@@ -1,4 +1,4 @@
-let productos = [
+let products = [
     { nombre: "Camisa", precio: 30, descuento: 10 },
     { nombre: "Pantalón", precio: 50, descuento: 15 },
     { nombre: "Zapatos", precio: 80, descuento: 20 },
@@ -21,12 +21,12 @@ function orderProducts(products){
 }
 
 function filterByDiscount(){
-  filterProducts = orderProducts(productos);
+  filterProducts = orderProducts(products);
   let filterDiscount = filterProducts.find(product => product.Descuento === 20);
 
   return `Nombre del producto: ${filterDiscount.Nombre} | Descuento: ${filterDiscount.Descuento}`;
 
 }
 
-orderProducts(productos);
+orderProducts(products);
 console.log(filterByDiscount());
