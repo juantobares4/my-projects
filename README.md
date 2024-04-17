@@ -1,1 +1,1 @@
-# programacion3
+# Ejercicios de JavaScript | Programación 3
