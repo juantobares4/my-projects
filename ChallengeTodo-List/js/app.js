@@ -96,3 +96,33 @@ function filterTasksComplete(){ // Filtra solo por tareas completadas.
   }  
 
 }
+
+function filterTasksInclompete(){
+  response.innerHTML = ''; // Esto garantiza que no haya duplicados ni contenido antiguo.
+  let incompletedTasks = arrayTasks.filter(task => task.completed === false);
+
+  if(incompletedTasks.length > 0){
+      incompletedTasks.forEach(task => {
+      let text = `<b>Nombre de la tarea:</b> ${task.name} | <b>Categoría:</b> ${task.category} | <b>Completada:</b> ${task.completed ? 'Si' : 'No'}`;
+      let taskItem = document.createElement('div');
+      
+      taskItem.innerHTML = text;
+  
+      taskItem.style.border = '1px solid rgba(0, 0, 0, 0.2)';
+      taskItem.style.backgroundColor = '#FFEE58';
+      
+      response.appendChild(taskItem);  
+    
+    }) 
+      
+  }else{
+    let text = `<b>No hay tareas incompletas para mostrar.</b>`
+    let taskItem = document.createElement('div');
+      
+    taskItem.innerHTML = text;
+
+    response.appendChild(taskItem);
+
+  }
+
+}
