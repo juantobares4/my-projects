@@ -6,7 +6,6 @@ let response = document.getElementById('tasks'); // Obtenemos el ID del elemento
 let searchTask = document.getElementById('searchTask'); // ID del formulario de la barra de búsqueda.
 
 let arrayTasks = [];
-let taskIdCounter = 0;
 
 // Creo eventos
 tasks.addEventListener("submit", receiveTasks); // Evento para enviar tareas a la lista.
@@ -40,19 +39,29 @@ function receiveTasks(event) {
   
   response.innerHTML = ""; // Esto garantiza que no haya duplicados ni contenido antiguo.
 
-  arrayTasks.forEach(task => {
+  arrayTasks.forEach((task, index) => {
     let taskItem = document.createElement('div'); // Creamos el elemento. 
     let taskText = `<b>Nombre de la tarea:</b> ${task.name} | <b>Categoría:</b> ${task.category} | <b>Completada:</b> ${task.completed ? 'Sí' : 'No'}`;
-    
+
     taskItem.innerHTML = taskText; // TextContent inserta texto plano | InnerText nos permite insertar etiquetas HTML.
     
     /* Le damos estilos al nuevo elemento que se ira creando */
     taskItem.style.border = '1px solid rgba(0, 0, 0, 0.2)';
     taskItem.style.backgroundColor = '#FFEE58';
+    taskItem.style.cursor = 'pointer';
+
+    taskItem.setAttribute('data-task-id', index + 1);
+    task.id = index + 1;
+    
+    taskItem.addEventListener('click', () => {
+      console.log(`Hiciste click en la tarea ${task.id}`); 
+      deleteTaskOnClick(task.id);
+
+    });
 
     response.appendChild(taskItem);
-
-  })
+    
+  });
   
 
 }
@@ -70,7 +79,7 @@ function filterTasksComplete(){ // Filtra solo por tareas completadas.
   let completedTasks = arrayTasks.filter(task => task.completed === true);
 
   if(completedTasks.length > 0){
-      completedTasks.forEach(task => {
+      completedTasks.forEach((task, index) => {
       let text = `<b>Nombre de la tarea:</b> ${task.name} | <b>Categoría:</b> ${task.category} | <b>Completada:</b> ${task.completed ? 'Si' : ''}`;
       let taskItem = document.createElement('div');
       
@@ -78,6 +87,16 @@ function filterTasksComplete(){ // Filtra solo por tareas completadas.
   
       taskItem.style.border = '1px solid rgba(0, 0, 0, 0.2)';
       taskItem.style.backgroundColor = '#FFEE58';
+      taskItem.style.cursor = 'pointer';
+
+      taskItem.setAttribute('data-task-id', index + 1);
+      task.id = index + 1;
+
+      taskItem.addEventListener('click', () => {
+        console.log(`Hiciste click en la tarea ${task.id}`); 
+        deleteTaskOnClick(task.id);
+  
+      });
       
       response.appendChild(taskItem);  
     
@@ -100,7 +119,7 @@ function filterTasksInclomplete(){
   let incompletedTasks = arrayTasks.filter(task => task.completed === false);
 
   if(incompletedTasks.length > 0){
-      incompletedTasks.forEach(task => {
+      incompletedTasks.forEach((task, index) => {
       let text = `<b>Nombre de la tarea:</b> ${task.name} | <b>Categoría:</b> ${task.category} | <b>Completada:</b> ${task.completed ? 'Si' : 'No'}`;
       let taskItem = document.createElement('div');
       
@@ -108,6 +127,16 @@ function filterTasksInclomplete(){
   
       taskItem.style.border = '1px solid rgba(0, 0, 0, 0.2)';
       taskItem.style.backgroundColor = '#FFEE58';
+      taskItem.style.cursor = 'pointer';
+
+      taskItem.setAttribute('data-task-id', index + 1);
+      task.id = index + 1;
+
+      taskItem.addEventListener('click', () => {
+        console.log(`Hiciste click en la tarea ${task.id}`); 
+        deleteTaskOnClick(task.id);
+  
+      });
       
       response.appendChild(taskItem);
     
@@ -129,7 +158,7 @@ function filterAllTasks(){
   response.innerHTML = '';
   
   if(arrayTasks.length > 0){
-    arrayTasks.forEach(task => {
+    arrayTasks.forEach((task, index) => {
       let text = `<b>Nombre de la tarea:</b> ${task.name} | <b>Categoría:</b> ${task.category} | <b>Completada:</b> ${task.completed ? 'Si' : 'No'}`;
       let taskItem = document.createElement('div');
 
@@ -137,6 +166,16 @@ function filterAllTasks(){
 
       taskItem.style.border = '1px solid rgba(0, 0, 0, 0.2)';
       taskItem.style.backgroundColor = '#FFEE58';
+      taskItem.style.cursor = 'pointer';
+
+      taskItem.setAttribute('data-task-id', index + 1);
+      task.id = index + 1;
+
+      taskItem.addEventListener('click', () => {
+        console.log(`Hiciste click en la tarea ${task.id}`); 
+        deleteTaskOnClick(task.id);
+  
+      });
       
       response.appendChild(taskItem); 
 
@@ -154,37 +193,64 @@ function filterAllTasks(){
 
 } 
 
-function searchForTask(event){
-  event.preventDefault();
-  response.innerHTML = ''; // Eliminamos duplicados en el elemento donde mostraremos todo.
+function searchForTask(event) {
+    event.preventDefault();
+    response.innerHTML = ''; // Limpiar el contenido actual en response
   
-  let inputTask = document.getElementById('nameTask').value;
-  let coincidence = arrayTasks.filter(task => task.name === inputTask) /* Creamos un nuevo array solo con el nombre
-  de la tarea filtrada. */
+    let inputTask = document.getElementById('nameTask').value;
+    let coincidence = arrayTasks.filter(task => task.name === inputTask); // Filtrar las tareas que coinciden con el nombre buscado
 
-  if(coincidence.length === 0){
-    let text = `<b>No hay resultados de la búsqueda.</b>`;
-    let resultsElement = document.createElement('div');
+    if(coincidence.length === 0){
+        let text = `<b>No hay resultados de la búsqueda.</b>`;
+        let noResultsElement = document.createElement('div');
+        noResultsElement.innerHTML = text;
+        response.appendChild(noResultsElement);
+    
+    }else{
+        coincidence.forEach((task, index) => {
+            let title = `<b>Resultados de la búsqueda:</b><br>`;
+            let text = `${title}<b>Nombre de la tarea:</b> ${task.name} | <b>Categoría:</b> ${task.category} | <b>Completada:</b> ${task.completed ? 'Si' : 'No'}`;
+            
+            // Crear un elemento div para cada tarea coincidente
+            let taskItem = document.createElement('div');
+            taskItem.innerHTML = text;
+            taskItem.style.border = '1px solid rgba(0, 0, 0, 0.2)';
+            taskItem.style.backgroundColor = '#FFEE58';
+            taskItem.style.cursor = 'pointer';
 
-    resultsElement.innerHTML = text;
+            // Asignar atributo data-task-id con el índice + 1 (o cualquier identificador único)
+            taskItem.setAttribute('data-task-id', index + 1);
 
-    response.appendChild(resultsElement);
+            // Asignar un evento click al elemento taskItem para eliminar la tarea
+            taskItem.addEventListener('click', () => {
+                console.log(`Hiciste click en la tarea ${task.id}`);
+                deleteTaskOnClick(task.id); // Llamar a la función para eliminar la tarea
+            });
 
-  }else if(coincidence.length > 0){
-    coincidence.forEach(task => {
-      let title = `<b>Resultados de la búsqueda:</b><br>`
-      let text = `${title}<b>Nombre de la tarea:</b> ${task.name} | <b>Categoría:</b> ${task.category} | <b>Completada:</b> ${task.completed ? 'Si' : 'No'}`;
-      let resultsElement = document.createElement('div');
-  
-      resultsElement.innerHTML = text;
-  
-      resultsElement.style.border = '1px solid rgba(0, 0, 0, 0.2)';
-      resultsElement.style.backgroundColor = '#FFEE58';
-      
-      response.appendChild(resultsElement);
-
-    });
-
-  }
- 
+            response.appendChild(taskItem);
+        });
+    
+    }
 }
+function deleteTaskOnClick(taskId) {
+  let indexTaskToDelete = arrayTasks.findIndex(task => task.id === taskId);
+
+  if (indexTaskToDelete !== -1) {
+      arrayTasks.splice(indexTaskToDelete, 1);
+
+      let taskElementToRemove = document.querySelector(`[data-task-id="${taskId}"]`);
+      
+      if (taskElementToRemove) {
+          taskElementToRemove.remove();
+      
+      }else{
+          console.log(`No se encontró ningún elemento con data-task-id="${taskId}" en el DOM.`);
+      }
+     
+  }else{
+      console.log(`No se encontró ninguna tarea con el ID "${taskId}" en arrayTasks.`);
+  
+  }
+
+}
+
