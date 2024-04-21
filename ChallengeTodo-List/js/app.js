@@ -154,7 +154,8 @@ function filterAllTasks(){
 
 } 
 
-function searchForTask(){
+function searchForTask(event){
+  event.preventDefault();
   response.innerHTML = ''; // Eliminamos duplicados en el elemento donde mostraremos todo.
   
   let inputTask = document.getElementById('nameTask').value;
