@@ -1,15 +1,18 @@
 /* Obtengo los ID de los elementos que voy a necesitar */ 
 
 let tasks = document.getElementById("formTask"); // ID del formulario donde se pasan las tareas.
-let clearTasks = document.getElementById('clearTasks') // ID del botón para vaciar el listado de tareas.
+let clearTasks = document.getElementById('clearTasks'); // ID del botón para vaciar el listado de tareas.
 let response = document.getElementById('tasks'); // Obtenemos el ID del elemento donde mostraremos el listado de tareas.
+let searchTask = document.getElementById('searchTask'); // ID del formulario de la barra de búsqueda.
 
 let arrayTasks = [];
 let taskIdCounter = 0;
 
 // Creo eventos
-tasks.addEventListener("submit", receiveTasks); // Evento para enviar tareas a la lista
-clearTasks.addEventListener("click", emptyTasks); // Evento para vaciar la lista de tareas
+tasks.addEventListener("submit", receiveTasks); // Evento para enviar tareas a la lista.
+clearTasks.addEventListener("click", emptyTasks); // Evento para vaciar la lista de tareas.
+searchTask.addEventListener("submit", searchForTask); /* Evento para filtrar por tarea en la barra de búsqueda | 
+Debe ser tipo "submit" porque si no no se vincula con la función si es de tipo "click". */
 
 // Función que se ejecuta al enviar el formulario
 function receiveTasks(event) {
@@ -47,11 +50,6 @@ function receiveTasks(event) {
     taskItem.style.border = '1px solid rgba(0, 0, 0, 0.2)';
     taskItem.style.backgroundColor = '#FFEE58';
 
-    // Creamos un ID para cada elemento <li>
-     let taskId = `task-${taskIdCounter}`;
-     taskItem.setAttribute('id', taskId);
-     taskIdCounter++; 
-
     response.appendChild(taskItem);
 
   })
@@ -83,7 +81,7 @@ function filterTasksComplete(){ // Filtra solo por tareas completadas.
       
       response.appendChild(taskItem);  
     
-    }) 
+    });
       
   }else{
     let text = `<b>No hay tareas completas para mostrar.</b>`
@@ -97,7 +95,7 @@ function filterTasksComplete(){ // Filtra solo por tareas completadas.
 
 }
 
-function filterTasksInclompete(){
+function filterTasksInclomplete(){
   response.innerHTML = ''; // Esto garantiza que no haya duplicados ni contenido antiguo.
   let incompletedTasks = arrayTasks.filter(task => task.completed === false);
 
@@ -111,9 +109,9 @@ function filterTasksInclompete(){
       taskItem.style.border = '1px solid rgba(0, 0, 0, 0.2)';
       taskItem.style.backgroundColor = '#FFEE58';
       
-      response.appendChild(taskItem);  
+      response.appendChild(taskItem);
     
-    }) 
+    });
       
   }else{
     let text = `<b>No hay tareas incompletas para mostrar.</b>`
@@ -125,4 +123,67 @@ function filterTasksInclompete(){
 
   }
 
+}
+
+function filterAllTasks(){
+  response.innerHTML = '';
+  
+  if(arrayTasks.length > 0){
+    arrayTasks.forEach(task => {
+      let text = `<b>Nombre de la tarea:</b> ${task.name} | <b>Categoría:</b> ${task.category} | <b>Completada:</b> ${task.completed ? 'Si' : 'No'}`;
+      let taskItem = document.createElement('div');
+
+      taskItem.innerHTML = text;
+
+      taskItem.style.border = '1px solid rgba(0, 0, 0, 0.2)';
+      taskItem.style.backgroundColor = '#FFEE58';
+      
+      response.appendChild(taskItem); 
+
+    });
+
+  }else{
+    let text = `<b>No hay tareas para mostrar.</b>`
+    let taskItem = document.createElement('div');
+      
+    taskItem.innerHTML = text; // TextContent inserta texto plano | InnerText nos permite insertar etiquetas HTML.
+
+    response.appendChild(taskItem);
+
+  };
+
+} 
+
+function searchForTask(){
+  response.innerHTML = ''; // Eliminamos duplicados en el elemento donde mostraremos todo.
+  
+  let inputTask = document.getElementById('nameTask').value;
+  let coincidence = arrayTasks.filter(task => task.name === inputTask) /* Creamos un nuevo array solo con el nombre
+  de la tarea filtrada. */
+
+  if(coincidence.length === 0){
+    let text = `<b>No hay resultados de la búsqueda.</b>`;
+    let resultsElement = document.createElement('div');
+
+    resultsElement.innerHTML = text;
+
+    response.appendChild(resultsElement);
+
+  }else if(coincidence.length > 0){
+    coincidence.forEach(task => {
+      let title = `<b>Resultados de la búsqueda:</b><br>`
+      let text = `${title}<b>Nombre de la tarea:</b> ${task.name} | <b>Categoría:</b> ${task.category} | <b>Completada:</b> ${task.completed ? 'Si' : 'No'}`;
+      let resultsElement = document.createElement('div');
+  
+      resultsElement.innerHTML = text;
+  
+      resultsElement.style.border = '1px solid rgba(0, 0, 0, 0.2)';
+      resultsElement.style.backgroundColor = '#FFEE58';
+      
+      response.appendChild(resultsElement);
+
+    });
+
+  }
+ 
 }

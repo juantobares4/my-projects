@@ -33,16 +33,16 @@
             </a>
             <ul class="dropdown-menu">
               <li><a id="navTaskComplete" class="dropdown-item" href="#" onclick="filterTasksComplete()">Completas</a></li>
-              <li><a class="dropdown-item" href="#" onclick="filterTasksInclompete()">Incompletas</a></li>
+              <li><a class="dropdown-item" href="#" onclick="filterTasksInclomplete()">Incompletas</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Todas las tareas</a></li>
+              <li><a class="dropdown-item" href="#" onclick="filterAllTasks()">Todas las tareas</a></li>
             </ul>
           </li>
         </ul>
-        <form class="d-flex ml-auto" role="search">
-          <input class="form-control me-2" type="search" placeholder="Buscar tarea" aria-label="Search">
+        <form id="searchTask" class="d-flex ml-auto" role="search">
+          <input id="nameTask" class="form-control me-2" type="search" placeholder="Buscar tarea" aria-label="Search">
           <button class="btn btn-info" type="submit">Buscar</button>
-        </form>
+        </form>        
       </div>
     </div>
   </nav>      
