@@ -232,6 +232,7 @@ function searchForTask(event) {
     
     }
 }
+
 function deleteTaskOnClick(taskId) {
   let indexTaskToDelete = arrayTasks.findIndex(task => task.id === taskId);
 
