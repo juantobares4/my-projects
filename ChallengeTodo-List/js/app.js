@@ -5,16 +5,10 @@ let clearTasks = document.getElementById('clearTasks'); // ID del botón para va
 let response = document.getElementById('tasks'); // Obtenemos el ID del elemento donde mostraremos el listado de tareas.
 let searchTask = document.getElementById('searchTask'); // ID del formulario de la barra de búsqueda.
 
-let arrayTasks = [];
+let arrayTasks = JSON.parse(localStorage.getItem('task')) || [];
 
-// Creo eventos
-tasks.addEventListener("submit", receiveTasks); // Evento para enviar tareas a la lista.
-clearTasks.addEventListener("click", emptyTasks); // Evento para vaciar la lista de tareas.
-searchTask.addEventListener("submit", searchForTask); /* Evento para filtrar por tarea en la barra de búsqueda | 
-Debe ser tipo "submit" porque si no no se vincula con la función si es de tipo "click". */
-
-// Función que se ejecuta al enviar el formulario
-function receiveTasks(event) {
+// Función para recibir las tareas
+function receiveTasks(event){
   event.preventDefault(); // Evitar que se recargue la página al enviar el formulario.
 
   // Obtener los valores del formulario
@@ -27,50 +21,28 @@ function receiveTasks(event) {
     name: nameTask,
     category: categoryTask,
     completed: isComplete
-
+  
   };
-
+  
+  // Guardamos el array actualizado en el localStorage
   arrayTasks.push(userTask);
+  localStorage.setItem('task', JSON.stringify(arrayTasks));
 
   /* Limpiamos el contenido del formulario y del div donde se van colocando las tareas */
   document.getElementById("inputTask").value = "";
   document.getElementById("inputCategory").value = "";
   document.getElementById('isComplete').checked = false;
-  
-  response.innerHTML = ""; // Esto garantiza que no haya duplicados ni contenido antiguo.
 
-  arrayTasks.forEach((task, index) => {
-    let taskItem = document.createElement('div'); // Creamos el elemento. 
-    let taskText = `<b>Nombre de la tarea:</b> ${task.name} | <b>Categoría:</b> ${task.category} | <b>Completada:</b> ${task.completed ? 'Sí' : 'No'}`;
+  renderTasks(); /* Se llama a la función renderTasks() para que cuando agreguemos una tarea, 
+  el listado esté actualizado constantemente sin necesidad de recargar. */ 
 
-    taskItem.innerHTML = taskText; // TextContent inserta texto plano | InnerText nos permite insertar etiquetas HTML.
-    
-    /* Le damos estilos al nuevo elemento que se ira creando */
-    taskItem.style.border = '1px solid rgba(0, 0, 0, 0.2)';
-    taskItem.style.backgroundColor = '#FFEE58';
-    taskItem.style.cursor = 'pointer';
-
-    taskItem.setAttribute('data-task-id', index + 1);
-    task.id = index + 1;
-    
-    taskItem.addEventListener('click', () => {
-      console.log(`Hiciste click en la tarea ${task.id}`); 
-      deleteTaskOnClick(task.id);
-
-    });
-
-    response.appendChild(taskItem);
-    
-  });
-  
-
-}
+};
 
 // Función que se ejecuta al clickear el botón "Vaciar tareas"
 function emptyTasks(){
   response.innerHTML = ''; // Si quiero vaciar utilizando remove(), después no puedo volver a llenar el listado nuevamente.
-
-  arrayTasks = []; // Vacío el array también.
+  arrayTasks = []; // Vacío el array también.  
+  localStorage.removeItem('task');
 
 }
 
@@ -93,7 +65,6 @@ function filterTasksComplete(){ // Filtra solo por tareas completadas.
       task.id = index + 1;
 
       taskItem.addEventListener('click', () => {
-        console.log(`Hiciste click en la tarea ${task.id}`); 
         deleteTaskOnClick(task.id);
   
       });
@@ -133,7 +104,6 @@ function filterTasksInclomplete(){
       task.id = index + 1;
 
       taskItem.addEventListener('click', () => {
-        console.log(`Hiciste click en la tarea ${task.id}`); 
         deleteTaskOnClick(task.id);
   
       });
@@ -172,7 +142,6 @@ function filterAllTasks(){
       task.id = index + 1;
 
       taskItem.addEventListener('click', () => {
-        console.log(`Hiciste click en la tarea ${task.id}`); 
         deleteTaskOnClick(task.id);
   
       });
@@ -223,30 +192,35 @@ function searchForTask(event) {
 
             // Asignar un evento click al elemento taskItem para eliminar la tarea
             taskItem.addEventListener('click', () => {
-                console.log(`Hiciste click en la tarea ${task.id}`);
                 deleteTaskOnClick(task.id); // Llamar a la función para eliminar la tarea
-            });
+            
+              });
 
             response.appendChild(taskItem);
+        
         });
     
     }
+
 }
 
 function deleteTaskOnClick(taskId) {
   let indexTaskToDelete = arrayTasks.findIndex(task => task.id === taskId);
 
-  if (indexTaskToDelete !== -1) {
+  if(indexTaskToDelete !== -1){
       arrayTasks.splice(indexTaskToDelete, 1);
 
       let taskElementToRemove = document.querySelector(`[data-task-id="${taskId}"]`);
       
-      if (taskElementToRemove) {
+      if(taskElementToRemove){
           taskElementToRemove.remove();
-      
+          
       }else{
           console.log(`No se encontró ningún elemento con data-task-id="${taskId}" en el DOM.`);
+      
       }
+
+      localStorage.setItem('task', JSON.stringify(arrayTasks));
      
   }else{
       console.log(`No se encontró ninguna tarea con el ID "${taskId}" en arrayTasks.`);
@@ -255,3 +229,37 @@ function deleteTaskOnClick(taskId) {
 
 }
 
+function renderTasks(){
+  response.innerHTML = '';
+  
+  arrayTasks.forEach((task, index) => {
+    let taskItem = document.createElement('div');
+    let taskText = `<b>Nombre de la tarea:</b> ${task.name} | <b>Categoría:</b> ${task.category} | <b>Completada:</b> ${task.completed ? 'Sí' : 'No'}`;
+
+    taskItem.innerHTML = taskText;
+    
+    taskItem.style.border = '1px solid rgba(0, 0, 0, 0.2)';
+    taskItem.style.backgroundColor = '#FFEE58';
+    taskItem.style.cursor = 'pointer';
+
+    taskItem.setAttribute('data-task-id', index + 1);
+    task.id = index + 1;
+
+    taskItem.addEventListener('click', () => {
+      deleteTaskOnClick(task.id);
+
+    });
+
+    response.appendChild(taskItem);
+  
+  });
+
+}
+
+// Creo eventos
+tasks.addEventListener("submit", receiveTasks); // Evento para enviar tareas a la lista.
+clearTasks.addEventListener("click", emptyTasks); // Evento para vaciar la lista de tareas.
+searchTask.addEventListener("submit", searchForTask); /* Evento para filtrar por tarea en la barra de búsqueda | 
+Debe ser tipo "submit" porque si no no se vincula con la función si es de tipo "click". */
+
+renderTasks();
