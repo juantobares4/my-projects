@@ -85,7 +85,7 @@ function filterTasksComplete(){ // Filtra solo por tareas completadas.
 
 }
 
-function filterTasksInclomplete(){
+function filterTasksIncomplete(){
   response.innerHTML = ''; // Esto garantiza que no haya duplicados ni contenido antiguo.
   let incompletedTasks = arrayTasks.filter(task => task.completed === false);
 
