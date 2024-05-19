@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
+@font-face{
+  font-family: 'jacksonville';
+  src: url(/css/fonts/NFL_Jacksonville_Jaguars[1].ttf);
+
+}
+
+:root{
+  --font-form: 'Audiowide', sans-serif;
+
+}
+
+html, body{
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+
+}
+
+body{
+  background-image: url('/images/undraw_game_day_ucx9.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+}
+
+nav{
+  font-family: 'jacksonville';
+
+}
+
+.title-section{
+  color: #1E2025;
+  background-color: #F2E9DC;
+  border: 2px solid black;
+
+}
+
+.options{
+  font-size: 20px;
+  border-radius: 5px;
+  text-decoration: none;
+
+}
+
+a:hover{
+  text-decoration: none;
+
+}
+
+button:hover{
+  background-color: #808F85;
+
+}
+
+.form-container{
+  font-family: var(--font-form);
+
+}
+
+#container-team{
+  background-color: #F2E9DC;
+  border: 2px solid black;
+
+}
