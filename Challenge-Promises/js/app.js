@@ -45,7 +45,10 @@ const addPlayer = async(event) => {
     
     let players = getPlayersFromLocalStorage();
   
-    let findPlayer = players.find(player => player.name === playerName);
+    let findPlayer = players.find(player => {
+      player.name === playerName && player.lastName === playerLastName
+
+      });
   
     if(findPlayer){
       throw new Error('El jugador ya forma parte de tu plantilla.');
@@ -56,7 +59,7 @@ const addPlayer = async(event) => {
     
     savePlayersInLocalStorage(players);
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 500));
 
     alert('El jugador fue agregado a tu plantilla correctamente.');
 
@@ -65,16 +68,71 @@ const addPlayer = async(event) => {
   
   }
 
+  playerName = document.getElementById('playerName').value = '';
+  playerLastName = document.getElementById('playerLastName').value = '';
+  playerPosition = document.getElementById('position').value = '';
+  playerAge = document.getElementById('playerAge').value = '';
+
+  listarJugadores();
+
 };
 
 
 // Función asíncrona para listar todos los jugadores del equipo
 const listarJugadores = async() => {
-  let players = getPlayersFromLocalStorage();
+  let team = getPlayersFromLocalStorage();
+  let containerTeam = document.getElementById('container-team');
+  let image = document.querySelector('.background-image-team');
+  let goalkeepers = team.filter(player => player.position === 'Arquero');
+  let defenders = team.filter(player => player.position === 'Defensor');
+  let midfielders = team.filter(player => player.position === 'Mediocampista');
+  let forwards = team.filter(player => player.position === 'Delantero');
+  
+  console.log(goalkeepers, defenders, midfielders, forwards);
+  
+  /* Creamos elementos para la tabla del equipo */
+  let table = document.createElement('table');
+  let tbody = document.createElement('tbody');
 
-  let encontrado = players.find(player => player.name === 'Franco');
+  containerTeam.style.display = 'block';
 
-  console.log(players);
+  image.remove();
+  
+  let elementContainerTitle = document.createElement('h4');
+  let title = 'Plantel';
+
+  elementContainerTitle.style.fontFamily = 'jacksonville';
+  elementContainerTitle.style.botde
+  elementContainerTitle.style.padding = '10px'; 
+  elementContainerTitle.innerHTML = title;
+
+  table.appendChild(elementContainerTitle);
+
+  /* Creamos filas de la tabla */
+  
+  team.forEach(element => {
+    let row = document.createElement('tr');
+    
+    Object.values(element).forEach(text => {
+      let td = document.createElement('td');
+      td.style.border = '2px solid black';
+      td.style.backgroundColor = 'antiquewhite';
+      td.style.padding = '7px';
+      td.style.fontFamily = 'Audiowide';
+      td.style.fontSize = '13px';
+      td.innerHTML = `<i>${text}</i>`;
+      row.appendChild(td);
+      
+    });
+    
+    tbody.appendChild(row);
+    
+    
+  });
+  
+  table.appendChild(tbody)
+  table.style.boxShadow = '15px 15px 15px 15px rgba(0, 0, 0, 0.3)';
+  containerTeam.appendChild(table);
 
 };
 
