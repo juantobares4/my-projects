@@ -8,6 +8,12 @@
 
 :root{
   --font-form: 'Audiowide', sans-serif;
+  --primary-font: 'jacksonville';
+
+}
+
+.primary-font{
+  font-family: var(--primary-font);
 
 }
 
@@ -16,7 +22,6 @@ html, body{
   width: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
 
 }
 
@@ -81,8 +86,14 @@ button:hover{
 
 }
 
+table{
+  min-width: 100%;
+  max-width: 100%;
+
+}
+
 .background-image-team{
-  width: 70%;
-  height: 70%;
+  width: 50%;
+  height: 50%;
 
 }
