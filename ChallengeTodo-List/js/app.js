@@ -180,21 +180,18 @@ function searchForTask(event) {
             let title = `<b>Resultados de la búsqueda:</b><br>`;
             let text = `${title}<b>Nombre de la tarea:</b> ${task.name} | <b>Categoría:</b> ${task.category} | <b>Completada:</b> ${task.completed ? 'Si' : 'No'}`;
             
-            // Crear un elemento div para cada tarea coincidente
             let taskItem = document.createElement('div');
             taskItem.innerHTML = text;
             taskItem.style.border = '1px solid rgba(0, 0, 0, 0.2)';
             taskItem.style.backgroundColor = '#FFEE58';
             taskItem.style.cursor = 'pointer';
 
-            // Asignar atributo data-task-id con el índice + 1 (o cualquier identificador único)
             taskItem.setAttribute('data-task-id', index + 1);
 
-            // Asignar un evento click al elemento taskItem para eliminar la tarea
             taskItem.addEventListener('click', () => {
-                deleteTaskOnClick(task.id); // Llamar a la función para eliminar la tarea
-            
-              });
+              deleteTaskOnClick(task.id); 
+
+            });
 
             response.appendChild(taskItem);
         
