@@ -87,13 +87,6 @@ const playersList = async() => {
   if(team.length > 0){
     containerTeam.innerHTML = '';
 
-    let goalkeepers = team.filter(player => player.position === 'Arquero');
-    let defenders = team.filter(player => player.position === 'Defensor');
-    let midfielders = team.filter(player => player.position === 'Mediocampista');
-    let forwards = team.filter(player => player.position === 'Delantero');
-    
-    let sortTeam = [goalkeepers, defenders, midfielders, forwards];
-    
     /* Creamos elementos para la tabla del equipo */
     
     let table = document.createElement('table');
@@ -166,14 +159,49 @@ const playersList = async() => {
 // Función asíncrona para asignar una nueva posición a un jugador
 const asignarPosicion = async (nombreJugador, nuevaPosicion) => {
   let team = getPlayersFromLocalStorage();
+  let goalkeepers = team.filter(player => player.position === 'Arquero');
+  let defenders = team.filter(player => player.position === 'Defensor');
+  let midfielders = team.filter(player => player.position === 'Mediocampista');
+  let forwards = team.filter(player => player.position === 'Delantero');
+  let sortTeam = [goalkeepers, defenders, midfielders, forwards];
+  
   let sectionTeam = document.getElementById('section-team');
-  
-  sectionTeam.scrollIntoView({
-    behavior: 'smooth' // Hace un scroll suave.
+  let containerSortTeam = document.getElementById('sort-team');
+  containerSortTeam.innerHTML = ''; // Limpiar contenido previo
+  let table = document.createElement('table');
+  let tbody = document.createElement('tbody');
 
-  })
+  // Hace un scroll suave a la sección.
+  sectionTeam.scrollIntoView({
+      behavior: 'smooth'
+  });
+
+  sortTeam.forEach(forPositions => {
+      for(let player of forPositions){
+          let row = document.createElement('tr'); // Crear una nueva fila para cada jugador
+
+          let td = document.createElement('td');
+          td.style.border = '2px solid black';
+          td.style.backgroundColor = 'antiquewhite';
+          td.style.padding = '7px';
+          td.style.fontFamily = 'Audiowide';
+          td.style.fontSize = '13px';
+          td.innerHTML = `${player.position}<b>Nombre: </b> ${player.name} | <b>Apellido: </b> ${player.lastName}</i> | Edad: <i>${player.age}</i>`;
+          row.appendChild(td);
+
+          tbody.appendChild(row); // Agregar la fila al cuerpo de la tabla
+      
+        }
   
-  localStorage.clear();
+  });
+
+  table.appendChild(tbody);
+  table.style.boxShadow = '15px 15px 15px 15px rgba(0, 0, 0, 0.3)';
+  table.style.backgroundColor = '#439F52';
+  table.style.width = '100%'; // Asegura que la tabla ocupe todo el ancho del contenedor
+  table.style.marginTop = '20px'; // Agrega espacio encima de la tabla
+
+  containerSortTeam.appendChild(table);
 
 };
 
