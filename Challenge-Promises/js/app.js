@@ -35,6 +35,7 @@ const addPlayer = async(event) => {
     }
 
     let player = {
+      id: Math.ceil(Math.random() * 1000),
       name: playerName,
       lastName: playerLastName,
       age: playerAge,
@@ -61,7 +62,7 @@ const addPlayer = async(event) => {
 
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    alert('El jugador fue agregado a tu plantilla correctamente.');
+    alert('El jugador fue agregado a tu plantilla correctamente ✅');
     
     await playersList();
 
@@ -113,16 +114,19 @@ const playersList = async() => {
     team.forEach(element => {
       let row = document.createElement('tr');
       
-      Object.values(element).forEach(text => {
-        let td = document.createElement('td');
-        td.style.border = '2px solid black';
-        td.style.backgroundColor = 'antiquewhite';
-        td.style.padding = '7px';
-        td.style.fontFamily = 'Audiowide';
-        td.style.fontSize = '13px';
-        td.innerHTML = `<i>${text}</i>`;
-        row.appendChild(td);
-        
+      Object.keys(element).forEach(key => {
+        if(key !== 'id'){
+          let td = document.createElement('td');
+          td.style.border = '2px solid black';
+          td.style.backgroundColor = 'antiquewhite';
+          td.style.padding = '7px';
+          td.style.fontFamily = 'Audiowide';
+          td.style.fontSize = '13px';
+          td.innerHTML = `<i>${element[key]}</i>`;
+          row.appendChild(td);
+          
+        }
+
       });
       
       tbody.appendChild(row);
@@ -157,67 +161,172 @@ const playersList = async() => {
 };
 
 // Función asíncrona para asignar una nueva posición a un jugador
-const asignarPosicion = async (nombreJugador, nuevaPosicion) => {
+const completeInformation = async() => {
   let team = getPlayersFromLocalStorage();
-  let goalkeepers = team.filter(player => player.position === 'Arquero');
-  let defenders = team.filter(player => player.position === 'Defensor');
-  let midfielders = team.filter(player => player.position === 'Mediocampista');
-  let forwards = team.filter(player => player.position === 'Delantero');
-  let sortTeam = [goalkeepers, defenders, midfielders, forwards];
-  
-  let sectionTeam = document.getElementById('section-team');
   let containerSortTeam = document.getElementById('sort-team');
-  containerSortTeam.innerHTML = ''; // Limpiar contenido previo
-  let table = document.createElement('table');
-  let tbody = document.createElement('tbody');
-
-  // Hace un scroll suave a la sección.
-  sectionTeam.scrollIntoView({
-      behavior: 'smooth'
-  });
-
-  sortTeam.forEach(forPositions => {
-      for(let player of forPositions){
-          let row = document.createElement('tr'); // Crear una nueva fila para cada jugador
-
-          let td = document.createElement('td');
-          td.style.border = '2px solid black';
-          td.style.backgroundColor = 'antiquewhite';
-          td.style.padding = '7px';
-          td.style.fontFamily = 'Audiowide';
-          td.style.fontSize = '13px';
-          td.innerHTML = `${player.position}<b>Nombre: </b> ${player.name} | <b>Apellido: </b> ${player.lastName}</i> | Edad: <i>${player.age}</i>`;
-          row.appendChild(td);
-
-          tbody.appendChild(row); // Agregar la fila al cuerpo de la tabla
-      
-        }
   
-  });
+  if(team.length > 0){
+    let goalkeepers = team.filter(player => player.position === 'Arquero');
+    let defenders = team.filter(player => player.position === 'Defensor');
+    let midfielders = team.filter(player => player.position === 'Mediocampista');
+    let forwards = team.filter(player => player.position === 'Delantero');
+    let sortTeam = [goalkeepers, defenders, midfielders, forwards];
+    
+    let sectionTeam = document.getElementById('section-team');
+    containerSortTeam.innerHTML = '';
+    let table = document.createElement('table');
+    let tbody = document.createElement('tbody');
+    
+    sectionTeam.scrollIntoView({
+      behavior: 'smooth'
+    }); // Hace un scroll suave a la sección.
+    
+    sortTeam.forEach(forPositions => {
+      for(let player of forPositions){
+            let row = document.createElement('tr');
+            let td = document.createElement('td');
+            td.style.border = '2px solid black';
+            td.style.backgroundColor = 'antiquewhite';
+            td.style.padding = '7px';
+            td.style.fontFamily = 'Audiowide';
+            td.style.fontSize = '13px';
+            td.innerHTML = `<b>Posición:</b> ${player.position} | <b>Nombre: </b> ${player.name} | <b>Apellido: </b> ${player.lastName} | <b>Edad:</b> ${player.age} | <b>Estado:</b> ${player.state} | <b>Editar posición</b>: <button class='ml-1' onclick='(editPosition(${player.id}))'>Editar</button> | <b>Realizar cambio</b>: <button class='ml-1' onclick='(buttonChangePlayer(${player.id}))'>Cambiar</button>`;
 
-  table.appendChild(tbody);
-  table.style.boxShadow = '15px 15px 15px 15px rgba(0, 0, 0, 0.3)';
-  table.style.backgroundColor = '#439F52';
-  table.style.width = '100%'; // Asegura que la tabla ocupe todo el ancho del contenedor
-  table.style.marginTop = '20px'; // Agrega espacio encima de la tabla
+            row.appendChild(td);
+            tbody.appendChild(row);
 
-  containerSortTeam.appendChild(table);
+          }
+    
+      });
 
-};
+    table.appendChild(tbody);
+    table.style.boxShadow = '15px 15px 15px 15px rgba(0, 0, 0, 0.3)';
+    table.style.backgroundColor = '#439F52';
+    table.style.width = '100%'; // Asegura que la tabla ocupe todo el ancho del contenedor
+    table.style.marginTop = '20px'; // Agrega espacio encima de la tabla
 
-// Función asíncrona para realizar un cambio durante un partido
-const realizarCambio = async (jugadorEntrante, jugadorSaliente) => {
-  // Implementación para realizar un cambio durante un partido
-};
+    containerSortTeam.appendChild(table);
 
-// Función principal asíncrona que interactúa con el usuario
-const main = async () => {
-  try {
-    // Lógica para interactuar con el usuario y llamar a las funciones adecuadas
-  } catch (error) {
-    console.error('Error:', error);
+  }else if(team.length === 0){
+    let message = 'No hay jugadores en tu plantilla';
+    let elementMessage = document.createElement('h3');
+    
+    containerSortTeam.innerHTML = '';
+
+    containerSortTeam.scrollIntoView({
+      behavior: 'smooth'
+    }); // Hace un scroll suave a la sección.
+    
+    elementMessage.innerHTML = message;
+    containerSortTeam.appendChild(elementMessage);
+
   }
+
 };
 
-// Llamar a la función principal para iniciar la aplicación
-main();
+const editPosition = async(playerID) => {
+  try{
+    let team = getPlayersFromLocalStorage();
+  
+    let indexPlayer = team.findIndex(player => player.id === playerID);
+    let player = team[indexPlayer];
+    let newPosition = prompt(`Nueva posición del jugador ${player.name} ${player.lastName}:`);
+    
+    if(!newPosition){
+      throw new Error('Error al cambiar los datos del jugador.');
+
+    }
+
+    player.position = newPosition;
+
+    team[indexPlayer] = player;
+
+    savePlayersInLocalStorage(team);
+
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    alert('El jugador fue editado correctamente ✅');
+
+    await completeInformation();
+
+  }catch(error){
+    alert(error);
+
+  }
+  
+};
+
+const changePlayer = () => {
+  let sectionTeam = document.getElementById('section-team');
+
+  sectionTeam.scrollIntoView({
+    behavior: 'smooth'
+  }); //
+
+  completeInformation();
+
+}
+
+const buttonChangePlayer = async(playerID) => {
+  let team = getPlayersFromLocalStorage();
+
+  try{
+    console.log(`Hiciste click en el jugador con ID ${playerID}`)
+    let indexFirstPlayer = team.findIndex(player => player.id === playerID);
+    let firstPlayer = team[indexFirstPlayer];
+    let nameSecondPlayerToChange = prompt('Ingresá el nombre del jugador a cambiar:');
+    let lastNameSecondPlayerToChange = prompt('Ingresá el apellido del jugador a cambiar:');
+
+    function capitalizeFirstCharacter(word){
+      let firstCharacter = word.slice(0, 1).toUpperCase();
+      let restOfTheWord = word.slice(1);
+
+      return firstCharacter + restOfTheWord;
+
+    }
+
+    let name = capitalizeFirstCharacter(nameSecondPlayerToChange);
+    let lastName = capitalizeFirstCharacter(lastNameSecondPlayerToChange);
+    let indexSecondPlayer = team.findIndex(player => player.name === name && player.lastName === lastName);
+
+    if(indexSecondPlayer === -1){
+      throw new Error('El jugador que intentás cambiar no forma parte de tu plantel.');
+
+    }
+
+    if(firstPlayer.state === 'Titular'){
+      firstPlayer.state = 'Suplente';
+
+    }else{
+      firstPlayer.state = 'Titular';
+
+    }
+
+    team[indexFirstPlayer] = firstPlayer;
+
+    let secondPlayer = team[indexSecondPlayer];
+
+    if(secondPlayer.state === 'Titular'){
+      secondPlayer.state = 'Suplente';
+
+    }else{
+      secondPlayer.state = 'Titular';
+
+    }
+
+    team[indexSecondPlayer] = secondPlayer;
+
+    savePlayersInLocalStorage(team);
+
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    alert(`Cambio realizado con éxito ✅`);
+    
+    await completeInformation();
+
+  }catch(error){
+    alert(error);
+
+  }
+
+}

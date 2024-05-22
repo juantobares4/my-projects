@@ -100,7 +100,8 @@ table{
 
 #section-team{
   width: 100%;
-  height: 2000px;
+  min-height: 700px;
+  text-align: center;
 
 }
 

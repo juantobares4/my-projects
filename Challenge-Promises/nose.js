@@ -1,23 +1,50 @@
-let object = [
+let players = [
   {
-    nombre: 'Juan Cruz',
-    apellido: 'Tobares',
-    edad: 23
+    posicion:'Arquero',
+    nombre:'Franco Armani'
 
   },
   {
-    nombre: 'Marisa',
-    apellido: 'Griffa',
-    edad: 45
+    posicion:'Arquero',
+    nombre: 'Ezquiel Centurión'
 
   },
   {
-    nombre: 'Marcelo',
-    apellido: 'Benedetti',
-    edad: 32
+    posicion: 'Defensor',
+    nombre: "Agustín Sant'anna"
+
+  },
+  {
+    posicion: 'Mediocampista',
+    nombre: 'Claudio Echeverri'
+
+  },
+  {
+    posicion: 'Delantero',
+    nombre: 'Miguel Ángel Borja'
 
   }
 
-];
+]
 
-object.forEach(persona => console.log(persona.nombre));
+players.forEach(player => {
+  switch(player.posicion){
+    case 'Arquero':
+      console.log(player.nombre);
+      break
+
+    case 'Defensor':
+      console.log(player.nombre);
+      break
+
+    case 'Mediocampista':
+      console.log(player.nombre);
+      break
+
+    case 'Delantero':
+      console.log(player.nombre);
+      break
+
+  }
+
+})
