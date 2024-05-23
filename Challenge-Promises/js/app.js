@@ -81,80 +81,94 @@ const addPlayer = async(event) => {
 
 // Función asíncrona para listar todos los jugadores del equipo
 const playersList = async() => {
-  let team = getPlayersFromLocalStorage();
-  let containerTeam = document.getElementById('container-team');
-  let image = document.querySelector('.background-image-team'); // QuerySelector nos permite seleccionar por clase.
-
-  if(team.length > 0){
-    containerTeam.innerHTML = '';
-
-    /* Creamos elementos para la tabla del equipo */
+  try{
+    let team = getPlayersFromLocalStorage();
+    let containerTeam = document.getElementById('container-team');
+    let image = document.querySelector('.background-image-team'); // QuerySelector nos permite seleccionar por clase.
     
-    let table = document.createElement('table');
-    let tbody = document.createElement('tbody');
-  
-    containerTeam.style.display = 'block';
-  
-    if(image){
-      image.remove();
+    if(team.length > 0){
+      containerTeam.innerHTML = '';
 
-    }
-    
-    let elementContainerTitle = document.createElement('h4');
-    let title = 'Plantel';
-  
-    elementContainerTitle.style.fontFamily = 'jacksonville';
-    elementContainerTitle.style.padding = '10px'; 
-    elementContainerTitle.innerHTML = title;
-  
-    table.appendChild(elementContainerTitle);
-  
-    /* Creamos filas de la tabla */
-    
-    team.forEach(element => {
-      let row = document.createElement('tr');
+      /* Creamos elementos para la tabla del equipo */
       
-      Object.keys(element).forEach(key => {
-        if(key !== 'id'){
-          let td = document.createElement('td');
-          td.style.border = '2px solid black';
-          td.style.backgroundColor = 'antiquewhite';
-          td.style.padding = '7px';
-          td.style.fontFamily = 'Audiowide';
-          td.style.fontSize = '13px';
-          td.innerHTML = `<i>${element[key]}</i>`;
-          row.appendChild(td);
-          
-        }
-
+      let table = document.createElement('table');
+      let tbody = document.createElement('tbody');
+    
+      containerTeam.style.display = 'block';
+    
+      if(image !== null){
+        image.remove();
+  
+      }
+      
+      let elementContainerTitle = document.createElement('h4');
+      let title = 'Plantel';
+    
+      elementContainerTitle.style.fontFamily = 'jacksonville';
+      elementContainerTitle.style.padding = '10px'; 
+      elementContainerTitle.innerHTML = title;
+    
+      table.appendChild(elementContainerTitle);
+    
+      /* Creamos filas de la tabla */
+      
+      team.forEach(element => {
+        let row = document.createElement('tr');
+        
+        Object.keys(element).forEach(key => {
+          if(key !== 'id'){
+            let td = document.createElement('td');
+            td.style.border = '2px solid black';
+            td.style.backgroundColor = 'antiquewhite';
+            td.style.padding = '7px';
+            td.style.fontFamily = 'Audiowide';
+            td.style.fontSize = '13px';
+            td.innerHTML = `<i>${element[key]}</i>`;
+            row.appendChild(td);
+            
+          }
+  
+        });
+        
+        tbody.appendChild(row);
+        
       });
       
-      tbody.appendChild(row);
+      table.appendChild(tbody)
+      table.style.boxShadow = '15px 15px 15px 15px rgba(0, 0, 0, 0.3)';
+      table.style.backgroundColor = '#439F52';
+      containerTeam.appendChild(table);
+  
+    }else if(team.length === 0){
+      containerTeam.innerHTML = '';
+
+      let message = 'No hay jugadores en tu plantilla.';
+      let elementMessage = document.createElement('h4');
+  
+      elementMessage.innerHTML = message;
+      elementMessage.style.fontFamily = 'jacksonville';
       
-    });
+      let urlImage = '/images/undraw_no_data_re_kwbl.svg';
+
+      image = document.createElement('img');
+      image.src = urlImage;
+      image.className = 'background-image-team';
+
+      console.log(!image);
     
-    table.appendChild(tbody)
-    table.style.boxShadow = '15px 15px 15px 15px rgba(0, 0, 0, 0.3)';
-    table.style.backgroundColor = '#439F52';
-    containerTeam.appendChild(table);
+      image.style.width = '70px';
+      image.style.height = '70px';
+      image.style.padding = '8px';
+      
+      elementMessage.classList.add('text-center');
+      
+      containerTeam.appendChild(image);
+      containerTeam.appendChild(elementMessage);
+  
+    }
 
-  }else if(team.length === 0){
-    containerTeam.innerHTML = '';
-
-    let message = 'No hay jugadores en tu plantilla.';
-    let elementMessage = document.createElement('h4');
-
-    elementMessage.innerHTML = message;
-    elementMessage.style.fontFamily = 'jacksonville';
-
-    image.style.width = '70px';
-    image.style.height = '70px';
-    image.style.padding = '8px';
-
-    elementMessage.classList.add('text-center');
-
-    containerTeam.appendChild(image);
-    containerTeam.appendChild(elementMessage);
+  }catch(error){
+    console.log(error);
 
   }
 
@@ -165,60 +179,72 @@ const completeInformation = async() => {
   let team = getPlayersFromLocalStorage();
   let containerSortTeam = document.getElementById('sort-team');
   
-  if(team.length > 0){
-    let goalkeepers = team.filter(player => player.position === 'Arquero');
-    let defenders = team.filter(player => player.position === 'Defensor');
-    let midfielders = team.filter(player => player.position === 'Mediocampista');
-    let forwards = team.filter(player => player.position === 'Delantero');
-    let sortTeam = [goalkeepers, defenders, midfielders, forwards];
-    
-    let sectionTeam = document.getElementById('section-team');
-    containerSortTeam.innerHTML = '';
-    let table = document.createElement('table');
-    let tbody = document.createElement('tbody');
-    
-    sectionTeam.scrollIntoView({
-      behavior: 'smooth'
-    }); // Hace un scroll suave a la sección.
-    
-    sortTeam.forEach(forPositions => {
-      for(let player of forPositions){
-            let row = document.createElement('tr');
-            let td = document.createElement('td');
-            td.style.border = '2px solid black';
-            td.style.backgroundColor = 'antiquewhite';
-            td.style.padding = '7px';
-            td.style.fontFamily = 'Audiowide';
-            td.style.fontSize = '13px';
-            td.innerHTML = `<b>Posición:</b> ${player.position} | <b>Nombre: </b> ${player.name} | <b>Apellido: </b> ${player.lastName} | <b>Edad:</b> ${player.age} | <b>Estado:</b> ${player.state} | <b>Editar posición</b>: <button class='ml-1' onclick='(editPosition(${player.id}))'>Editar</button> | <b>Realizar cambio</b>: <button class='ml-1' onclick='(buttonChangePlayer(${player.id}))'>Cambiar</button>`;
+  try{
+    if(team.length > 0){
+      let goalkeepers = team.filter(player => player.position === 'Arquero');
+      let defenders = team.filter(player => player.position === 'Defensor');
+      let midfielders = team.filter(player => player.position === 'Mediocampista');
+      let forwards = team.filter(player => player.position === 'Delantero');
+      let sortTeam = [goalkeepers, defenders, midfielders, forwards];
+      
+      let sectionTeam = document.getElementById('section-team');
+      containerSortTeam.innerHTML = '';
+      let table = document.createElement('table');
+      let tbody = document.createElement('tbody');
+      
+      sectionTeam.scrollIntoView({
+        behavior: 'smooth'
+      }); // Hace un scroll suave a la sección.
+      
+      sortTeam.forEach(forPositions => {
+        for(let player of forPositions){
+              let row = document.createElement('tr');
+              let td = document.createElement('td');
+              td.style.border = '2px solid black';
+              td.style.backgroundColor = 'antiquewhite';
+              td.style.padding = '7px';
+              td.style.fontFamily = 'Audiowide';
+              td.style.fontSize = '13px';
+              td.innerHTML = `<b>Posición:</b> ${player.position} | <b>Nombre: </b> ${player.name} | <b>Apellido: </b> ${player.lastName} | <b>Edad:</b> ${player.age} | <b>Estado:</b> ${player.state} | <b>Editar posición</b>: <button class='ml-1' onclick='(editPosition(${player.id}))'>Editar</button> | <b>Realizar cambio</b>: <button class='ml-1' onclick='(buttonChangePlayer(${player.id}))'>Cambiar</button>`;
+  
+              row.appendChild(td);
+              tbody.appendChild(row);
+  
+            }
+      
+        });
+  
+      table.appendChild(tbody);
+      table.style.boxShadow = '15px 15px 15px 15px rgba(0, 0, 0, 0.3)';
+      table.style.backgroundColor = '#439F52';
+      table.style.width = '100%'; // Asegura que la tabla ocupe todo el ancho del contenedor
+      table.style.marginTop = '20px'; // Agrega espacio encima de la tabla
+  
+      containerSortTeam.appendChild(table);
+  
+    }else if(team.length === 0){
+      let message = 'No hay jugadores en tu plantilla';
+      let elementMessage = document.createElement('h3');
+      let image = document.getElementById('data');
 
-            row.appendChild(td);
-            tbody.appendChild(row);
+      if(image){
+        image.remove();
 
-          }
-    
-      });
+      }
 
-    table.appendChild(tbody);
-    table.style.boxShadow = '15px 15px 15px 15px rgba(0, 0, 0, 0.3)';
-    table.style.backgroundColor = '#439F52';
-    table.style.width = '100%'; // Asegura que la tabla ocupe todo el ancho del contenedor
-    table.style.marginTop = '20px'; // Agrega espacio encima de la tabla
+      containerSortTeam.innerHTML = '';
+  
+      containerSortTeam.scrollIntoView({
+        behavior: 'smooth'
+      }); // Hace un scroll suave a la sección.
+      
+      elementMessage.innerHTML = message;
+      containerSortTeam.appendChild(elementMessage);
+  
+    }
 
-    containerSortTeam.appendChild(table);
-
-  }else if(team.length === 0){
-    let message = 'No hay jugadores en tu plantilla';
-    let elementMessage = document.createElement('h3');
-    
-    containerSortTeam.innerHTML = '';
-
-    containerSortTeam.scrollIntoView({
-      behavior: 'smooth'
-    }); // Hace un scroll suave a la sección.
-    
-    elementMessage.innerHTML = message;
-    containerSortTeam.appendChild(elementMessage);
+  }catch(error){
+    console.log(error);
 
   }
 
@@ -227,13 +253,17 @@ const completeInformation = async() => {
 const editPosition = async(playerID) => {
   try{
     let team = getPlayersFromLocalStorage();
-  
+    let arrayValidPositions = ['Arquero', 'Defensor', 'Mediocampista', 'Delantero'];
     let indexPlayer = team.findIndex(player => player.id === playerID);
     let player = team[indexPlayer];
     let newPosition = prompt(`Nueva posición del jugador ${player.name} ${player.lastName}:`);
-    
-    if(!newPosition){
+    let validate = arrayValidPositions.find(position => position === newPosition) ? true : false;
+
+    if(!newPosition){ // Esta condición evalúa si es falsy. Si lo es, da true.
       throw new Error('Error al cambiar los datos del jugador.');
+
+    }else if(!validate){
+      throw new Error('La posición asignada no es válida.');
 
     }
 
@@ -268,14 +298,17 @@ const changePlayer = () => {
 }
 
 const buttonChangePlayer = async(playerID) => {
-  let team = getPlayersFromLocalStorage();
-
   try{
-    console.log(`Hiciste click en el jugador con ID ${playerID}`)
+    let team = getPlayersFromLocalStorage();
     let indexFirstPlayer = team.findIndex(player => player.id === playerID);
     let firstPlayer = team[indexFirstPlayer];
     let nameSecondPlayerToChange = prompt('Ingresá el nombre del jugador a cambiar:');
     let lastNameSecondPlayerToChange = prompt('Ingresá el apellido del jugador a cambiar:');
+
+    if(!nameSecondPlayerToChange || !lastNameSecondPlayerToChange){
+      throw new Error('Error al ingresar los datos del jugador.');
+
+    };
 
     function capitalizeFirstCharacter(word){
       let firstCharacter = word.slice(0, 1).toUpperCase();
@@ -283,7 +316,7 @@ const buttonChangePlayer = async(playerID) => {
 
       return firstCharacter + restOfTheWord;
 
-    }
+    };
 
     let name = capitalizeFirstCharacter(nameSecondPlayerToChange);
     let lastName = capitalizeFirstCharacter(lastNameSecondPlayerToChange);
@@ -326,6 +359,33 @@ const buttonChangePlayer = async(playerID) => {
 
   }catch(error){
     alert(error);
+
+  }
+
+}
+
+const emptyTeam = async() => {
+  let team = getPlayersFromLocalStorage();
+  let response = confirm('¿Estás seguro que deseas realizar esta acción?');
+
+  if(response){
+    try{
+      if(team.length === 0){
+        throw new Error('Actualmente no tienes jugadores en tu plantel.');
+  
+      }
+    
+      new Promise(resolve => setTimeout(resolve, 500));
+    
+      alert(`Plantel despedido con éxito ✅`);
+      
+      localStorage.clear();
+      window.location.reload(); // Recargar la página para mantener actualizado para vaciar el panel.
+  
+    }catch(error){
+      alert(error);
+  
+    }
 
   }
 
