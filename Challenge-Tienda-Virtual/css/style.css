@@ -41,6 +41,22 @@ nav{
   
 }
 
+.link-cart{
+  font-family: var(--font-products);
+  
+}
+
+.h4-cart{
+  font-size: 17px;
+  color: #136F63;
+
+}
+
+.link-cart:hover{
+  text-decoration: none;
+
+}
+
 .shop-cart{
   width: 28px;
   height: 28px;

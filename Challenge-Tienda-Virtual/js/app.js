@@ -98,11 +98,15 @@ function filterByCategory(nameCategory){
         cardText.style.fontSize = '17px';
         cardText.className = 'card-text';
 
-        let cardButton = document.createElement('a');
-        cardButton.href = '#';
+        let cardButton = document.createElement('button');
         cardButton.className = 'btn btn-warning mb-5 font-buttons';
         cardButton.style.color = 'black';
         cardButton.innerHTML = 'Comprar ahora';
+
+        cardButton.addEventListener('click', () => {
+          productDetail(product.id);
+
+        });
 
         cardBody.appendChild(cardTitle);
         cardBody.appendChild(cardText);
@@ -186,10 +190,15 @@ function returnAllTheProducts(){
           cardText.style.fontSize = '17px';
           cardText.className = 'card-text';
 
-          let cardButton = document.createElement('a');
-          cardButton.href = `/shopping-cart.html/${product.id}`;
+          let cardButton = document.createElement('button');
           cardButton.className = 'btn btn-warning mb-5 font-buttons';
           cardButton.style.color = 'black';
+          
+          cardButton.addEventListener('click', () => {
+            productDetail(product.id);
+
+          });
+
           cardButton.innerHTML = 'Comprar ahora';
 
           cardBody.appendChild(cardTitle);
@@ -229,6 +238,12 @@ function returnAllTheProducts(){
 function main(){
   returnAllTheProducts(); 
   
+}
+
+function productDetail(idProduct){
+  console.log('Funcionando...');
+  console.log(idProduct);
+
 }
 
 main();
