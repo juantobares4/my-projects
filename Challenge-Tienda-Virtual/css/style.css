@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 
 :root{
   --font-brand: "Playfair Display", serif;
   --font-products: "DM Mono", monospace;
   --font-buttons: "DM Serif Display", serif;
+  --font-cart-section: "DM Sans", sans-serif;
 
 }
 
@@ -13,7 +15,7 @@
   font-family: var(--font-buttons);
   font-weight: 400;
   font-style: normal;
-  color: white;
+  color: black;
   letter-spacing: 0.5px;
 
 }
@@ -42,13 +44,13 @@ nav{
 }
 
 .link-cart{
-  font-family: var(--font-products);
+  font-family: var(--font-cart-section);
   
 }
 
 .h4-cart{
   font-size: 17px;
-  color: #136F63;
+  color: #0c2e2a;
 
 }
 
@@ -107,7 +109,18 @@ nav{
 
 }
 
+.modal-dialog #titles{
+  font-family: var(--font-products);
+
+}
+
+.modal-dialog .attributes{
+  color: red;
+
+}
+
 .loading-container{
   text-align: center;
 
 }
+

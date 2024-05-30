@@ -108,9 +108,21 @@ function filterByCategory(nameCategory){
 
         });
 
+        let buttonViewDetail = document.createElement('button');
+        buttonViewDetail.className = 'btn btn-secondary ml-1 mb-5 font-buttons';
+        buttonViewDetail.style.color = 'black';
+        
+          buttonViewDetail.addEventListener('click', () => {
+            productDetail(product.id);
+
+          });
+
+          buttonViewDetail.innerHTML = 'Más detalles';
+
         cardBody.appendChild(cardTitle);
         cardBody.appendChild(cardText);
         cardBody.appendChild(cardButton);
+        cardBody.appendChild(buttonViewDetail);
         cardDiv.appendChild(imageProduct);
         cardDiv.appendChild(cardBody);
         colDiv.appendChild(cardDiv);
@@ -143,7 +155,6 @@ function filterByCategory(nameCategory){
 function returnAllTheProducts(){
   allProducts = fetchData();
   let containerProducts = document.getElementById('products-list');
-  let cartSection = document.getElementById('cart-section');
   containerProducts.innerHTML = '';
 
   return allProducts
@@ -190,20 +201,32 @@ function returnAllTheProducts(){
           cardText.style.fontSize = '17px';
           cardText.className = 'card-text';
 
-          let cardButton = document.createElement('button');
-          cardButton.className = 'btn btn-warning mb-5 font-buttons';
-          cardButton.style.color = 'black';
+          let buttonBuyProduct = document.createElement('button');
+          buttonBuyProduct.className = 'btn btn-warning mb-5 font-buttons';
+          buttonBuyProduct.style.color = 'black';
           
-          cardButton.addEventListener('click', () => {
+          buttonBuyProduct.addEventListener('click', () => {
+            console.log('Comprando...');
+
+          });
+
+          buttonBuyProduct.innerHTML = 'Añadir al carrito';
+
+          let buttonViewDetail = document.createElement('button');
+          buttonViewDetail.className = 'btn btn-secondary ml-1 mb-5 font-buttons';
+          buttonViewDetail.style.color = 'black';
+          
+          buttonViewDetail.addEventListener('click', () => {
             productDetail(product.id);
 
           });
 
-          cardButton.innerHTML = 'Comprar ahora';
+          buttonViewDetail.innerHTML = 'Más detalles';
 
           cardBody.appendChild(cardTitle);
           cardBody.appendChild(cardText);
-          cardBody.appendChild(cardButton);
+          cardBody.appendChild(buttonBuyProduct);
+          cardBody.appendChild(buttonViewDetail);
           cardDiv.appendChild(imageProduct);
           cardDiv.appendChild(cardBody);
           colDiv.appendChild(cardDiv);
@@ -235,15 +258,74 @@ function returnAllTheProducts(){
 
 }
 
+async function productDetail(idProduct){
+  try{
+    let dataProducts = await fetchData();
+    let findProduct = dataProducts.find(product => product.id === idProduct);
+    let modalProduct = document.createElement('div');
+    let arrayProduct = [findProduct];
+
+    if(modalProduct){
+      modalProduct.remove();
+    
+    }
+
+    modalProduct.className = 'modal fade';
+    modalProduct.id = `modal-product-${idProduct}`; // Se le pasa un ID al modal, basado en el ID del producto que se clickeó, para que dicho modal muestre el producto clickeado y se mantenga actualizado.
+    modalProduct.tabIndex = -1; // Nos permite que el modal reciba enfoque mediante JavaScript.
+
+    let modalBodyContent = '<div class="modal-body">';
+    
+    arrayProduct.forEach(attr => {
+      modalBodyContent += `
+        <h5 id="titles"><b>${attr.title}</b></h5>
+        <br>
+        <b id="titles">Precio:</b> €${attr.price}
+        <br>
+        <br>
+        <b id="titles">Valoración:</b> ${attr.rating.rate}
+        <br>
+        <br>
+        <b id="titles">Descripción:</b> ${attr.description}
+
+      `
+
+    })
+
+    modalBodyContent += '</div>';
+
+    modalProduct.innerHTML = `
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="titles">Detalle del Producto</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          ${modalBodyContent}
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning font-buttons" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modalProduct);
+
+    $(`#modal-product-${idProduct}`).modal('show'); // Se llama al modal con ID asigando anteriormente.
+
+  }catch{
+    console.log('Error.');
+
+  }
+
+}
+
 function main(){
   returnAllTheProducts(); 
   
 }
 
-function productDetail(idProduct){
-  console.log('Funcionando...');
-  console.log(idProduct);
-
-}
 
 main();
