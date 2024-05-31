@@ -260,6 +260,29 @@ function returnAllTheProducts(){
 
 async function productDetail(idProduct){
   try{
+    
+    function renderRatingStars(rating){
+      let maxStars = 5;
+      let starFill = '<img src="images/icons/star-fill.svg" alt="Star">';
+      let star = '<img src="images/icons/star.svg" alt="Star">';
+      let message = '';
+      let roundedRating = Math.round(rating);
+
+      for(let x = 1; x <= maxStars; x++){
+        if(x <= roundedRating){
+          message += starFill;
+
+        }else{
+          message += star;
+
+        }
+
+      }
+
+      return message;
+
+    }
+
     let dataProducts = await fetchData();
     let findProduct = dataProducts.find(product => product.id === idProduct);
     let modalProduct = document.createElement('div');
@@ -283,7 +306,7 @@ async function productDetail(idProduct){
         <b id="titles">Precio:</b> €${attr.price}
         <br>
         <br>
-        <b id="titles">Valoración:</b> ${attr.rating.rate}
+        <b id="titles" class="element-rating">Valoración:</b> ${renderRatingStars(attr.rating.rate)} (${attr.rating.rate})
         <br>
         <br>
         <b id="titles">Descripción:</b> ${attr.description}
@@ -316,7 +339,7 @@ async function productDetail(idProduct){
     $(`#modal-product-${idProduct}`).modal('show'); // Se llama al modal con ID asigando anteriormente.
 
   }catch{
-    console.log('Error.');
+    throw new Error(console.error('Error.'));
 
   }
 
