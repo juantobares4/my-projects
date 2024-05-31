@@ -147,8 +147,12 @@ function filterByCategory(nameCategory){
       
       });
 
+      containerProducts.scrollIntoView({
+        behavior: 'smooth'
+      
+      });
 
-    });
+    });    
 
 }
 
@@ -252,7 +256,12 @@ function returnAllTheProducts(){
         
         });
 
-      }, 2000);
+        containerProducts.scrollIntoView({
+          behavior: 'smooth'
+        
+        });
+
+      }, 1000);
          
     });
 
@@ -260,11 +269,11 @@ function returnAllTheProducts(){
 
 async function productDetail(idProduct){
   try{
-    
+
     function renderRatingStars(rating){
       let maxStars = 5;
-      let starFill = '<img src="images/icons/star-fill.svg" alt="Star">';
-      let star = '<img src="images/icons/star.svg" alt="Star">';
+      let starFill = '<img class="mb-1" src="images/icons/star-fill.svg" alt="Star">';
+      let star = '<img class="mb-1" src="images/icons/star.svg" alt="Star">';
       let message = '';
       let roundedRating = Math.round(rating);
 
@@ -306,7 +315,7 @@ async function productDetail(idProduct){
         <b id="titles">Precio:</b> €${attr.price}
         <br>
         <br>
-        <b id="titles" class="element-rating">Valoración:</b> ${renderRatingStars(attr.rating.rate)} (${attr.rating.rate})
+        <b id="titles" class="element-rating">Valoración:</b> ${attr.rating.rate} ${renderRatingStars(attr.rating.rate)} (${attr.rating.count})
         <br>
         <br>
         <b id="titles">Descripción:</b> ${attr.description}

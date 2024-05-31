@@ -11,6 +11,12 @@
 
 }
 
+.logo{
+  width: 130px;
+  height: 130px;
+
+}
+
 .font-buttons{
   font-family: var(--font-buttons);
   font-weight: 400;
@@ -50,7 +56,7 @@ nav{
 
 .h4-cart{
   font-size: 17px;
-  color: #0c2e2a;
+  color: rgba(9, 9, 9, 0.802);
 
 }
 
@@ -95,6 +101,13 @@ nav{
 
 }
 
+.custom-height-carousel{
+  height: 750px;
+
+}
+
+/* Efectos para las cards */
+
 .card{
   overflow: hidden;
   transition: transform 0.3s ease;
@@ -107,7 +120,9 @@ nav{
   transform: scale(1.2);
   z-index: 2;
 
-}
+} 
+
+/* --------------------- */
 
 .modal-dialog #titles{
   font-family: var(--font-products);
