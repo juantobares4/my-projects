@@ -1,7 +1,7 @@
 function getDataFromLocalStorage(){
-  let data = JSON.parse(localStorage.getItem('data')) || [];
+  let data = localStorage.getItem('data');
 
-  return data;
+  return data ? JSON.parse(data) : [];
 
 }
 
@@ -21,6 +21,52 @@ function fetchData(){
     }, 100);
 
   });
+
+}
+
+function renderRatingStars(rating){
+  let maxStars = 5;
+  let starFill = '<img class="mb-1" src="images/icons/star-fill.svg" alt="Star">';
+  let star = '<img class="mb-1" src="images/icons/star.svg" alt="Star">';
+  let message = '';
+  let roundedRating = Math.round(rating);
+
+  for(let x = 1; x <= maxStars; x++){
+    if(x <= roundedRating){
+      message += starFill;
+
+    }else{
+      message += star;
+
+    }
+
+  }
+
+  return message;
+
+}
+
+function showToast(message, title){
+  toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-top-center",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+  
+  };
+
+  toastr.success(message, title);
 
 }
 
@@ -46,7 +92,6 @@ function categoriesList(){
       let result = [...dataArray];
 
       return result;
-
 
   })
 
@@ -101,10 +146,10 @@ function filterByCategory(nameCategory){
         let cardButton = document.createElement('button');
         cardButton.className = 'btn btn-warning mb-5 font-buttons';
         cardButton.style.color = 'black';
-        cardButton.innerHTML = 'Comprar ahora';
+        cardButton.innerHTML = 'Añadir al carrito';
 
         cardButton.addEventListener('click', () => {
-          productDetail(product.id);
+          addProductToLocalstorage(product.id);
 
         });
 
@@ -169,7 +214,7 @@ function returnAllTheProducts(){
       setTimeout(() => {
         let cards = [];
         containerProducts.innerHTML = '';
-      
+        
         products.forEach(product => {
           let colDiv = document.createElement('div');
           colDiv.className = 'col-lg-6 mb-4';
@@ -210,7 +255,7 @@ function returnAllTheProducts(){
           buttonBuyProduct.style.color = 'black';
           
           buttonBuyProduct.addEventListener('click', () => {
-            console.log('Comprando...');
+            addProductToLocalstorage(product.id);
 
           });
 
@@ -269,29 +314,6 @@ function returnAllTheProducts(){
 
 async function productDetail(idProduct){
   try{
-
-    function renderRatingStars(rating){
-      let maxStars = 5;
-      let starFill = '<img class="mb-1" src="images/icons/star-fill.svg" alt="Star">';
-      let star = '<img class="mb-1" src="images/icons/star.svg" alt="Star">';
-      let message = '';
-      let roundedRating = Math.round(rating);
-
-      for(let x = 1; x <= maxStars; x++){
-        if(x <= roundedRating){
-          message += starFill;
-
-        }else{
-          message += star;
-
-        }
-
-      }
-
-      return message;
-
-    }
-
     let dataProducts = await fetchData();
     let findProduct = dataProducts.find(product => product.id === idProduct);
     let modalProduct = document.createElement('div');
@@ -354,10 +376,151 @@ async function productDetail(idProduct){
 
 }
 
-function main(){
-  returnAllTheProducts(); 
-  
+async function addProductToLocalstorage(productId){
+  try{
+    let productsAPI = await fetchData();
+    let productsInLocalStorage = getDataFromLocalStorage();
+    let addedProduct = productsAPI.find(product => product.id === productId);
+    
+    productsInLocalStorage.push(addedProduct);
+    saveDataInLocalStorage(productsInLocalStorage);
+    
+    setTimeout(() => {
+      showToast('¡El producto fue agregado exitosamente al carrito!', 'Producto agregado con éxito');
+      
+    }, 500);
+
+    await counterProductsInCart();
+
+  }catch(error){
+    console.error(error.message);
+
+  }
+
 }
 
+function counterProductsInCart(){
+  let productsInLocalStorage = getDataFromLocalStorage();
+  let cartSection = document.getElementById('nav-cart');
+  let countProducts = productsInLocalStorage.length;
+  let counterElement = document.getElementById('cart-counter');
+  
+  if(!counterElement){
+    counterElement = document.createElement('p');
+    counterElement.style.listStyle = 'none';
+    counterElement.style.fontSize = '11px'
+    counterElement.style.color = 'white'; 
+    counterElement.className = 'counter-products ml-0 mt-3';
+    counterElement.id = 'cart-counter';
+    cartSection.appendChild(counterElement);
+
+  }
+
+  counterElement.innerHTML = `<b>${countProducts}</b>`;
+
+}
+
+function productsLocalStorage(event) {
+  if(event){
+    event.preventDefault();
+  
+  }
+  
+  let productsInLocalStorage = getDataFromLocalStorage();
+  
+  try{  
+    function deleteDuplicate(array){
+      let uniqueProducts = {};
+      array.forEach(element => {
+        uniqueProducts[element.title] = element; // Esto nos garantiza que no se puedan agregar objetos con el mismo título.
+      });
+    
+      return Object.values(uniqueProducts);
+    
+    }
+
+    function countDuplicate(array){
+      let countMap = {};
+      array.forEach(element => {
+        if (countMap[element.title]) {
+          countMap[element.title]++;
+        } else {
+          countMap[element.title] = 1;
+        }
+      });
+
+      return countMap;
+
+    }
+
+    let modalBodyContent = '<div class="modal-body">';
+    let noneDuplicate = deleteDuplicate(productsInLocalStorage);
+    let count = countDuplicate(productsInLocalStorage);
+    
+    noneDuplicate.forEach(attr => {
+      let productCount = count[attr.title];
+      modalBodyContent += `
+        <div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
+          <img class="image-product-to-cart" src="${attr.image}" style="margin-right: 20px;">
+          <div>
+            <h5 class="titles"><b>${attr.title}</b></h5>
+            <p class="titles"><b>Precio: €${attr.price} | Cantidad: ${productCount}</b></p>
+          </div>
+        </div>
+        <hr class="horizontal-line my-2">
+      `;
+    
+    });
+
+    modalBodyContent += '</div>';
+
+    let modalCart = document.getElementById('modal-cart');
+    if(!modalCart){
+      modalCart = document.createElement('div');
+      let bagCheckImg = '/images/icons/bag-dash-fill.svg';
+      modalCart.className = 'modal fade';
+      modalCart.id = 'modal-cart';
+      modalCart.tabIndex = -1;
+      
+      modalCart.innerHTML = `
+        <div class="modal-dialog custom-modal-cart">
+          <div class="modal-content">
+            <div class="modal-header align-items-center text-center">
+              <h5 class="modal-title" id="titles">
+                <img src="${bagCheckImg}" class="ml-3 mr-3 img-cart">Mi carrito
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            ${modalBodyContent}
+            <div class="modal-footer">
+              <button type="button" class="btn btn-warning font-buttons" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modalCart);
+    
+    }else{
+      modalCart.querySelector('.modal-body').innerHTML = modalBodyContent;
+    
+    }
+
+    $(`#modal-cart`).modal('show'); // Se llama al modal con ID asignado anteriormente.
+    
+  }catch(error){
+    console.error(error);
+  
+  }
+
+}
+
+
+function main(){
+  returnAllTheProducts();
+  counterProductsInCart();
+
+}
 
 main();

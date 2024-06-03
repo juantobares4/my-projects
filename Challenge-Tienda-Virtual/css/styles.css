@@ -46,7 +46,7 @@ nav{
 
 .cart-section{
   box-shadow: 15px 15px 15px 10px rgba(0, 0, 0, 0.3);
-  
+
 }
 
 .link-cart{
@@ -71,6 +71,15 @@ nav{
 
 }
 
+.counter-products{
+  font-family: var(--font-products) !important;
+  display: inline-block;
+  background-color: black;
+  padding: 5px 10px;
+  border-radius: 100%;
+
+}
+
 .img-brand{
   width: 70px;
   height: 70px;
@@ -84,13 +93,13 @@ nav{
 
 .link{
   font-size: 17px;
-  color: #136F63;
+  color: #1c1d1d;
 
 }
 
 .link:hover{
   text-decoration: none;
-  color: #21af9c;
+  color: #435f5c;
 
 }
 
@@ -124,7 +133,7 @@ nav{
 
 /* --------------------- */
 
-.modal-dialog #titles{
+.modal-dialog .titles{
   font-family: var(--font-products);
 
 }
@@ -134,3 +143,24 @@ nav{
 
 }
 
+.custom-modal-cart{
+  max-width: 80%;
+
+}
+
+.img-cart{
+  width: 30px;
+  height: 30px;
+
+}
+
+.image-product-to-cart{
+  width: 50px;
+  height: 50px;
+
+}
+
+.horizontal-line{
+  border-width: 2px;
+
+}
