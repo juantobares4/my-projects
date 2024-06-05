@@ -138,6 +138,11 @@ nav{
 
 }
 
+.modal-title{
+  font-family: var(--font-brand);
+
+}
+
 .loading-container{
   text-align: center;
 
@@ -162,6 +167,7 @@ nav{
 
 .horizontal-line{
   border-width: 2px;
+  width: 100%;
 
 }
 
@@ -178,7 +184,7 @@ nav{
 
 .title-empty-cart{
   font-family: var(--font-brand);
-  color: #435f5ce7;
+  color: #273231e7;
 
 }
 

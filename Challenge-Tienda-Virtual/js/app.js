@@ -332,15 +332,15 @@ async function productDetail(idProduct){
     
     arrayProduct.forEach(attr => {
       modalBodyContent += `
-        <h5 id="titles"><b>${attr.title}</b></h5>
+        <h5 class="titles"><b>${attr.title}</b></h5>
         <br>
-        <b id="titles">Precio:</b> €${attr.price}
-        <br>
-        <br>
-        <b id="titles" class="element-rating">Valoración:</b> ${attr.rating.rate} ${renderRatingStars(attr.rating.rate)} (${attr.rating.count})
+        <b class="titles">Precio: €${attr.price}</b>
         <br>
         <br>
-        <b id="titles">Descripción:</b> ${attr.description}
+        <b class="titles element-rating">Valoración: ${attr.rating.rate} ${renderRatingStars(attr.rating.rate)} (${attr.rating.count}) </b>
+        <br>
+        <br>
+        <b class="titles">Descripción:</b> ${attr.description}
 
       `
 
@@ -352,7 +352,7 @@ async function productDetail(idProduct){
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="titles">Detalle del Producto</h5>
+            <h5 class="modal-title">Detalle del Producto</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -475,9 +475,8 @@ function myCart(event) {
             </div>
             <hr class="horizontal-line my-2">
           `;
-          
-          
-        })      
+
+        });      
         
         
       }else if(productsInLocalStorage.length === 0){
@@ -490,7 +489,7 @@ function myCart(event) {
         `
         modalBodyContent += message;
         
-      }
+      };
       
       modalBodyContent += '</div>';
       
@@ -516,7 +515,7 @@ function myCart(event) {
               </div>
               ${modalBodyContent}
               <div class="modal-footer">
-                <button type="button" class="btn btn-warning font-buttons" data-dismiss="modal">Cerrar</button>
+                <button type="button" id='close-mycart' class="btn btn-warning font-buttons" data-dismiss="modal">Cerrar</button>
               </div>
             </div>
           </div>
@@ -527,7 +526,7 @@ function myCart(event) {
         modalCart.querySelector('.modal-body').innerHTML = modalBodyContent;
       
       }
-  
+          
       $(`#modal-cart`).modal('show'); // Se llama al modal con ID asignado anteriormente.  
 
     }  
