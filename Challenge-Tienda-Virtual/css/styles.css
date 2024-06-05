@@ -164,3 +164,26 @@ nav{
   border-width: 2px;
 
 }
+
+.link-remove{
+  color: rgb(199, 21, 21) !important;
+  cursor: pointer;
+
+}
+
+.link-remove:hover{
+  color: rgb(42, 22, 22) !important;
+
+}
+
+.title-empty-cart{
+  font-family: var(--font-brand);
+  color: #435f5ce7;
+
+}
+
+.empty-cart{
+  width: 500px;
+  height: 500px;
+
+}
