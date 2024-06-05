@@ -465,12 +465,14 @@ function myCart(event) {
       if(productsInLocalStorage.length > 0){
         noneDuplicate.forEach(attr => {
           let productCount = count[attr.title];
+          let totalPrice = attr.price * productCount;
+
           modalBodyContent += `
             <div class="d-flex align-items-start mb-4">
               <img class="image-product-to-cart" src="${attr.image}" style="margin-right: 20px;">
               <div>
                 <h5 class="titles"><b>${attr.title}</b></h5>
-                <p class="titles"><b>Precio: €${attr.price} | Cantidad: ${productCount} | Total: €${attr.price * productCount}</b><a class="link-remove m-3" onclick="removeProductToCart(${attr.id})"><img class="mr-1 mb-1" src="/images/icons/trash3-fill.svg">Remover</a></p>
+                <p class="titles"><b>Precio: €${attr.price} | Cantidad: ${productCount} | Total: €${totalPrice.toFixed(2)}</b><a class="link-remove m-3" onclick="removeProductToCart(${attr.id})"><img class="mr-1 mb-1" src="/images/icons/trash3-fill.svg">Remover</a></p>
               </div>
             </div>
             <hr class="horizontal-line my-2">
