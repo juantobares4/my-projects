@@ -3,7 +3,7 @@
 
 - Es necesario que, para correr correctamente el proyecto *ChallengeTodo-List* / *Challenge-Promises*
 nos situemos en la carpeta de dicho proyecto utilizando el comando:
-`cd ChallengeTodo-List / Challenge-Promises`
+`cd ChallengeTodo-List / Challenge-Promises / Challenge-Tienda-Virtual / Challenge-Mercado-Libre`
 
 - Una vez situados dentro del proyecto, utilizaremos el comando `code .` para
 abrirlo en nuestro Visual Studio Code.
