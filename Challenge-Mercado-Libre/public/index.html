@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>FreeStore | Argentina</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Estilos propios -->
+  <link rel="stylesheet" href="/src/css/styles.css">
+  <link rel="icon" href="/public/pngwing.com.png">
+</head>
+<body>
+  <head>
+    <div class="p-3 div-contact d-flex justify-content-center align-items-center bg-dark position-relative">
+      <div class="contact-container position-absolute d-flex align-items-center">
+        <img src="/public/icons/at.svg" alt="" class="mr-0 svg-icon">
+        <p class="mb-1 contact">contacto.freestore@gmail.com</p>
+      </div>
+      <p class="mb-1 text-center flex-grow-1">Envíos a todo el país | Bienvenidos a FreeStore Argentina</p>
+    </div>
+    <div class="container-logo">
+      <div class="m-5 d-flex justify-content-center align-items-center">
+        <img class="m-4 img-logo" src="/public/Logo.png" alt="">
+      </div>
+    </div>
+    <nav class="navbar navbar-expand-lg d-flex justify-content-center align-items-center navbar-dark">
+      <a href="/public/index.html">
+        <img class="mb-1 mr-3 svg-home" src="/public/icons/house.svg" alt="">
+      </a>
+      <div class="dropdown mr-3">
+        <a class="drop-link nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">Categorías</a>
+        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item links" href="#" onclick="filterBy('deportes')"><img class="mt-1 mr-2 mb-3 img-descript" src="/public/icons/balls-sports_5564932.png" alt="">Deportes</a></li>
+          <li><a class="dropdown-item links" href="#" onclick="filterBy('moda')"><img class="mt-1 mr-2 mb-3 img-descript" src="/public/icons/shoes_7360550.png" alt="">Moda</a></li>
+          <li><a class="dropdown-item links" href="#" onclick="filterBy('tecnologia')"><img class="mt-1 mb-3 mr-2 img-descript" src="/public/icons/laptop_1314188.png" alt="">Tecnología</a></li>
+          <li><a class="dropdown-item links" href="#" onclick="filterBy('hogar')"><img class="mt-1 mr-2 mb-3 img-descript" src="/public/icons/furniture_2475141.png" alt="">Hogar</a></li>
+          <li><a class="dropdown-item links" href="#" onclick="filterBy('juegosdemesa')"><img class="mt-1 mb-3 mr-2 img-descript" src="/public/icons/puzzle_8317735.png" alt="">Juegos de mesa</a></li>
+          <li><a class="dropdown-item links" href="#" onclick="filterBy('herramientas')"><img class="mt-1 mr-2 mb-3 img-descript" src="/public/icons/support_807380.png" alt="">Herramientas</a></li>
+          <li><a class="dropdown-item links" href="#" onclick="filterBy('electrodomésticos')"><img class="mt-1 mr-2 mb-3 img-descript" src="/public/icons/blender_2625612.png" alt="">Electrodomésticos</a></li>
+          <li><a class="dropdown-item links" href="#" onclick="filterBy('ropa')"><img class="mt-1 mr-2 mb-3 img-descript" src="/public/icons/pijamas_12692112.png" alt="">Ropa</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" onclick="">Todas las categorías</a></li>
+        </ul>
+      </div>
+      <div>
+        <a class="drop-link mr-3" href="">Contacto</a>
+      </div>
+      <div>
+        <a class="drop-link mr-3 ml-2" href="#" onclick="filterBy('novedades')">Novedades</a>
+      </div>
+    </nav>
+    <div class="cart-section navbar navbar-expand-lg justify-content-center p-3">
+      <a href="#" onclick="viewMyCart()">
+        <img class="mr-3 ml-3 svg-mycart" src="/public/icons/bag.svg" alt="cart">
+      </a>
+    </div>
+  </head>    
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="/src/js/app.js"></script>
+</body>
+</html>
