@@ -124,3 +124,18 @@ nav{
   filter: invert(1);
 
 }
+
+.svg-mycart:hover{
+  filter: invert(0);
+
+}
+
+.svg-myfavorites{
+  filter: invert(1);
+
+}
+
+.svg-myfavorites:hover{
+  filter: invert(0)
+
+}
