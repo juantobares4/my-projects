@@ -63,6 +63,9 @@ const filterBy = async(filter) => {
 
 }
 
+const searchProduct = async() => {
+  console.log('Funcionando...');
 
+}
 
 

@@ -5,10 +5,15 @@
 
 }
 
+.main-font{
+  font-family: var(--main-font);
+
+}
+
 body{
-  background: #6190E8;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #A7BFE8, #6190E8);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #A7BFE8, #6190E8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #6190E8;
+  background: -webkit-linear-gradient(to right, #A7BFE8, #6190E8);
+  background: linear-gradient(to right, #A7BFE8, #6190E8);
 
 }
 
@@ -143,4 +148,52 @@ nav{
 .svg-myfavorites:hover{
   filter: invert(0)
 
+}
+
+.carousel-item img{
+  height: 800px;
+
+}
+
+.horizontal-line{
+  border: solid black 2px;
+
+}
+
+.section-search-products{
+  margin-top: 170px;
+  margin-bottom: 170px;
+
+}
+
+.title-search-products{
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+}
+
+.input-products{
+  -webkit-box-shadow: 14px 7px 0px 2px rgb(76, 76, 76);
+  -moz-box-shadow: 14px 7px 0px 2px rgb(76, 76, 76);
+  box-shadow: 16px 10px 0px 2px rgb(76, 76, 76);
+  position: relative;
+
+}
+
+.input-container{
+  position: relative;
+
+}
+
+.search-icon{
+  position: absolute;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-image: url("/public/icons/search.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  
 }
