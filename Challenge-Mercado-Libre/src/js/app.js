@@ -56,16 +56,160 @@ const fetchApiProducts = (filter) => { // En esta promesa traigo el producto con
 
 }
 
-const filterBy = async(filter) => {
-  let filterData = await fetchApiProducts(filter);
+const productByCategory = async(container, filter) => {
+  function capitalizeFirstLetter(string){
+    return string.substring(0, 1).toUpperCase() + string.substring(1);
+  
+  }
 
-  console.log(filterData);
+  let products = await fetchApiProducts(filter);
+  let containerProducts = document.getElementById(container);
+  containerProducts.innerHTML = '';
+
+  let carousel = document.createElement('div');
+  carousel.className = 'carousel slide';
+  carousel.setAttribute('data-ride', 'carousel');
+
+  let carouselId = `product-carousel-${container}`;
+  carousel.id = carouselId;
+
+  let indicators = document.createElement('ol');
+  indicators.className = 'carousel-indicators';
+
+  let inner = document.createElement('div');
+  inner.className = 'carousel-inner';
+
+  let prev = document.createElement('a');
+  prev.className = 'carousel-control-prev';
+  prev.href = `#${carouselId}`;
+  prev.role = 'button';
+  prev.setAttribute('data-slide', 'prev');
+  prev.innerHTML = '<img src="/public/icons/caret-left-fill.svg" alt="prev">';
+
+  let next = document.createElement('a');
+  next.className = 'carousel-control-next';
+  next.href = `#${carouselId}`;
+  next.role = 'button';
+  next.setAttribute('data-slide', 'next');
+  next.innerHTML = '<img src="/public/icons/caret-right-fill.svg" alt="next">';
+
+  products.forEach((product, index) => {
+    let indicator = document.createElement('li');
+    indicator.setAttribute('data-target', `#${carouselId}`);
+    indicator.setAttribute('data-slide-to', index);
+
+    if(index === 0){
+      indicator.className = 'active';
+    
+    }
+
+    indicators.appendChild(indicator);
+
+    let carouselItem = document.createElement('div');
+    carouselItem.className = `carousel-item${index === 0 ? ' active' : ''}`;
+
+    let img = document.createElement('img');
+    img.src = product.images[0].url;
+    img.className = 'product-image d-block mx-auto';
+    img.alt = product.title;
+    img.style.height = '300px';
+    img.style.width = '300px';
+    img.style.objectFit = 'contain';
+    img.style.borderRadius = '30px';
+    img.style.padding = '10px';
+
+    let title = document.createElement('h5');
+    title.innerHTML = `${product.title}`;
+    title.className = 'product-title';
+
+    let description = document.createElement('p');
+    description.textContent = product.description;
+    description.className = 'product-description';
+
+    let price = document.createElement('p');
+    price.innerHTML = `<b>${product.currency}</b> ${product.price}`;
+    price.className = 'product-price';
+
+    let shipping = document.createElement('p');
+    shipping.innerHTML = `${product.isFreeShipping ? 'Envío Gratis' : ''}`;
+    shipping.className = 'product-shipping text-success';
+
+    let containerIcons = document.createElement('div');
+    containerIcons.className = 'd-flex justify-content-center align-items-center';
+    
+    let elementIconFav = document.createElement('img');
+    let elementIconAddToCart = document.createElement('img');
+
+    let routeIconFav = '/public/icons/heart.svg';
+    let routeIconAddToCart = '/public/icons/bag-plus.svg';
+
+    elementIconFav.src = routeIconFav;
+    elementIconFav.style.marginRight = '10px';
+
+    elementIconAddToCart.src = routeIconAddToCart;
+    elementIconAddToCart.style.marginBottom = '2px';
+
+    containerIcons.appendChild(elementIconFav);
+    containerIcons.appendChild(elementIconAddToCart);
+
+    elementIconFav.addEventListener('click', function(event){
+      event.stopPropagation(); // Evita que se ejecute la función múltiples veces.
+      addProductToFav();
+
+    });
+
+    carouselItem.appendChild(img);
+    carouselItem.appendChild(title);
+    carouselItem.appendChild(description);
+    carouselItem.appendChild(price);
+    carouselItem.appendChild(shipping);
+    carouselItem.appendChild(containerIcons);
+    inner.appendChild(carouselItem);
+  
+  });
+
+  carousel.appendChild(indicators);
+  carousel.appendChild(inner);
+  carousel.appendChild(prev);
+  carousel.appendChild(next);
+
+  containerProducts.appendChild(carousel);
+
+  let titleOfSection = document.createElement('h5');
+  titleOfSection.className = 'carousel-title';
+  titleOfSection.innerHTML = `Productos relacionados a ${capitalizeFirstLetter(filter)}`;
+
+  containerProducts.parentNode.insertBefore(titleOfSection, containerProducts);
+
+};
+
+const productDetail = async(productId) => {
+  console.log(`Producto ${productId}`);
 
 }
 
-const searchProduct = async() => {
+/* Buscar objetos mediante la barra de búsqueda */
+const resultsToSearch = async(filter) => {
+  let data = await fetchApiProducts(filter);
+  
+  console.log(data);
+  
+}
+
+const addProductToFav = async() => {
   console.log('Funcionando...');
 
 }
 
+const addProductToCart = (productId) => {
+  console.log(`Producto ${productId} añadido al carrito`);
 
+}
+
+const main = () => {
+  productByCategory('carousel-by-sports-products', 'deportes');
+  productByCategory('carousel-by-tecnology-products', 'electrónica');
+  
+}
+
+main();

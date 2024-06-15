@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 
 :root{
   --main-font: "Playfair Display", serif;
+  --font-nav: "Space Grotesk", sans-serif;
 
 }
 
@@ -11,29 +13,28 @@
 }
 
 body{
-  background: #6190E8;
-  background: -webkit-linear-gradient(to right, #A7BFE8, #6190E8);
-  background: linear-gradient(to right, #A7BFE8, #6190E8);
+  background: #7a7574; 
+  background: -webkit-linear-gradient(to right, #b9b5b4, #7a7574);
+  background: linear-gradient(to right, #b9b5b4, #7a7574);
 
 }
 
 .div-contact{
   font-size: 13px;
-  color: rgb(243, 211, 211);
+  color: white;
   font-family: var(--main-font);
+  background-color: #3b3535;
 
 }
 
 .container-logo{
-  background: #BBD2C5;
-  background: -webkit-linear-gradient(to right, #536976, #BBD2C5);
-  background: linear-gradient(to right, #536976, #BBD2C5); 
+  background: #cb1b41; 
   
 }
 
 .img-logo{
-  width: 250px;
-  height: 120px;
+  height: 350px;
+  width: 350px;
   overflow: hidden;
   transition: transform 0.3s ease;
   z-index: 1;
@@ -47,7 +48,7 @@ body{
 
 } 
 
-.svg-icon{
+.svg-at-icon{
   filter: invert(1);
 
 }
@@ -69,15 +70,10 @@ body{
 }
 
 nav{
-  background-color: #413d36;
+  background-color: #282627;
   height: 70px;
-  font-family: var(--main-font);
-  font-size: 18px;
-
-}
-
-.svg-home{
-  filter: invert(1);
+  font-family: var(--font-nav);
+  font-size: 16px;
 
 }
 
@@ -99,7 +95,7 @@ nav{
 }
 
 .drop-link{
-  color: antiquewhite;
+  color: rgb(255, 255, 255);
 
 }
 
@@ -126,37 +122,33 @@ nav{
 }
 
 .cart-section{
-  background-color: #2C5364;
+  background-color: #3b3535c9;
 
 }
 
-.svg-mycart{
+.svg-mycart, .svg-myfavorites, .svg-home{
   filter: invert(1);
 
 }
 
-.svg-mycart:hover{
+.svg-mycart:hover, .svg-myfavorites:hover, .svg-home:hover{
   filter: invert(0);
 
 }
 
-.svg-myfavorites{
-  filter: invert(1);
-
-}
-
-.svg-myfavorites:hover{
-  filter: invert(0)
-
-}
-
-.carousel-item img{
+.custom-height-carousel{
   height: 800px;
+  width: 300px;
+
+}
+
+.titles-carousel{
+  font-family: var(--font-nav);
 
 }
 
 .horizontal-line{
-  border: solid black 2px;
+  border: solid #3b3535 2px;
 
 }
 
@@ -196,4 +188,34 @@ nav{
   background-repeat: no-repeat;
   cursor: pointer;
   
+}
+
+.section-products-by-categories {
+  box-shadow: 0 20px 20px 30px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  background-color: white;
+
+}
+
+.carousel-title{
+  font-family: var(--main-font);
+  text-decoration: underline;
+  font-size: 22px;
+
+}
+
+.product-title, .product-price{
+  font-family: var(--font-nav);
+ 
+}
+
+.product-image{
+  transition: transform 0.3s ease;
+
+}
+
+.product-image:hover{
+  overflow: hidden;
+  transform: scale(1.2);
+
 }

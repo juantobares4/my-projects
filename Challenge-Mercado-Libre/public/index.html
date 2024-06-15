@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>FreeStore | Argentina</title>
+  <title>Bundled Argentina</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,19 +9,19 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <!-- Estilos propios -->
   <link rel="stylesheet" href="/src/css/styles.css">
-  <link rel="icon" href="/public/images/pngwing.com.png">
+  <link rel="icon" href="/public/icons/ecommerce_1754997.png">
 </head>
 <body>
   <head>
-    <div class="p-3 div-contact d-flex justify-content-center align-items-center bg-dark position-relative">
+    <div class="p-3 div-contact d-flex justify-content-center align-items-center position-relative">
       <div class="contact-container position-absolute d-flex align-items-center">
-        <img src="/public/icons/at.svg" alt="" class="mr-0 svg-icon">
-        <p class="mb-1 contact">contacto.freestore@gmail.com</p>
+        <img src="/public/icons/at.svg" alt="" class="mr-0 svg-at-icon">
+        <p class="mb-1 contact">contacto.bundled@gmail.com</p>
       </div>
-      <p class="mb-1 mr-3 text-center flex-grow-1">Envíos a todo el país | Bienvenidos a FreeStore Argentina</p>
+      <p class="mb-1 mr-3 text-center flex-grow-1">Envíos a todo el país | Bienvenidos a Bundled Argentina</p>
     </div>
     <div class="container-logo d-flex justify-content-center align-items-center">
-      <img class="m-4 img-logo" src="/public/images/Logo.png" alt="">
+      <img class="m-4 img-logo" src="/public/images/Logo-Challenge.svg" alt="">
     </div>
     <nav class="navbar navbar-expand-lg d-flex justify-content-center align-items-center navbar-dark">
       <a href="/public/index.html">
@@ -69,21 +69,25 @@
       <div class="carousel-item">
         <img src="/public/images/still-life-say-no-fast-fashion.png" class="d-block w-100 custom-height-carousel" alt="...">
         <div class="carousel-caption">
+          <h2 class="mb-5 titles-carousel">Explorá nuestra colección de verano</h2>
         </div>
       </div>
       <div class="carousel-item">
         <img src="/public/images/man-neon-suit-sits-chair-with-neon-sign-that-says-word-it.png" class="d-block w-100 custom-height-carousel" alt="...">
         <div class="carousel-caption">
+          <h2 class="mb-5 titles-carousel">Llevá tu juego al siguiente nivel</h2>
         </div>
       </div>
       <div class="carousel-item active">
         <img src="/public/images/black-friday-tag-with-copy-space.png" class="d-block w-100 custom-height-carousel" alt="...">
         <div class="carousel-caption">
+          <h2 class="mb-5 titles-carousel">Descuentos épicos para un día épico</h2>
         </div>
       </div>
       <div class="carousel-item">
         <img src="/public/images/programming-background-with-person-working-with-codes-computer.png" class="d-block w-100 custom-height-carousel" alt="...">
         <div class="carousel-caption">
+          <h2 class="mb-5 titles-carousel">El futuro es ahora, vivilo con nosotros</h2>
         </div>
       </div>
     </div>
@@ -97,20 +101,35 @@
     </a>
   </div>
   <div class="horizontal-line"></div>
+  <section class="section-products-by-categories mt-5">
+    <div id="container-section-sports">
+      <div class="d-flex justify-content-center align-items-center" id="carousel-by-sports-products"></div>
+    </div>
+  </section>
+  <section class="section-products-by-categories mt-5">
+    <div id="container-section-tecnology">
+      <div class="d-flex justify-content-center align-items-center" id="carousel-by-tecnology-products"></div>
+    </div>
+  </section>
   <section class="section-search-products">
     <div class="container-search text-center">
-      <h4 class="main-font title-search-products resaltado-irregular"><mark>Buscar Productos</mark></h4>
+      <h4 class="main-font title-search-products resaltado-irregular"><mark>Buscar productos o categorías</mark></h4>
     </div>
     <div class="m-5">
-      <form class="d-flex justify-content-center align-items-center input-container" role="search">
-        <input class="form-control main-font input-products rounded-pill" type="search" placeholder="Buscá lo que quieras..." aria-label="Search">
-        <a href="#" onclick="searchProduct()">
-          <div class="search-icon" id="search-product"></div>
-        </a>
+      <form class="d-flex justify-content-center align-items-center input-container" role="search" onsubmit="return filterDataToSearch(event)"> <!-- onsubmit indica que función se ejecutará cuando se envíe el formulario -->
+        <input class="form-control main-font input-products rounded-pill" type="search" placeholder="Buscá lo que quieras..." aria-label="Search" id="inputSearchProduct">
+        <button type="submit" class="btn">
+          <div class="search-icon mr-4" id="search-product"></div>
+        </button>
       </form>
     </div>   
   </section>
   <div class="horizontal-line"></div>
+  <section class="" id="section-list-products">
+    <div id="products-container">
+      
+    </div>
+  </section>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
