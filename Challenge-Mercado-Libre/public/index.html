@@ -49,12 +49,12 @@
         <a class="drop-link mr-3 ml-2" href="#" onclick="filterBy('novedades')">Novedades</a>
       </div>
     </nav>
-    <div class="cart-section navbar navbar-expand-lg justify-content-center p-3">
-      <a href="#" onclick="viewMyCart()">
-        <img class="mr-4 svg-mycart" src="/public/icons/bag.svg" alt="cart">
+    <div class="cart-section navbar navbar-expand-lg justify-content-center p-3 align-items-center">
+      <a href="#" onclick="viewMyCart()" id="my-cart" class="align-items-center justify-content-center d-flex">
+        <img class="mr-2 svg-mycart" src="/public/icons/bag.svg" alt="cart">
       </a>
       <a href="#" onclick="viewMyFavorites()">
-        <img class="svg-myfavorites" src="/public/icons/heart.svg" alt="">
+        <img class="svg-myfavorites ml-1" src="/public/icons/heart.svg" alt="">
       </a>
     </div>
   </head> 
@@ -148,7 +148,9 @@
   
   <footer>
     <div class="container-footer bg-dark align-items-center d-flex justify-content-around py-3">
-      <img class="logo-footer ml-5" src="/public/images/Logo-Challenge.svg" alt="">
+      <div class="d-flex">
+        <img class="logo-footer p-0 ml-5 mb-3" src="/public/images/Logo-Challenge.svg" alt="">
+      </div>
       <div class="mt-4 text-center">
         <h4 class="titles-carousel text-white mb-3">Nuestras Redes Sociales</h4>
         <div class="social-icons d-flex justify-content-center">
@@ -169,7 +171,7 @@
       </div>
     </div>
   </footer>
-
+  
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

@@ -10,7 +10,7 @@ const saveInLocalStorage = (data) => {
 
 }
 
-function showToast(message, title){
+const showToast = (message, title) => {
   toastr.options = {
       "closeButton": true,
       "debug": false,
@@ -31,6 +31,28 @@ function showToast(message, title){
   };
 
   toastr.success(message, title);
+
+
+}
+
+const counterProductsInMyCart = () => {
+  let products = getLocalStorage();
+  let myCart = document.getElementById('my-cart');
+  let countProducts = products.length;
+  let counterElement = document.getElementById('cart-counter');
+
+  if(!counterElement){ // Si counterElement no existe (si es false), lo crea.
+    counterElement = document.createElement('p');
+    counterElement.style.textDecoration = 'none';
+    counterElement.style.fontSize = '11px'
+    counterElement.style.color = 'white'; 
+    counterElement.className = 'counter-products mr-3 mt-3';
+    counterElement.id = 'cart-counter';
+    myCart.appendChild(counterElement);
+
+  }
+
+  counterElement.innerHTML = `<b>${countProducts}</b>`;
 
 }
 
@@ -165,6 +187,7 @@ const productByCategory = async(container, filter) => {
 
     let elementIconFav = document.createElement('img');
     let elementIconAddToCart = document.createElement('img');
+    let elementProductDetail = document.createElement('a');
 
     elementIconAddToCart.style.cursor = 'pointer';
     elementIconFav.style.cursor = 'pointer';
@@ -178,12 +201,24 @@ const productByCategory = async(container, filter) => {
     elementIconAddToCart.src = routeIconAddToCart;
     elementIconAddToCart.style.marginBottom = '2px';
 
+    elementProductDetail.text = 'Más detalles...';
+    elementProductDetail.style.cursor = 'pointer';
+    elementProductDetail.style.textDecoration = 'none';
+    elementProductDetail.className = 'link-product-detail ml-2 mt-1';
+    
     containerIcons.appendChild(elementIconFav);
     containerIcons.appendChild(elementIconAddToCart);
+    containerIcons.appendChild(elementProductDetail);
+    
+    elementProductDetail.addEventListener('click', function(event){
+      event.stopPropagation();
+      productDetail(product.id);
 
+    });
+    
     elementIconFav.addEventListener('click', function(event){
-      event.stopPropagation(); // Evita que se ejecute la función múltiples veces.
-      addProductToFav();
+      event.stopPropagation();
+      addProductToFav(product.id);
 
     });
 
@@ -221,7 +256,7 @@ const productByCategory = async(container, filter) => {
 };
 
 const productDetail = async(productId) => {
-  console.log(`Producto ${productId}`);
+  console.log(`Detalles del Producto ${productId}`);
 
 }
 
@@ -233,8 +268,8 @@ const resultsToSearch = async(filter) => {
   
 }
 
-const addProductToFav = async() => {
-  console.log('Funcionando...');
+const addProductToFav = async(productId) => {
+  console.log(`Producto ${productId} agregado a favoritos.`);
 
 }
 
@@ -247,6 +282,7 @@ const main = () => {
   productByCategory('carousel-by-sports-products', 'deportes');
   productByCategory('carousel-by-tecnology-products', 'electrónica');
   productByCategory('carousel-by-home-products', 'hogar');
+  counterProductsInMyCart();
 
 }
 

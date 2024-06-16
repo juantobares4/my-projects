@@ -129,6 +129,15 @@ nav{
 
 }
 
+.counter-products{
+  font-family: var(--font-nav);
+  display: inline-block;
+  background-color: black;
+  padding: 5px 10px;
+  border-radius: 100%;
+
+}
+
 .svg-mycart, .svg-myfavorites, .svg-home{
   filter: invert(1);
 
