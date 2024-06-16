@@ -10,6 +10,30 @@ const saveInLocalStorage = (data) => {
 
 }
 
+function showToast(message, title){
+  toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-top-center",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+  
+  };
+
+  toastr.success(message, title);
+
+}
+
 const fetchApiProducts = (filter) => { // En esta promesa traigo el producto con las características generales, y aparte, traigo su respectivo detalle, para poder utilizar las fotos en el inicio.
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -137,8 +161,13 @@ const productByCategory = async(container, filter) => {
     let containerIcons = document.createElement('div');
     containerIcons.className = 'd-flex justify-content-center align-items-center';
     
+    let horizontalLine = document.createElement('hr');
+
     let elementIconFav = document.createElement('img');
     let elementIconAddToCart = document.createElement('img');
+
+    elementIconAddToCart.style.cursor = 'pointer';
+    elementIconFav.style.cursor = 'pointer';
 
     let routeIconFav = '/public/icons/heart.svg';
     let routeIconAddToCart = '/public/icons/bag-plus.svg';
@@ -158,11 +187,19 @@ const productByCategory = async(container, filter) => {
 
     });
 
+
+    elementIconAddToCart.addEventListener('click', function(event){
+      event.stopPropagation();
+      addProductToCart(product.id);
+
+    })
+
     carouselItem.appendChild(img);
     carouselItem.appendChild(title);
     carouselItem.appendChild(description);
     carouselItem.appendChild(price);
     carouselItem.appendChild(shipping);
+    carouselItem.appendChild(horizontalLine);
     carouselItem.appendChild(containerIcons);
     inner.appendChild(carouselItem);
   
@@ -176,7 +213,7 @@ const productByCategory = async(container, filter) => {
   containerProducts.appendChild(carousel);
 
   let titleOfSection = document.createElement('h5');
-  titleOfSection.className = 'carousel-title';
+  titleOfSection.className = 'carousel-title  ';
   titleOfSection.innerHTML = `Productos relacionados a ${capitalizeFirstLetter(filter)}`;
 
   containerProducts.parentNode.insertBefore(titleOfSection, containerProducts);
@@ -209,7 +246,8 @@ const addProductToCart = (productId) => {
 const main = () => {
   productByCategory('carousel-by-sports-products', 'deportes');
   productByCategory('carousel-by-tecnology-products', 'electrónica');
-  
+  productByCategory('carousel-by-home-products', 'hogar');
+
 }
 
 main();

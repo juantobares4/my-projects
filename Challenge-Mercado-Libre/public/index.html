@@ -58,6 +58,7 @@
       </a>
     </div>
   </head> 
+  
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -101,19 +102,10 @@
     </a>
   </div>
   <div class="horizontal-line"></div>
-  <section class="section-products-by-categories mt-5">
-    <div id="container-section-sports">
-      <div class="d-flex justify-content-center align-items-center" id="carousel-by-sports-products"></div>
-    </div>
-  </section>
-  <section class="section-products-by-categories mt-5">
-    <div id="container-section-tecnology">
-      <div class="d-flex justify-content-center align-items-center" id="carousel-by-tecnology-products"></div>
-    </div>
-  </section>
+  
   <section class="section-search-products">
     <div class="container-search text-center">
-      <h4 class="main-font title-search-products resaltado-irregular"><mark>Buscar productos o categorías</mark></h4>
+      <h3 class="main-font title-search-products resaltado-irregular">Podes buscar por productos o categorías</h3>
     </div>
     <div class="m-5">
       <form class="d-flex justify-content-center align-items-center input-container" role="search" onsubmit="return filterDataToSearch(event)"> <!-- onsubmit indica que función se ejecutará cuando se envíe el formulario -->
@@ -124,12 +116,60 @@
       </form>
     </div>   
   </section>
-  <div class="horizontal-line"></div>
-  <section class="" id="section-list-products">
-    <div id="products-container">
-      
+
+  <div class="add-section title-search-products d-flex justify-content-center align-items-center">
+    <h3 class="main-font">O bien, mirá la selección de productos que hicimos para vos</h3>
+  </div>
+
+  <section class="section-products-by-categories mt-5">
+    <div id="container-section-sports">
+      <div class="d-flex justify-content-center align-items-center" id="carousel-by-sports-products"></div>
     </div>
   </section>
+  <div class="horizontal-line"></div>
+  
+  <section class="section-products-by-categories mt-5">
+    <div id="container-section-tecnology">
+      <div class="d-flex justify-content-center align-items-center" id="carousel-by-tecnology-products"></div>
+    </div>
+  </section>
+  <div class="horizontal-line"></div>
+  
+  <section class="section-products-by-categories mt-5">
+    <div id="container-section-home">
+      <div class="d-flex justify-content-center align-items-center" id="carousel-by-home-products"></div>
+    </div>
+  </section>
+  <div class="horizontal-line"></div>
+  
+  <section class="" id="section-list-products">
+    <div id="products-container"></div>
+  </section>
+  
+  <footer>
+    <div class="container-footer bg-dark align-items-center d-flex justify-content-around py-3">
+      <img class="logo-footer ml-5" src="/public/images/Logo-Challenge.svg" alt="">
+      <div class="mt-4 text-center">
+        <h4 class="titles-carousel text-white mb-3">Nuestras Redes Sociales</h4>
+        <div class="social-icons d-flex justify-content-center">
+          <a href="https://www.instagram.com/mercadolibre.arg/" class="mx-2"><img src="/public/icons/contact/instagram.svg" alt=""></a>
+          <a href="https://www.facebook.com/MercadoLibre/" class="mx-2"><img src="/public/icons/contact/facebook.svg" alt=""></a>
+          <a href="https://x.com/ML_Argentina" class="mx-2"><img src="/public/icons/contact/twitter-x.svg" alt=""></a>
+          <a href="https://www.mercadolibre.com.ar/" class="mx-2"><img src="/public/icons/contact/google.svg" alt=""></a>
+        </div>
+      </div>
+    </div>
+    <div class="titles-carousel about-us text-center py-3">
+      <h5 class="m-0 fs-5">Contáctate con nosotros</h5>
+      <div class="m-0 d-flex justify-content-center align-items-center">
+        <img src="/public/icons/contact/geo-alt.svg">
+        <p class="mt-3 mr-3 ml-2">Tejerina Norte 783, Río Cuarto, Córdoba, CP 5800</p>
+        <img src="/public/icons/contact/telephone.svg" alt="">
+        <p class="mt-3 mr-3 ml-2">(011) 4640-8000</p>
+      </div>
+    </div>
+  </footer>
+
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
