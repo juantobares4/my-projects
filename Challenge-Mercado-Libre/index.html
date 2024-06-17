@@ -10,9 +10,10 @@
   <!-- Estilos propios -->
   <link rel="stylesheet" href="/src/css/styles.css">
   <link rel="icon" href="/public/icons/ecommerce_1754997.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 <body>
-  <head>
+  <header>
     <div class="p-3 div-contact d-flex justify-content-center align-items-center position-relative">
       <div class="contact-container position-absolute d-flex align-items-center">
         <img src="/public/icons/at.svg" alt="" class="mr-0 svg-at-icon">
@@ -21,7 +22,7 @@
       <p class="mb-1 mr-3 text-center flex-grow-1">Envíos a todo el país | Bienvenidos a Bundled Argentina</p>
     </div>
     <div class="container-logo d-flex justify-content-center align-items-center">
-      <img class="m-4 img-logo" src="/public/images/Logo-Challenge.svg" alt="">
+      <img class="ml-5 img-logo" src="/public/images/Logo-Challenge.svg" alt="">
     </div>
     <nav class="navbar navbar-expand-lg d-flex justify-content-center align-items-center navbar-dark">
       <a href="/public/index.html">
@@ -43,13 +44,13 @@
         </ul>
       </div>
       <div>
-        <a class="drop-link mr-3" href="">Contacto</a>
+        <a class="drop-link mr-4" href="">Contacto</a>
       </div>
       <div>
         <a class="drop-link mr-3 ml-2" href="#" onclick="filterBy('novedades')">Novedades</a>
       </div>
     </nav>
-    <div class="cart-section navbar navbar-expand-lg justify-content-center p-3 align-items-center">
+    <div class="cart-section navbar navbar-expand-lg justify-content-center p-1 align-items-center">
       <a href="#" onclick="viewMyCart()" id="my-cart" class="align-items-center justify-content-center d-flex">
         <img class="mr-2 svg-mycart" src="/public/icons/bag.svg" alt="cart">
       </a>
@@ -57,7 +58,7 @@
         <img class="svg-myfavorites ml-1" src="/public/icons/heart.svg" alt="">
       </a>
     </div>
-  </head> 
+  </header> 
   
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -162,7 +163,7 @@
       </div>
     </div>
     <div class="titles-carousel about-us text-center py-3">
-      <h5 class="m-0 fs-5">Contáctate con nosotros</h5>
+      <h5 class="mt-0 fs-5">Contáctate con nosotros</h5>
       <div class="m-0 d-flex justify-content-center align-items-center">
         <img src="/public/icons/contact/geo-alt.svg">
         <p class="mt-3 mr-3 ml-2">Tejerina Norte 783, Río Cuarto, Córdoba, CP 5800</p>
@@ -172,9 +173,10 @@
     </div>
   </footer>
   
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="/src/js/app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  
 </body>
 </html>

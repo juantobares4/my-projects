@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 
 :root{
   --main-font: "Montserrat", sans-serif;
@@ -130,7 +131,7 @@ nav{
 }
 
 .counter-products{
-  font-family: var(--font-nav);
+  font-family: "Oswald", sans-serif;
   display: inline-block;
   background-color: black;
   padding: 5px 10px;
@@ -145,6 +146,28 @@ nav{
 
 .svg-mycart:hover, .svg-myfavorites:hover, .svg-home:hover{
   filter: invert(0);
+
+}
+
+.cointainer-icons img{  
+  height: 20px;
+
+}
+
+.svg-add-product-to-fav:hover,
+.svg-add-product-to-cart:hover{
+  background-color: #fff;
+  border: 1px solid black;
+  padding: 1px;
+  border-radius: 13%;
+  
+}
+
+.svg-add-product-to-fav:hover,
+.svg-add-product-to-fav:hover img,
+.svg-add-product-to-cart:hover,
+.svg-add-product-to-cart:hover img{
+  transform: none;
 
 }
 
@@ -256,7 +279,7 @@ footer{
 .logo-footer{
   width: 300px;
   height: 300px;
-
+  
 }
 
 .about-us{
@@ -264,5 +287,19 @@ footer{
   background-color: #3b3535c9;
   font-size: 12px;
   height: 100px;
+
+}
+
+.social-icons a{
+  background-color: #fff;
+  border: 1px solid white;
+  padding: 10px;
+  margin: 2px;
+  border-radius: 15%;
+
+}
+
+.social-icons a:hover{
+  background-color: #b9b5b4;
 
 }
