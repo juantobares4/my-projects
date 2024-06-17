@@ -434,6 +434,7 @@ function myCart(event) {
         let uniqueProducts = {};
         array.forEach(element => {
           uniqueProducts[element.title] = element; // Esto nos garantiza que no se puedan agregar objetos con el mismo título.
+        
         });
       
         return Object.values(uniqueProducts);
