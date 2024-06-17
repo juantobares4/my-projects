@@ -130,6 +130,12 @@ nav{
 
 }
 
+.image-product-to-cart{
+  height: 50px;
+  width: 50px;
+
+}
+
 .counter-products{
   font-family: "Oswald", sans-serif;
   display: inline-block;
@@ -151,6 +157,11 @@ nav{
 
 .cointainer-icons img{  
   height: 20px;
+
+}
+
+.link-product-detail{
+  font-family: var(--font-nav);
 
 }
 

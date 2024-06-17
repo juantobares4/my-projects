@@ -34,7 +34,7 @@ const showToast = (message, title) => {
 
 }
 
-const fetchCompleteApiProducts = (filter) => { // En esta promesa traigo el producto con las características generales, y aparte, traigo su respectivo detalle, para poder utilizar las fotos en el inicio.
+const fetchCompleteProductsApi = (filter) => { // En esta promesa traigo el producto con las características generales, y aparte, traigo su respectivo detalle, para poder utilizar las fotos en el inicio.
   return new Promise((resolve, reject) => {
     setTimeout(() => {
         fetch(`https://api.mercadolibre.com/sites/MLA/search?q=${filter}`)
@@ -116,7 +116,7 @@ const productByCategory = async(container, filter) => {
   
   }
 
-  let products = await fetchCompleteApiProducts(filter);
+  let products = await fetchCompleteProductsApi(filter);
   let containerProducts = document.getElementById(container);
   containerProducts.innerHTML = '';
 
@@ -265,11 +265,21 @@ const productByCategory = async(container, filter) => {
 
 };
 
+/* Buscar productos mediante la barra de búsqueda */
+const inputDataUser = async(event) => {
+  event.preventDefault();
+  let inputValue = document.getElementById('inputSearchProduct').value;
+
+  return inputValue;
+
+}
+
 /* Buscar objetos mediante la barra de búsqueda */
 const resultsToSearch = async(filter) => {
-  let data = await fetchCompleteApiProducts(filter);
+  let searchUser = inputDataUser();
+  let data = await fetchCompleteProductsApi(filter);
   
-  console.log(data);
+  console.log(searchUser);
   
 }
 
@@ -295,7 +305,7 @@ const counterProductsInMyCart = () => {
 
 const addProductToFav = async(productId) => {
   try{
-    let productDetailApi = await fetchCompleteApiProducts(productId);
+    let productDetailApi = await fetchProductDetail(productId);
     let productsInLocalStorage = getLocalStorage();
     let filterProduct = productDetailApi.find(product => {product. id === productId});
     
@@ -315,12 +325,148 @@ const addProductToFav = async(productId) => {
 
 };
 
-const addProductToCart = (productId) => {
-  console.log(`Producto ${productId} añadido al carrito`);
+const addProductToCart = async(productId) => {
+  try{
+    let productsDetailApi = await fetchProductDetail(productId);
+    let filterProduct = productsDetailApi.find(product => product.id === productId);
+    let productsInLocalStorage = getLocalStorage();
+
+    productsInLocalStorage.push(filterProduct);
+    saveInLocalStorage(productsInLocalStorage);
+
+    showToast('Producto agregado con éxito', '¡Producto agregado al carrito!');
+
+    await counterProductsInMyCart();
+
+  }catch(error){
+    console.error(error);
+
+  }
 
 }
 
-const main = () => {
+const viewMyCart = (event) => {
+  try{
+    if(event){
+      event.preventDefault();
+    
+    }
+
+    let productsInLocalStorage = getLocalStorage();
+
+    if(productsInLocalStorage){
+      function deleteDuplicate(array){
+        let uniqueProducts = {};
+        array.forEach(element => {
+          uniqueProducts[element.title] = element; // Esto nos garantiza que no se puedan agregar objetos con el mismo título.
+        
+        });
+      
+        return Object.values(uniqueProducts);
+        
+      }
+    
+      function countDuplicate(array){
+        let countMap = {};
+        
+        array.forEach(element => {
+          if(countMap[element.title]){
+            countMap[element.title]++;
+          
+          }else{
+            countMap[element.title] = 1;
+            
+          }
+          
+        });
+    
+        return countMap;
+    
+      }
+    
+      let modalBodyContent = '<div class="modal-body">';
+      let noneDuplicate = deleteDuplicate(productsInLocalStorage);
+      let count = countDuplicate(productsInLocalStorage);
+    
+      if(productsInLocalStorage.length > 0){
+        noneDuplicate.forEach(attr => {
+          let productCount = count[attr.title];
+          let totalPrice = attr.price * productCount;
+          let productImage = attr.images[0].url;
+
+          modalBodyContent += `
+            <div class="d-flex align-items-start mb-4">
+              <img class="image-product-to-cart" src="${productImage}" style="margin-right: 20px;">
+              <div>
+                <h5 class="titles"><b>${attr.title}</b></h5>
+                <p class="titles"><b>Precio: €${attr.price} | Cantidad: ${productCount} | Total: €${totalPrice.toFixed(2)} |</b><a class="link-remove m-3" onclick="removeProductToCart(${attr.id})"><img class="mr-1 mb-1" src="/images/icons/trash3-fill.svg">Remover</a></p>
+              </div>
+            </div>
+            <hr class="horizontal-line my-2">
+          `;
+
+          });      
+          
+      }else if(productsInLocalStorage.length === 0){
+        let message = `
+          <div class="d-flex align-items-center justify-content-center">
+            <img class="empty-cart" src="images/pngwing.com.png">
+          </div>
+          <h4 class="justify-content-center text-center title-empty-cart">¡Tu carrito de compras está vacío!</h4>
+
+        `
+        modalBodyContent += message;
+        
+      };
+        
+      modalBodyContent += '</div>';
+      
+      let modalCart = document.getElementById('modal-cart');
+      
+      if(!modalCart){ 
+        modalCart = document.createElement('div');
+        let bagCheckImg = '/images/icons/bag-dash-fill.svg';
+        modalCart.className = 'modal fade';
+        modalCart.id = 'modal-cart';
+        modalCart.tabIndex = -1;
+        
+        modalCart.innerHTML = `
+          <div class="modal-dialog custom-modal-cart">
+            <div class="modal-content">
+              <div class="modal-header align-items-center text-center">
+                <h5 class="modal-title titles">
+                  <img src="${bagCheckImg}" class="ml-3 mr-3 img-cart">Mi carrito
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              ${modalBodyContent}
+              <div class="modal-footer">
+                <button type="button" id='close-mycart' class="btn btn-warning font-buttons" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modalCart);
+      
+      }else{
+        modalCart.querySelector('.modal-body').innerHTML = modalBodyContent;
+      
+      }
+            
+        $(`#modal-cart`).modal('show'); // Se llama al modal con ID asignado anteriormente.  
+  
+      }  
+
+  }catch(error){
+    console.error(error);
+
+  }
+
+}  
+
+const main = async() => {
   productByCategory('carousel-by-sports-products', 'deportes');
   productByCategory('carousel-by-tecnology-products', 'electrónica');
   productByCategory('carousel-by-home-products', 'hogar');
