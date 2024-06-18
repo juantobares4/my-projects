@@ -44,7 +44,7 @@
         </ul>
       </div>
       <div>
-        <a class="drop-link mr-4" href="">Contacto</a>
+        <a class="drop-link mr-4" href="" onclick="scrollContactSection(event)">Contactános</a>
       </div>
       <div>
         <a class="drop-link mr-3 ml-2" href="#" onclick="filterBy('novedades')">Novedades</a>
@@ -147,10 +147,11 @@
     <div id="products-container"></div>
   </section>
   
-  <footer>
+  <footer id="section-contact">
     <div class="container-footer bg-dark align-items-center d-flex justify-content-around py-3">
-      <div class="d-flex">
-        <img class="logo-footer p-0 ml-5 mb-3" src="/public/images/Logo-Challenge.svg" alt="">
+      <div class="d-flex flex-column">
+        <img class="logo-footer mt-5 p-0 ml-5 mb-1" src="/public/images/Logo-Challenge.svg" alt="">
+        <p class="all-rights-reserved p-0 mt-4 ml-5 mb-3 main-font"><i>© 2024 Bundled Argentina. Todos los derechos reservados.</i></p>
       </div>
       <div class="mt-4 text-center">
         <h4 class="titles-carousel text-white mb-3">Nuestras Redes Sociales</h4>
@@ -163,7 +164,7 @@
       </div>
     </div>
     <div class="titles-carousel about-us text-center py-3">
-      <h5 class="mt-0 fs-5">Contáctate con nosotros</h5>
+      <h5 class="mt-0">Contáctate con nosotros</h5>
       <div class="m-0 d-flex justify-content-center align-items-center">
         <img src="/public/icons/contact/geo-alt.svg">
         <p class="mt-3 mr-3 ml-2">Tejerina Norte 783, Río Cuarto, Córdoba, CP 5800</p>

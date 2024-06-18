@@ -141,12 +141,12 @@ nav{
 
 }
 
-.custom-modal-cart{
+.custom-modal{
   max-width: 80%;
 
 }
 
-.image-descript-cart{
+.image-descript-cart, .image-descript-favourites{
   width: 25px;
   height: 25px;
 
@@ -361,13 +361,19 @@ footer{
 
 .container-footer{
   background-color: #3b3535;
+  position: relative;
 
 }
 
 .logo-footer{
   width: 300px;
-  height: 300px;
+  height: auto;
   
+}
+
+.all-rights-reserved{
+  font-size: 13px;
+
 }
 
 .about-us{

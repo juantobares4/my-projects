@@ -34,6 +34,46 @@ const showToast = (message, title) => {
 
 }
 
+const scrollContactSection = (event) => {
+  event.preventDefault();
+  let footer = document.getElementById('section-contact');
+
+  footer.scrollIntoView({
+    behavior: 'smooth'
+  
+  });
+
+}
+
+const deleteDuplicate = (array) => {
+  let uniqueProducts = {};
+  array.forEach(element => {
+    uniqueProducts[element.title] = element; // Esto nos garantiza que no se puedan agregar objetos con el mismo título.
+  
+  });
+
+  return Object.values(uniqueProducts);
+
+}
+
+const countDuplicate = (array) => {
+  let countMap = {};
+
+  array.forEach(element => {
+    if(countMap[element.title]){
+      countMap[element.title]++;
+    
+    }else{
+      countMap[element.title] = 1;
+    
+    }
+  
+  });
+
+  return countMap;
+
+}
+
 const fetchCompleteProductsApi = (filter) => { // En esta promesa traigo el producto con las características generales, y aparte, traigo su respectivo detalle, para poder utilizar las fotos en el inicio.
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -312,8 +352,6 @@ const addProductToFav = async(productId) => {
     let filterProduct = productDetailApi.find(product => product.id === productId);
     filterProduct.isFavourite = true;
 
-    console.log(filterProduct);
-
     productsInLocalStorage.push(filterProduct);
     saveInLocalStorage(productsInLocalStorage);
 
@@ -363,35 +401,6 @@ const viewMyCart = (event) => {
     productsInLocalStorage = productsInLocalStorage.filter(product => product.itsInTheCart);
 
     if(productsInLocalStorage){
-      function deleteDuplicate(array){
-        let uniqueProducts = {};
-        array.forEach(element => {
-          uniqueProducts[element.title] = element; // Esto nos garantiza que no se puedan agregar objetos con el mismo título.
-        
-        });
-
-        return Object.values(uniqueProducts);
-      
-      }
-
-      function countDuplicate(array){
-        let countMap = {};
-
-        array.forEach(element => {
-          if(countMap[element.title]){
-            countMap[element.title]++;
-          
-          }else{
-            countMap[element.title] = 1;
-          
-          }
-        
-        });
-
-        return countMap;
-
-      }
-
       let modalBodyContent = '<div class="modal-body">';
       let noneDuplicate = deleteDuplicate(productsInLocalStorage);
       let count = countDuplicate(productsInLocalStorage);
@@ -438,7 +447,7 @@ const viewMyCart = (event) => {
         modalCart.tabIndex = -1;
 
         modalCart.innerHTML = `
-          <div class="modal-dialog custom-modal-cart">
+          <div class="modal-dialog custom-modal">
             <div class="modal-content">
               <div class="modal-header align-items-center text-center">
                 <h5 class="main-font">
@@ -496,35 +505,6 @@ const viewMyFavorites = (event) => {
     productsInLocalStorage = productsInLocalStorage.filter(product => product.isFavourite);
 
     if(productsInLocalStorage){
-      function deleteDuplicate(array){
-        let uniqueProducts = {};
-        array.forEach(element => {
-          uniqueProducts[element.title] = element; // Esto nos garantiza que no se puedan agregar objetos con el mismo título.
-        
-        });
-
-        return Object.values(uniqueProducts);
-      
-      }
-
-      function countDuplicate(array){
-        let countMap = {};
-
-        array.forEach(element => {
-          if(countMap[element.title]){
-            countMap[element.title]++;
-          
-          }else{
-            countMap[element.title] = 1;
-          
-          }
-        
-        });
-
-        return countMap;
-
-      }
-
       let modalBodyContent = '<div class="modal-body">';
       let noneDuplicate = deleteDuplicate(productsInLocalStorage);
       let count = countDuplicate(productsInLocalStorage);
@@ -565,17 +545,17 @@ const viewMyFavorites = (event) => {
 
       if(!modalFavourites){
         modalFavourites = document.createElement('div');
-        let bagCheckImg = '/public/icons/cart.svg';
+        let bagCheckImg = '/public/icons/favorite-heart_109761.png';
         modalFavourites.className = 'modal fade';
         modalFavourites.id = 'modal-favourites';
         modalFavourites.tabIndex = -1;
 
         modalFavourites.innerHTML = `
-          <div class="modal-dialog custom-modal-cart">
+          <div class="modal-dialog custom-modal">
             <div class="modal-content">
               <div class="modal-header align-items-center text-center">
                 <h5 class="main-font">
-                  <img class="image-descript-cart m-3" src="${bagCheckImg}" class="ml-3 mr-3 img-cart">Mis favoritos
+                  <img class="image-descript-favourites m-3" src="${bagCheckImg}" class="ml-3 mr-3 img-cart">Mis favoritos
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
