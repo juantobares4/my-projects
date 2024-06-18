@@ -286,13 +286,15 @@ const resultsToSearch = async(filter) => {
 const counterProductsInMyCart = () => {
   let products = getLocalStorage();
   let myCart = document.getElementById('my-cart');
-  let countProducts = products.length;
   let counterElement = document.getElementById('cart-counter'); // Busca el ID del contador de productos.
+  
+  let productsInMyCart = products.filter(product => product.itsInTheCart);
+  let countProducts = productsInMyCart.length;
 
   if(!counterElement){ // Si counterElement no existe (si es false), lo crea.
     counterElement = document.createElement('p');  
     counterElement.style.fontSize = '11px'
-    counterElement.style.color = 'white'; 
+    counterElement.style.color = 'white';
     counterElement.className = 'counter-products mr-3 mt-3';
     counterElement.id = 'cart-counter';
     myCart.appendChild(counterElement);
@@ -307,15 +309,17 @@ const addProductToFav = async(productId) => {
   try{
     let productDetailApi = await fetchProductDetail(productId);
     let productsInLocalStorage = getLocalStorage();
-    let filterProduct = productDetailApi.find(product => {product. id === productId});
-    
+    let filterProduct = productDetailApi.find(product => product.id === productId);
+    filterProduct.isFavourite = true;
+
+    console.log(filterProduct);
+
     productsInLocalStorage.push(filterProduct);
     saveInLocalStorage(productsInLocalStorage);
-    
-    await counterProductsInMyCart();
-    
+
     setTimeout(() => {
       showToast('Producto agregado con éxito', '¡Producto agregado a Tus Favoritos!');
+   
     }, 100);
     
   }catch(error){
@@ -328,8 +332,10 @@ const addProductToFav = async(productId) => {
 const addProductToCart = async(productId) => {
   try{
     let productsDetailApi = await fetchProductDetail(productId);
-    let filterProduct = productsDetailApi.find(product => product.id === productId);
     let productsInLocalStorage = getLocalStorage();
+    let filterProduct = productsDetailApi.find(product => product.id === productId);
+
+    filterProduct.itsInTheCart = true;
 
     productsInLocalStorage.push(filterProduct);
     saveInLocalStorage(productsInLocalStorage);
@@ -354,6 +360,8 @@ const viewMyCart = (event) => {
 
     let productsInLocalStorage = getLocalStorage();
 
+    productsInLocalStorage = productsInLocalStorage.filter(product => product.itsInTheCart);
+
     if(productsInLocalStorage){
       function deleteDuplicate(array){
         let uniqueProducts = {};
@@ -361,81 +369,80 @@ const viewMyCart = (event) => {
           uniqueProducts[element.title] = element; // Esto nos garantiza que no se puedan agregar objetos con el mismo título.
         
         });
-      
+
         return Object.values(uniqueProducts);
-        
+      
       }
-    
+
       function countDuplicate(array){
         let countMap = {};
-        
+
         array.forEach(element => {
           if(countMap[element.title]){
             countMap[element.title]++;
           
           }else{
             countMap[element.title] = 1;
-            
-          }
           
+          }
+        
         });
-    
+
         return countMap;
-    
+
       }
-    
+
       let modalBodyContent = '<div class="modal-body">';
       let noneDuplicate = deleteDuplicate(productsInLocalStorage);
       let count = countDuplicate(productsInLocalStorage);
-    
-      if(productsInLocalStorage.length > 0){
+
+      if (productsInLocalStorage.length > 0){
         noneDuplicate.forEach(attr => {
           let productCount = count[attr.title];
           let totalPrice = attr.price * productCount;
           let productImage = attr.images[0].url;
 
           modalBodyContent += `
-            <div class="d-flex align-items-start mb-4">
-              <img class="image-product-to-cart" src="${productImage}" style="margin-right: 20px;">
+            <div class="d-flex align-items-start mb-4 border p-3">
+              <img class="image-product-to-cart mr-5" src="${productImage}">
               <div>
-                <h5 class="titles"><b>${attr.title}</b></h5>
-                <p class="titles"><b>Precio: €${attr.price} | Cantidad: ${productCount} | Total: €${totalPrice.toFixed(2)} |</b><a class="link-remove m-3" onclick="removeProductToCart(${attr.id})"><img class="mr-1 mb-1" src="/images/icons/trash3-fill.svg">Remover</a></p>
+                <h5 class="main-font"><b>${attr.title}</b></h5>
+                <p class="font-nav"><b class="ml-1 mr-1">Precio Unitario:</b> ${attr.currency} ${attr.price} | <b class="ml-1 mr-1 mr-1">Cantidad:</b> ${productCount} | <b class="ml-1 mr-1">Total:</b> ${attr.currency} ${totalPrice.toFixed(2)} | <button class="btn btn-outline text-danger remove-link" data-id="${attr.id}"><img class="mb-2" src="/public/icons/trash3.svg">Remover</button></p>
               </div>
             </div>
-            <hr class="horizontal-line my-2">
+            <hr>
           `;
+        });
 
-          });      
-          
-      }else if(productsInLocalStorage.length === 0){
+      }else if (productsInLocalStorage.length === 0){
         let message = `
           <div class="d-flex align-items-center justify-content-center">
-            <img class="empty-cart" src="images/pngwing.com.png">
+            <img class="empty-cart" src="src/assets/images/pngwing.com.png">
           </div>
-          <h4 class="justify-content-center text-center title-empty-cart">¡Tu carrito de compras está vacío!</h4>
+          <h4 class="justify-content-center text-center">¡Tu carrito de compras está vacío!</h4>
+        `;
 
-        `
         modalBodyContent += message;
-        
-      };
-        
+      
+      }
+
       modalBodyContent += '</div>';
-      
+
       let modalCart = document.getElementById('modal-cart');
-      
-      if(!modalCart){ 
+
+      if(!modalCart){
         modalCart = document.createElement('div');
-        let bagCheckImg = '/images/icons/bag-dash-fill.svg';
+        let bagCheckImg = '/public/icons/cart.svg';
         modalCart.className = 'modal fade';
         modalCart.id = 'modal-cart';
         modalCart.tabIndex = -1;
-        
+
         modalCart.innerHTML = `
           <div class="modal-dialog custom-modal-cart">
             <div class="modal-content">
               <div class="modal-header align-items-center text-center">
-                <h5 class="modal-title titles">
-                  <img src="${bagCheckImg}" class="ml-3 mr-3 img-cart">Mi carrito
+                <h5 class="main-font">
+                  <img class="image-descript-cart m-3" src="${bagCheckImg}" class="ml-3 mr-3 img-cart">Mi carrito
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
@@ -443,28 +450,178 @@ const viewMyCart = (event) => {
               </div>
               ${modalBodyContent}
               <div class="modal-footer">
-                <button type="button" id='close-mycart' class="btn btn-warning font-buttons" data-dismiss="modal">Cerrar</button>
+                <button type="button" id='close-mycart' class="btn button-53 font-buttons mt-3" data-dismiss="modal">Cerrar Mi Carrito</button>
               </div>
             </div>
           </div>
         `;
         document.body.appendChild(modalCart);
-      
+
       }else{
         modalCart.querySelector('.modal-body').innerHTML = modalBodyContent;
       
       }
-            
-        $(`#modal-cart`).modal('show'); // Se llama al modal con ID asignado anteriormente.  
-  
-      }  
 
+      $(`#modal-cart`).modal('show');
+
+      document.querySelectorAll('.remove-link').forEach(button => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          
+          let productId = event.target.closest('.remove-link').getAttribute('data-id');
+          removeProductToCart(productId);
+        
+        });
+      
+      });
+
+    }
+  
   }catch(error){
     console.error(error);
-
+  
   }
 
-}  
+};
+
+const viewMyFavorites = (event) => {
+  try{
+    if(event){
+      event.preventDefault();
+    
+    }
+
+    let productsInLocalStorage = getLocalStorage();
+
+    productsInLocalStorage = productsInLocalStorage.filter(product => product.isFavourite);
+
+    if(productsInLocalStorage){
+      function deleteDuplicate(array){
+        let uniqueProducts = {};
+        array.forEach(element => {
+          uniqueProducts[element.title] = element; // Esto nos garantiza que no se puedan agregar objetos con el mismo título.
+        
+        });
+
+        return Object.values(uniqueProducts);
+      
+      }
+
+      function countDuplicate(array){
+        let countMap = {};
+
+        array.forEach(element => {
+          if(countMap[element.title]){
+            countMap[element.title]++;
+          
+          }else{
+            countMap[element.title] = 1;
+          
+          }
+        
+        });
+
+        return countMap;
+
+      }
+
+      let modalBodyContent = '<div class="modal-body">';
+      let noneDuplicate = deleteDuplicate(productsInLocalStorage);
+      let count = countDuplicate(productsInLocalStorage);
+
+      if (productsInLocalStorage.length > 0){
+        noneDuplicate.forEach(attr => {
+          let productCount = count[attr.title];
+          let totalPrice = attr.price * productCount;
+          let productImage = attr.images[0].url;
+
+          modalBodyContent += `
+            <div class="d-flex align-items-start mb-4 border p-3">
+              <img class="image-product-to-cart mr-5" src="${productImage}">
+              <div>
+                <h5 class="main-font"><b>${attr.title}</b></h5>
+                <p class="font-nav"><b class="ml-1 mr-1">Precio Unitario:</b> ${attr.currency} ${attr.price} | <b class="ml-1 mr-1 mr-1">Cantidad:</b> ${productCount} | <b class="ml-1 mr-1">Total:</b> ${attr.currency} ${totalPrice.toFixed(2)} | <button class="btn btn-outline text-danger remove-link" data-id="${attr.id}"><img class="mb-2" src="/public/icons/trash3.svg">Remover</button></p>
+              </div>
+            </div>
+            <hr>
+          `;
+        });
+
+      }else if(productsInLocalStorage.length === 0){
+        let message = `
+          <div class="d-flex align-items-center justify-content-center">
+            <img class="empty-cart" src="src/assets/images/pngwing.com.png">
+          </div>
+          <h4 class="justify-content-center text-center">¡Tu carrito de compras está vacío!</h4>
+        `;
+
+        modalBodyContent += message;
+      
+      }
+
+      modalBodyContent += '</div>';
+
+      let modalFavourites = document.getElementById('modal-favourites');
+
+      if(!modalFavourites){
+        modalFavourites = document.createElement('div');
+        let bagCheckImg = '/public/icons/cart.svg';
+        modalFavourites.className = 'modal fade';
+        modalFavourites.id = 'modal-favourites';
+        modalFavourites.tabIndex = -1;
+
+        modalFavourites.innerHTML = `
+          <div class="modal-dialog custom-modal-cart">
+            <div class="modal-content">
+              <div class="modal-header align-items-center text-center">
+                <h5 class="main-font">
+                  <img class="image-descript-cart m-3" src="${bagCheckImg}" class="ml-3 mr-3 img-cart">Mis favoritos
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              ${modalBodyContent}
+              <div class="modal-footer">
+                <button type="button" id='close-myfavourites' class="btn button-53 font-buttons mt-3" data-dismiss="modal">Cerrar Mis Favoritos</button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        document.body.appendChild(modalFavourites);
+
+      }else{
+        modalFavourites.querySelector('.modal-body').innerHTML = modalBodyContent;
+      
+      }
+
+      $(`#modal-favourites`).modal('show');
+
+      document.querySelectorAll('.remove-link').forEach(button => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          
+          let productId = event.target.closest('.remove-link').getAttribute('data-id');
+          removeProductToCart(productId);
+        
+        });
+      
+      });
+
+    }
+  
+  }catch(error){
+    console.error(error);
+  
+  }
+
+};
+
+const removeProductToCart = (productId) => {
+  console.log(`Removing product with ID: ${productId}`);
+
+};
 
 const main = async() => {
   productByCategory('carousel-by-sports-products', 'deportes');
