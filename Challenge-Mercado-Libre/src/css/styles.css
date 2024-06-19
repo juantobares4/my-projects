@@ -171,6 +171,12 @@ nav{
 
 }
 
+.empty-favourites{
+  width: 400px;
+  height: 400px;
+
+}
+
 .title-empty-cart{
   color: rgba(0, 0, 0, 0.702);
   font-family: var(--main-font);
@@ -346,9 +352,14 @@ nav{
 
 }
 
-.product-title, .product-price{
+.product-title, .product-price, .product-seller{
   font-family: var(--font-nav);
  
+}
+
+.product-seller{
+  font-size: 13px;
+
 }
 
 .product-image{

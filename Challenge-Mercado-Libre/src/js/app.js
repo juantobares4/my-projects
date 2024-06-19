@@ -251,6 +251,10 @@ const productByCategory = async(container, filter) => {
     shipping.innerHTML = `${product.isFreeShipping ? 'Envío Gratis' : ''}`;
     shipping.className = 'product-shipping text-success';
 
+    let seller = document.createElement('p');
+    seller.innerHTML = `<i>${product.seller}</i>`;
+    seller.className = 'product-seller';
+
     let containerIcons = document.createElement('div');
     containerIcons.className = 'd-flex justify-content-center align-items-center container-icons';
     
@@ -306,6 +310,7 @@ const productByCategory = async(container, filter) => {
     carouselItem.appendChild(title);
     carouselItem.appendChild(description);
     carouselItem.appendChild(price);
+    carouselItem.appendChild(seller);
     carouselItem.appendChild(shipping);
     carouselItem.appendChild(horizontalLine);
     carouselItem.appendChild(containerIcons);
@@ -531,7 +536,9 @@ const viewMyCart = (event) => {
               </div>
             </div>
             <hr>
+          
           `;
+        
         });
 
       }else if (productsInLocalStorage.length === 0){
@@ -539,7 +546,8 @@ const viewMyCart = (event) => {
           <div class="d-flex align-items-center justify-content-center">
             <img class="empty-cart" src="src/assets/images/pngwing.com.png">
           </div>
-          <h4 class="justify-content-center text-center">¡Tu carrito de compras está vacío!</h4>
+          <h4 class="justify-content-center text-center main-font">¡Tu carrito de compras está vacío!</h4>
+        
         `;
 
         modalBodyContent += message;
@@ -635,15 +643,18 @@ const viewMyFavorites = (event) => {
               </div>
             </div>
             <hr>
+          
           `;
+        
         });
 
       }else if(productsInLocalStorage.length === 0){
         let message = `
           <div class="d-flex align-items-center justify-content-center">
-            <img class="empty-cart" src="src/assets/images/pngwing.com.png">
+            <img class="empty-favourites" src="src/assets/images/undraw_favourite_item_pcyo.svg">
           </div>
-          <h4 class="justify-content-center text-center">¡Tu carrito de compras está vacío!</h4>
+          <h4 class="justify-content-center text-center main-font mt-5">¡Tu listado de favoritos está vacío!</h4>
+        
         `;
 
         modalBodyContent += message;
@@ -678,6 +689,7 @@ const viewMyFavorites = (event) => {
               </div>
             </div>
           </div>
+        
         `;
 
         document.body.appendChild(modalFavourites);
