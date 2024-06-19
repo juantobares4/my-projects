@@ -374,7 +374,7 @@ async function productDetail(idProduct){
 
   }
 
-}
+};
 
 async function addProductToLocalstorage(productId){
   try{
