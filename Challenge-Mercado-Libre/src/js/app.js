@@ -74,6 +74,28 @@ const countDuplicate = (array) => {
 
 }
 
+const renderRatingStars = (rating) => {
+  let maxStars = 5;
+  let starFill = '<img class="mb-1" src="public/icons/star-fill.svg" alt="star-fill">';
+  let star = '<img class="mb-1" src="public/icons/star.svg" alt="star">';
+  let message = '';
+  let roundedRating = Math.round(rating);
+
+  for(let x = 1; x <= maxStars; x++){
+    if(x <= roundedRating){
+      message += starFill;
+
+    }else{
+      message += star;
+
+    }
+
+  }
+
+  return message;
+
+}
+
 const fetchCompleteProductsApi = (filter) => { // En esta promesa traigo el producto con las características generales, y aparte, traigo su respectivo detalle, para poder utilizar las fotos en el inicio.
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -101,7 +123,7 @@ const fetchCompleteProductsApi = (filter) => { // En esta promesa traigo el prod
                   ...product, // Esto copia los anteriores atributos del producto.
                   images: detail.pictures,
                   warranty: detail.warranty
-                
+                  
                 }))
             
             );
@@ -134,7 +156,8 @@ const fetchProductDetail = (productId) => {
             condition: json.condition,
             attributes: json.attributes,
             images: json.pictures,
-            warranty: json.warranty
+            warranty: json.warranty,
+            randomRating: (Math.random() * 2 + 3).toFixed(1) // Inventé una valoración aleatoria, entre 3 y 5 puntos, para los productos.
           
           };
           
@@ -229,7 +252,7 @@ const productByCategory = async(container, filter) => {
     shipping.className = 'product-shipping text-success';
 
     let containerIcons = document.createElement('div');
-    containerIcons.className = 'd-flex justify-content-center align-items-center cointainer-icons';
+    containerIcons.className = 'd-flex justify-content-center align-items-center container-icons';
     
     let horizontalLine = document.createElement('hr');
 
@@ -312,7 +335,7 @@ const inputDataUser = async(event) => {
 
   return inputValue;
 
-}
+};
 
 /* Buscar objetos mediante la barra de búsqueda */
 const resultsToSearch = async(filter) => {
@@ -321,7 +344,7 @@ const resultsToSearch = async(filter) => {
   
   console.log(searchUser);
   
-}
+};
 
 const counterProductsInMyCart = () => {
   let products = getLocalStorage();
@@ -343,7 +366,7 @@ const counterProductsInMyCart = () => {
 
   counterElement.innerHTML = `<b>${countProducts}</b>`;
 
-}
+};
 
 const addProductToFav = async(productId) => {
   try{
@@ -387,7 +410,95 @@ const addProductToCart = async(productId) => {
 
   }
 
-}
+};
+
+const productDetail = async(productId) => {
+  try{
+    let productDetailApi = await fetchProductDetail(productId);
+    let productFilter = productDetailApi.find(product => product.id === productId);
+    let modalProductDetail = document.createElement('div');
+    let arrayProduct = [productFilter];
+
+    if(modalProductDetail){
+      modalProductDetail.remove();
+    
+    }
+
+    modalProductDetail.className = 'modal fade';
+    modalProductDetail.id = `modal-product-detail-${productId}`; // Se le pasa un ID al modal, basado en el ID del producto que se clickeó, para que dicho modal muestre el producto clickeado y se mantenga actualizado.
+    modalProductDetail.tabIndex = -1;
+
+    let modalBodyContent = '<div class="modal-body border">';
+    
+    arrayProduct.forEach(attr => {
+      let imagesByProduct = attr.images.slice(0, 3).map(image => `<img class="image-product-detail" src="${image.url}" alt="${attr.title}">`).join('');
+
+      modalBodyContent += `
+        <div>
+          <div class="text-center ml-3">
+            <h5 class="main-font"><b>${attr.title}</b></h5>
+          </div>
+          <br>
+          <div class="d-flex justify-content-center border-bottom">
+            ${imagesByProduct}
+          </div>
+          <br>
+          <br>
+          <div class="font-nav">
+            <div>
+              <h5 class="text-center mb-5 main-font">Características</h5>
+            </div>
+            <div class="ml-3 d-flex align-items-center">
+              <img class="icons-detail mr-2" src="/public/icons/coin.svg">
+              <p class="mb-0"><b>Precio:</b> ${attr.price} <b>${attr.currency}</b></p>
+            </div>  
+              <br>
+            <div class="ml-3 d-flex align-items-center">
+              <img class="icons-detail mr-2" src="/public/icons/truck.svg">
+              <p class="mb-0"><b>Envío Gratis:</b> ${attr.isFreeShipping ? 'Sí' : 'No'}</p>
+              <br>
+            </div>
+              <br>
+            <div class="ml-3 d-flex align-items-center"> 
+              <img class="icons-detail mr-2" src="/public/icons/offer_664457.png">
+              <p class="mb-0"><b>Valoración:</b> ${renderRatingStars(attr.randomRating)} (${attr.randomRating})</p>
+            </div> 
+          </div>
+        </div>
+          
+      `
+
+    });
+
+    modalBodyContent += '</div>';
+
+    modalProductDetail.innerHTML = `
+      <div class="modal-dialog custom-modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="main-font">Detalle del Producto</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          ${modalBodyContent}
+          <div class="modal-footer">
+            <button type="button" class="btn button-53" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modalProductDetail);
+
+    $(`#modal-product-detail-${productId}`).modal('show'); // Se llama al modal con ID asigando anteriormente.
+
+  }catch(error){
+    console.error(error);
+
+  }
+
+};
 
 const viewMyCart = (event) => {
   try{
@@ -459,7 +570,7 @@ const viewMyCart = (event) => {
               </div>
               ${modalBodyContent}
               <div class="modal-footer">
-                <button type="button" id='close-mycart' class="btn button-53 font-buttons mt-3" data-dismiss="modal">Cerrar Mi Carrito</button>
+                <button type="button" id='close-mycart' class="btn button-53 mt-3" data-dismiss="modal">Cerrar Mi Carrito</button>
               </div>
             </div>
           </div>
@@ -563,7 +674,7 @@ const viewMyFavorites = (event) => {
               </div>
               ${modalBodyContent}
               <div class="modal-footer">
-                <button type="button" id='close-myfavourites' class="btn button-53 font-buttons mt-3" data-dismiss="modal">Cerrar Mis Favoritos</button>
+                <button type="button" id='close-myfavourites' class="btn button-53 mt-3" data-dismiss="modal">Cerrar Mis Favoritos</button>
               </div>
             </div>
           </div>
