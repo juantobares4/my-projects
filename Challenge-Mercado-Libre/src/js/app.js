@@ -3,12 +3,12 @@ const getLocalStorage = () => {
 
   return data ? JSON.parse(data) : [];
 
-}
+};
 
 const saveInLocalStorage = (data) => {
   localStorage.setItem('data', JSON.stringify(data));
 
-}
+};
 
 const showToast = (message, title) => {
   toastr.options = {
@@ -32,7 +32,7 @@ const showToast = (message, title) => {
 
   toastr.success(message, title);
 
-}
+};
 
 const scrollContactSection = (event) => {
   event.preventDefault();
@@ -43,7 +43,7 @@ const scrollContactSection = (event) => {
   
   });
 
-}
+};
 
 const deleteDuplicate = (array) => {
   let uniqueProducts = {};
@@ -54,7 +54,7 @@ const deleteDuplicate = (array) => {
 
   return Object.values(uniqueProducts);
 
-}
+};
 
 const countDuplicate = (array) => {
   let countMap = {};
@@ -72,7 +72,7 @@ const countDuplicate = (array) => {
 
   return countMap;
 
-}
+};
 
 const renderRatingStars = (rating) => {
   let maxStars = 5;
@@ -94,7 +94,44 @@ const renderRatingStars = (rating) => {
 
   return message;
 
-}
+};
+
+const removeAll = async(productId, asyncFunction) => {
+  try{
+    let productsInLocalStorage = getLocalStorage();
+    let productsFilter = productsInLocalStorage.filter(product => product.id !== productId);
+
+    saveInLocalStorage(productsFilter);
+    showToast('Producto eliminado con éxito');
+
+    await asyncFunction();
+    await counterProductsInMyCart();
+
+  }catch(error){
+    console.error(error);
+
+  }
+
+};
+
+const removeForQuantity = async(productId, asyncFunction) => {
+  try{
+    let productsInLocalStorage = getLocalStorage();
+    let productIndex = productsInLocalStorage.findIndex(product => product.id === productId);
+    productsInLocalStorage.splice(productIndex, 1); // A partir del index del producto encontrado, borra un elemento.
+    
+    saveInLocalStorage(productsInLocalStorage);
+    showToast('Producto eliminado con éxito');
+
+    await asyncFunction();
+    await counterProductsInMyCart();
+    
+  }catch(error){
+    console.error(error);
+
+  }
+
+};
 
 const fetchCompleteProductsApi = (filter) => { // En esta promesa traigo el producto con las características generales, y aparte, traigo su respectivo detalle, para poder utilizar las fotos en el inicio.
   return new Promise((resolve, reject) => {
@@ -140,7 +177,7 @@ const fetchCompleteProductsApi = (filter) => { // En esta promesa traigo el prod
 
   });
 
-}
+};
 
 const fetchProductDetail = (productId) => {
   return new Promise((resolve, reject) => {
@@ -333,21 +370,12 @@ const productByCategory = async(container, filter) => {
 
 };
 
-/* Buscar productos mediante la barra de búsqueda */
-const inputDataUser = async(event) => {
-  event.preventDefault();
-  let inputValue = document.getElementById('inputSearchProduct').value;
-
-  return inputValue;
-
-};
-
 /* Buscar objetos mediante la barra de búsqueda */
-const resultsToSearch = async(filter) => {
-  let searchUser = inputDataUser();
-  let data = await fetchCompleteProductsApi(filter);
-  
-  console.log(searchUser);
+const resultsToSearch = async() => {
+  let inputContent = document.getElementById('inputUser').value;
+  let productsApi = fetchCompleteProductsApi(inputContent);
+
+  console.log(inputContent);
   
 };
 
@@ -451,7 +479,7 @@ const productDetail = async(productId) => {
           <br>
           <div class="font-nav">
             <div>
-              <h5 class="text-center mb-5 main-font">Características</h5>
+              <h5 class="text-center mb-5 main-font modal-underline">Características</h5>
             </div>
             <div class="ml-3 d-flex align-items-center">
               <img class="icons-detail mr-2" src="/public/icons/coin.svg">
@@ -532,10 +560,9 @@ const viewMyCart = (event) => {
               <img class="image-product-to-cart mr-5" src="${productImage}">
               <div>
                 <h5 class="main-font"><b>${attr.title}</b></h5>
-                <p class="font-nav"><b class="ml-1 mr-1">Precio Unitario:</b> ${attr.currency} ${attr.price} | <b class="ml-1 mr-1 mr-1">Cantidad:</b> ${productCount} | <b class="ml-1 mr-1">Total:</b> ${attr.currency} ${totalPrice.toFixed(2)} | <button class="btn btn-outline text-danger remove-link" data-id="${attr.id}"><img class="mb-2" src="/public/icons/trash3.svg">Remover</button></p>
+                <p class="font-nav"><b class="ml-1 mr-1">Precio Unitario:</b> ${attr.currency} ${attr.price} | <b class="ml-1 mr-1 mr-1">Cantidad:</b> ${productCount} | <b class="ml-1 mr-1">Total:</b> ${attr.currency} ${totalPrice.toFixed(2)} | <button class="btn btn-outline text-danger remove-quantity-link" data-id="${attr.id}"><img class="mb-2 mr-1 remove-quantity-img" src="/public/icons/cart-dash.svg">Remover por unidad</button> | <button class="btn btn-outline text-danger remove-all-link" data-id="${attr.id}"><img class="mb-2 mr-1 remove-all-img" src="/public/icons/trash3.svg">Remover Todo</button></p>
               </div>
             </div>
-            <hr>
           
           `;
         
@@ -546,7 +573,7 @@ const viewMyCart = (event) => {
           <div class="d-flex align-items-center justify-content-center">
             <img class="empty-cart" src="src/assets/images/pngwing.com.png">
           </div>
-          <h4 class="justify-content-center text-center main-font">¡Tu carrito de compras está vacío!</h4>
+          <h4 class="justify-content-center text-center main-font title-empty-cart">¡Tu carrito de compras está vacío!</h4>
         
         `;
 
@@ -592,15 +619,26 @@ const viewMyCart = (event) => {
 
       $(`#modal-cart`).modal('show');
 
-      document.querySelectorAll('.remove-link').forEach(button => {
-        button.addEventListener('click', (event) => {
+      document.querySelectorAll('.remove-quantity-link').forEach(button => {
+        button.addEventListener('click', async(event) => {
           event.preventDefault();
           
-          let productId = event.target.closest('.remove-link').getAttribute('data-id');
-          removeProductToCart(productId);
+          let productId = event.target.closest('.remove-quantity-link').getAttribute('data-id');
+          await removeForQuantity(productId, viewMyCart);
         
         });
       
+      });
+
+      document.querySelectorAll('.remove-all-link').forEach(button => {
+        button.addEventListener('click', async(event) => {
+          event.preventDefault();
+
+          let produdctId = event.target.closest('.remove-all-link').getAttribute('data-id');
+          await removeAll(produdctId, viewMyCart);
+
+        });
+
       });
 
     }
@@ -639,7 +677,7 @@ const viewMyFavorites = (event) => {
               <img class="image-product-to-cart mr-5" src="${productImage}">
               <div>
                 <h5 class="main-font"><b>${attr.title}</b></h5>
-                <p class="font-nav"><b class="ml-1 mr-1">Precio Unitario:</b> ${attr.currency} ${attr.price} | <b class="ml-1 mr-1 mr-1">Cantidad:</b> ${productCount} | <b class="ml-1 mr-1">Total:</b> ${attr.currency} ${totalPrice.toFixed(2)} | <button class="btn btn-outline text-danger remove-link" data-id="${attr.id}"><img class="mb-2" src="/public/icons/trash3.svg">Remover</button></p>
+                <p class="font-nav"><b class="ml-1 mr-1">Precio Unitario:</b> ${attr.currency} ${attr.price} | <b class="ml-1 mr-1 mr-1">Cantidad:</b> ${productCount} | <b class="ml-1 mr-1">Total:</b> ${attr.currency} ${totalPrice.toFixed(2)} | <button class="btn btn-outline text-danger remove-quantity-link" data-id="${attr.id}"><img class="mb-2 mr-1 remove-quantity-img" src="/public/icons/cart-dash.svg">Remover por unidad</button> | <button class="btn btn-outline text-danger remove-all-link" data-id="${attr.id}"><img class="mb-2 mr-1 remove-all-img" src="/public/icons/trash3.svg">Remover Todo</button></p>
               </div>
             </div>
             <hr>
@@ -653,7 +691,7 @@ const viewMyFavorites = (event) => {
           <div class="d-flex align-items-center justify-content-center">
             <img class="empty-favourites" src="src/assets/images/undraw_favourite_item_pcyo.svg">
           </div>
-          <h4 class="justify-content-center text-center main-font mt-5">¡Tu listado de favoritos está vacío!</h4>
+          <h4 class="justify-content-center text-center main-font mt-5 title-empty-favourites">¡Todavía no agregaste nada a tus Favoritos!</h4>
         
         `;
 
@@ -701,12 +739,23 @@ const viewMyFavorites = (event) => {
 
       $(`#modal-favourites`).modal('show');
 
-      document.querySelectorAll('.remove-link').forEach(button => {
+      document.querySelectorAll('.remove-quantity-link').forEach(button => {
         button.addEventListener('click', (event) => {
           event.preventDefault();
           
-          let productId = event.target.closest('.remove-link').getAttribute('data-id');
-          removeProductToCart(productId);
+          let productId = event.target.closest('.remove-quantity-link').getAttribute('data-id');
+          removeForQuantity(productId, viewMyFavorites);
+        
+        });
+      
+      });
+
+      document.querySelectorAll('.remove-all-link').forEach(button => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          
+          let productId = event.target.closest('.remove-all-link').getAttribute('data-id');
+          removeAll(productId, viewMyFavorites);
         
         });
       
@@ -721,17 +770,16 @@ const viewMyFavorites = (event) => {
 
 };
 
-const removeProductToCart = (productId) => {
-  console.log(`Removing product with ID: ${productId}`);
-
-};
-
 const main = async() => {
+  let formSearchProduct = document.getElementById('searchForProductsOrCateogories');
+  formSearchProduct.addEventListener('submit', resultsToSearch);
+
   productByCategory('carousel-by-sports-products', 'deportes');
   productByCategory('carousel-by-tecnology-products', 'electrónica');
   productByCategory('carousel-by-home-products', 'hogar');
   counterProductsInMyCart();
+  
 
-}
+};
 
 main();
