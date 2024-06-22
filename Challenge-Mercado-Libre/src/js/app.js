@@ -371,12 +371,114 @@ const productByCategory = async(container, filter) => {
 };
 
 /* Buscar objetos mediante la barra de búsqueda */
-const resultsToSearch = async() => {
-  let inputContent = document.getElementById('inputUser').value;
-  let productsApi = fetchCompleteProductsApi(inputContent);
+const resultsToSearch = async(event) => {
+  try{
+    event.preventDefault();
+      let mainContent = document.getElementById('products-container');
+      let inputContent = document.getElementById('inputUser').value;
+      let productsApi = await fetchCompleteProductsApi(inputContent);
 
-  console.log(inputContent);
-  
+      mainContent.innerHTML = '';
+
+      productsApi.forEach(product => {
+        let colDiv = document.createElement('div');
+        colDiv.className = 'col-lg-6 mb-4 w-50';
+
+        let cardDiv = document.createElement('div');
+        cardDiv.className = 'card ml-5 h-100 mr-5';
+        cardDiv.style.boxShadow = '15px 15px 15px 10px rgba(0, 0, 0, 0.3)';
+
+        let imageByProduct = document.createElement('img');
+        imageByProduct.src = product.images[0].url;
+        imageByProduct.className = 'card-img-top';
+        imageByProduct.className = 'card-img-top mx-auto d-block';
+        imageByProduct.style.width = '200px';
+        imageByProduct.style.height = '200px';
+        imageByProduct.style.marginTop = '20px';
+        imageByProduct.style.marginBottom = '20px';
+          
+        let cardBody = document.createElement('div');
+        cardBody.className = 'card-body text-center';
+
+        let cardTitle = document.createElement('h5');
+        cardTitle.className = 'card-title';
+        cardTitle.style.fontSize = '17px';
+
+        let productTitle = `${product.title}`;
+        cardTitle.innerHTML = productTitle;
+
+        let cardPrice = document.createElement('p');
+        let price = `${product.price} <b>${product.currency}</b>`;
+        cardPrice.innerHTML = price;
+        cardPrice.style.fontSize = '14px';
+        cardPrice.className = 'card-text';
+
+        let cardShipping = document.createElement('p');
+        let shipping = `${product.isFreeShipping ? 'Envío Gratis' : ''}`;
+        cardShipping.className = 'product-shipping text-success';
+        cardShipping.style.fontSize = '14px';
+        cardShipping.innerHTML = shipping;
+
+        let horizontalLine = document.createElement('hr');
+        horizontalLine.style.paddingBottom = '30px';
+
+        let containerIcons = document.createElement('div');
+        containerIcons.className = 'd-flex justify-content-center align-items-center mb-3';
+
+        let elementIconFav = document.createElement('img');
+        let elementIconAddToCart = document.createElement('img');
+        let elementProductDetail = document.createElement('a');
+
+        elementIconAddToCart.style.width = '20px';
+        elementIconAddToCart.style.height = '20px';
+
+        elementIconFav.style.width = '21px';
+        elementIconFav.style.height = '21px';
+
+        elementIconAddToCart.style.cursor = 'pointer';
+        elementIconFav.style.cursor = 'pointer';
+        
+        elementIconFav.className = 'icon-cards-products mr-3';
+        elementIconAddToCart.className = 'icon-cards-products mr-3';
+
+        let routeIconFav = '/public/icons/heart.svg';
+        let routeIconAddToCart = '/public/icons/bag-plus.svg';
+
+        elementIconFav.src = routeIconFav;
+        elementIconFav.style.marginRight = '10px';
+
+        elementIconAddToCart.src = routeIconAddToCart;
+        elementIconAddToCart.style.marginBottom = '2px';
+
+        elementProductDetail.text = 'Más detalles...';
+        elementProductDetail.style.cursor = 'pointer';
+        elementProductDetail.style.textDecoration = 'none';
+        elementProductDetail.className = 'link-product-detail ml-2 mt-1 text-info';
+
+        cardBody.appendChild(cardTitle);
+        cardBody.appendChild(cardPrice);
+        cardBody.appendChild(cardShipping);
+        
+        containerIcons.appendChild(elementIconAddToCart);
+        containerIcons.appendChild(elementIconFav);
+        containerIcons.appendChild(elementProductDetail);
+        
+        cardBody.appendChild(horizontalLine);
+        cardBody.appendChild(containerIcons);
+        
+        cardDiv.appendChild(imageByProduct);
+        cardDiv.appendChild(cardBody);
+        colDiv.appendChild(cardDiv);
+
+        mainContent.appendChild(colDiv);
+
+    }); 
+
+  }catch(error){
+    console.error(error);
+
+  };
+
 };
 
 const counterProductsInMyCart = () => {
