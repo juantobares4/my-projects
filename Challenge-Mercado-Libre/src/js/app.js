@@ -227,6 +227,29 @@ const fetchProductDetail = (productId) => {
 
 };
 
+const fetchProductDescription = (idProduct) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      fetch(`https://api.mercadolibre.com/items/${idProduct}/description`)
+        .then(res => res.json())
+        .then(json => {
+          const descript = {
+            description: json.plain_text
+
+          };
+
+          resolve([descript]);
+
+        })
+
+        .catch(error => reject(error));
+
+    }, 100);
+
+  });
+
+};
+
 const productByCategory = async(container, filter) => {
   function capitalizeFirstLetter(string){
     return string.substring(0, 1).toUpperCase() + string.substring(1);
@@ -543,6 +566,21 @@ const resultsToSearch = async(event) => {
 
       mainContent.appendChild(colDiv);
 
+      elementIconAddToCart.addEventListener('click', () => {
+        addProductToCart(product.id);
+
+      });
+
+      elementIconFav.addEventListener('click', () => {
+        addProductToFav(product.id);
+
+      });
+
+      elementProductDetail.addEventListener('click', () => {
+        productDetail(product.id);        
+
+      });
+
     }); 
 
   }catch(error){
@@ -623,8 +661,9 @@ const productDetail = async(productId) => {
   try{
     let productDetailApi = await fetchProductDetail(productId);
     let productFilter = productDetailApi.find(product => product.id === productId);
-    let modalProductDetail = document.createElement('div');
     let arrayProduct = [productFilter];
+    
+    let modalProductDetail = document.createElement('div');
 
     if(modalProductDetail){
       modalProductDetail.remove();
@@ -637,8 +676,10 @@ const productDetail = async(productId) => {
 
     let modalBodyContent = '<div class="modal-body border">';
     
-    arrayProduct.forEach(attr => {
+    for(const attr of arrayProduct){ // En el recorrido de un array, para usar un async/await, es mejor usar un for que un forEach. 
       let imagesByProduct = attr.images.slice(0, 3).map(image => `<img class="image-product-detail" src="${image.url}" alt="${attr.title}">`).join('');
+      let arrayDescription = await fetchProductDescription(attr.id);
+      let description = arrayDescription[0].description || 'No hay descripción de este producto.';
 
       modalBodyContent += `
         <div>
@@ -651,22 +692,30 @@ const productDetail = async(productId) => {
           </div>
           <br>
           <br>
-          <div class="font-nav">
+          <div class="m-4">
             <div>
-              <h5 class="text-center mb-5 main-font modal-underline">Características</h5>
+              <h5 class="text-start mt-1 mb-5 main-font modal-underline">Descripción del producto</h5>
             </div>
-            <div class="ml-3 d-flex align-items-center">
+            <div class="text-justify">
+              <p class="main-font">${description}</p>
+            </div>
+          </div>
+          <div class="font-nav m-4">
+            <div>
+              <h5 class="text-start mt-5 mb-5 main-font modal-underline">Características</h5>
+            </div>
+            <div class="ml-1 d-flex align-items-center">
               <img class="icons-detail mr-2" src="/public/icons/coin.svg">
               <p class="mb-0"><b>Precio:</b> ${attr.price} <b>${attr.currency}</b></p>
             </div>  
               <br>
-            <div class="ml-3 d-flex align-items-center">
+            <div class="ml-1 d-flex align-items-center">
               <img class="icons-detail mr-2" src="/public/icons/truck.svg">
               <p class="mb-0"><b>Envío Gratis:</b> ${attr.isFreeShipping ? 'Sí' : 'No'}</p>
               <br>
             </div>
               <br>
-            <div class="ml-3 d-flex align-items-center"> 
+            <div class="ml-1 d-flex align-items-center"> 
               <img class="icons-detail mr-2" src="/public/icons/offer_664457.png">
               <p class="mb-0"><b>Valoración:</b> ${renderRatingStars(attr.randomRating)} (${attr.randomRating})</p>
             </div> 
@@ -675,7 +724,7 @@ const productDetail = async(productId) => {
           
       `
 
-    });
+    };
 
     modalBodyContent += '</div>';
 
