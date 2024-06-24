@@ -96,16 +96,25 @@ const renderRatingStars = (rating) => {
 
 };
 
-const removeAll = async(productId, asyncFunction) => {
+const removeAll = async(productId, asyncFunction, isFavourite, itsInTheCart) => {
   try{
     let productsInLocalStorage = getLocalStorage();
-    let productsFilter = productsInLocalStorage.filter(product => product.id !== productId);
+    let productsFilter;
 
+    if(isFavourite){
+      productsFilter = productsInLocalStorage.filter(product => !(product.id === productId && product.isFavourite));
+    
+    }else if(itsInTheCart){
+      productsFilter = productsInLocalStorage.filter(product => !(product.id === productId && product.itsInTheCart));
+    
+    };
+   
     saveInLocalStorage(productsFilter);
     showToast('Producto eliminado con éxito');
-
+ 
     await asyncFunction();
     await counterProductsInMyCart();
+
 
   }catch(error){
     console.error(error);
@@ -114,12 +123,20 @@ const removeAll = async(productId, asyncFunction) => {
 
 };
 
-const removeForQuantity = async(productId, asyncFunction) => {
+const removeForQuantity = async(productId, asyncFunction, isFavourite, itsInTheCart) => {
   try{
     let productsInLocalStorage = getLocalStorage();
-    let productIndex = productsInLocalStorage.findIndex(product => product.id === productId);
-    productsInLocalStorage.splice(productIndex, 1); // A partir del index del producto encontrado, borra un elemento.
     
+    if(isFavourite){  
+      let productIndex = productsInLocalStorage.findIndex(product => product.id === productId);
+      productsInLocalStorage.splice(productIndex, 1); // A partir del índice del producto encontrado, borramos un elemento.
+    
+    }else if(itsInTheCart){
+      let productIndex = productsInLocalStorage.findIndex(product => product.id === productId);
+      productsInLocalStorage.splice(productIndex, 1);
+    
+    }
+
     saveInLocalStorage(productsInLocalStorage);
     showToast('Producto eliminado con éxito');
 
@@ -149,7 +166,7 @@ const fetchCompleteProductsApi = (filter) => { // En esta promesa traigo el prod
               isFreeShipping: item.shipping.free_shipping, // Envío gratis
               stock: item.available_quantity,
               categoryId: item.category_id,
-              attributes: item.attributes, // Atributos del producto
+              attributes: item.attributes // Atributos del producto
 
             }))
 
@@ -195,7 +212,7 @@ const fetchProductDetail = (productId) => {
             images: json.pictures,
             warranty: json.warranty,
             randomRating: (Math.random() * 2 + 3).toFixed(1) // Inventé una valoración aleatoria, entre 3 y 5 puntos, para los productos.
-          
+
           };
           
           resolve([selectedData]);
@@ -367,110 +384,164 @@ const productByCategory = async(container, filter) => {
   titleOfSection.innerHTML = `Productos relacionados a ${capitalizeFirstLetter(filter)}`;
 
   containerProducts.parentNode.insertBefore(titleOfSection, containerProducts);
-
+  
 };
 
 /* Buscar objetos mediante la barra de búsqueda */
 const resultsToSearch = async(event) => {
   try{
     event.preventDefault();
-      let mainContent = document.getElementById('products-container');
-      let inputContent = document.getElementById('inputUser').value;
-      let productsApi = await fetchCompleteProductsApi(inputContent);
+    
+    document.querySelectorAll('.section-products-by-categories, .horizontal-line, .title').forEach(element => {
+      element.style.display = 'none';
+      
+    });
+    
+    let mainContent = document.getElementById('products-container');
+    let searchContainer = document.getElementById('section-list-products');
+    let sectionSearchProducts = document.querySelector('.section-search-products');
+    
+    sectionSearchProducts.style.marginBottom = '20px';
 
-      mainContent.innerHTML = '';
+    let containerTitle = document.getElementById('container-title');
+    
+    let elementTitle = document.createElement('h4');
+    let elementResults = document.createElement('p');
+    
+    let inputContent = document.getElementById('inputUser').value;
+    let productsApi = await fetchCompleteProductsApi(inputContent);
+    
+    let messageTitle = `Resultados de la búsqueda: ${inputContent}`;
+    let messageResults = `${productsApi.length} resultados`;
 
-      productsApi.forEach(product => {
-        let colDiv = document.createElement('div');
-        colDiv.className = 'col-lg-6 mb-4 w-50';
+    if(!containerTitle){
+      let containerTitle = document.createElement('div');
+      containerTitle.id = 'container-title';
+      
+      elementTitle.innerHTML = messageTitle;
 
-        let cardDiv = document.createElement('div');
-        cardDiv.className = 'card ml-5 h-100 mr-5';
-        cardDiv.style.boxShadow = '15px 15px 15px 10px rgba(0, 0, 0, 0.3)';
+      elementTitle.className = 'main-font mb-1';
+      elementTitle.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 1)';
+      elementTitle.style.color = 'white';
 
-        let imageByProduct = document.createElement('img');
-        imageByProduct.src = product.images[0].url;
-        imageByProduct.className = 'card-img-top';
-        imageByProduct.className = 'card-img-top mx-auto d-block';
-        imageByProduct.style.width = '200px';
-        imageByProduct.style.height = '200px';
-        imageByProduct.style.marginTop = '20px';
-        imageByProduct.style.marginBottom = '20px';
-          
-        let cardBody = document.createElement('div');
-        cardBody.className = 'card-body text-center';
+      elementResults.innerHTML = messageResults;
 
-        let cardTitle = document.createElement('h5');
-        cardTitle.className = 'card-title';
-        cardTitle.style.fontSize = '17px';
+      elementResults.className = 'main-font mb-5 mt-2';
+      elementResults.style.color = 'white';
+      
+      containerTitle.className = 'd-flex flex-column align-items-center pt-5 border shadow';
+      containerTitle.style.backgroundColor = '#3b3535';
+      
+      containerTitle.appendChild(elementTitle);
+      containerTitle.appendChild(elementResults);
+      searchContainer.parentNode.insertBefore(containerTitle, searchContainer);
+      
+    }else{
+      let elementTitle = containerTitle.querySelector('h4');
+      let elementResults = containerTitle.querySelector('p');
 
-        let productTitle = `${product.title}`;
-        cardTitle.innerHTML = productTitle;
+      elementTitle.innerHTML = messageTitle;
+      elementResults.innerHTML = messageResults;
 
-        let cardPrice = document.createElement('p');
-        let price = `${product.price} <b>${product.currency}</b>`;
-        cardPrice.innerHTML = price;
-        cardPrice.style.fontSize = '14px';
-        cardPrice.className = 'card-text';
+    };
 
-        let cardShipping = document.createElement('p');
-        let shipping = `${product.isFreeShipping ? 'Envío Gratis' : ''}`;
-        cardShipping.className = 'product-shipping text-success';
-        cardShipping.style.fontSize = '14px';
-        cardShipping.innerHTML = shipping;
+    mainContent.innerHTML = '';
+    
+    productsApi.forEach(product => {
+      let colDiv = document.createElement('div');
+      colDiv.className = 'col-lg-6 mb-4 w-50 mt-0';
 
-        let horizontalLine = document.createElement('hr');
-        horizontalLine.style.paddingBottom = '30px';
+      let cardDiv = document.createElement('div');
+      cardDiv.className = 'card ml-5 h-100 mr-5';
+      cardDiv.style.boxShadow = '15px 15px 15px 10px rgba(0, 0, 0, 0.3)';
 
-        let containerIcons = document.createElement('div');
-        containerIcons.className = 'd-flex justify-content-center align-items-center mb-3';
-
-        let elementIconFav = document.createElement('img');
-        let elementIconAddToCart = document.createElement('img');
-        let elementProductDetail = document.createElement('a');
-
-        elementIconAddToCart.style.width = '20px';
-        elementIconAddToCart.style.height = '20px';
-
-        elementIconFav.style.width = '21px';
-        elementIconFav.style.height = '21px';
-
-        elementIconAddToCart.style.cursor = 'pointer';
-        elementIconFav.style.cursor = 'pointer';
+      let imageByProduct = document.createElement('img');
+      imageByProduct.src = product.images[0].url;
+      imageByProduct.className = 'card-img-top';
+      imageByProduct.className = 'card-img-top mx-auto d-block';
+      imageByProduct.style.width = '200px';
+      imageByProduct.style.height = '200px';
+      imageByProduct.style.marginTop = '20px';
+      imageByProduct.style.marginBottom = '20px';
         
-        elementIconFav.className = 'icon-cards-products mr-3';
-        elementIconAddToCart.className = 'icon-cards-products mr-3';
+      let cardBody = document.createElement('div');
+      cardBody.className = 'card-body text-center d-flex flex-column justify-content-between';
 
-        let routeIconFav = '/public/icons/heart.svg';
-        let routeIconAddToCart = '/public/icons/bag-plus.svg';
+      let cardTitle = document.createElement('h5'); 
+      cardTitle.className = 'card-title';
+      cardTitle.style.fontSize = '17px';
 
-        elementIconFav.src = routeIconFav;
-        elementIconFav.style.marginRight = '10px';
+      let productTitle = `${product.title}`;
+      cardTitle.innerHTML = productTitle;
 
-        elementIconAddToCart.src = routeIconAddToCart;
-        elementIconAddToCart.style.marginBottom = '2px';
+      let cardPrice = document.createElement('p');
+      let price = `${product.price} <b>${product.currency}</b>`;
+      cardPrice.innerHTML = price;
+      cardPrice.style.fontSize = '15px';
+      cardPrice.className = 'card-text';
 
-        elementProductDetail.text = 'Más detalles...';
-        elementProductDetail.style.cursor = 'pointer';
-        elementProductDetail.style.textDecoration = 'none';
-        elementProductDetail.className = 'link-product-detail ml-2 mt-1 text-info';
+      let cardSeller = document.createElement('p');
+      let seller = `<i>${product.seller}</i>`;
+      cardSeller.innerHTML = seller;
+      cardSeller.style.fontSize = '13px';
 
-        cardBody.appendChild(cardTitle);
-        cardBody.appendChild(cardPrice);
-        cardBody.appendChild(cardShipping);
-        
-        containerIcons.appendChild(elementIconAddToCart);
-        containerIcons.appendChild(elementIconFav);
-        containerIcons.appendChild(elementProductDetail);
-        
-        cardBody.appendChild(horizontalLine);
-        cardBody.appendChild(containerIcons);
-        
-        cardDiv.appendChild(imageByProduct);
-        cardDiv.appendChild(cardBody);
-        colDiv.appendChild(cardDiv);
+      let cardShipping = document.createElement('p');
+      let shipping = `${product.isFreeShipping ? 'Envío Gratis' : ''}`;
+      cardShipping.className = 'product-shipping text-success';
+      cardShipping.style.fontSize = '14px';
+      cardShipping.innerHTML = shipping;
 
-        mainContent.appendChild(colDiv);
+      let containerIcons = document.createElement('div');
+      containerIcons.className = 'd-flex justify-content-center align-items-center';
+      containerIcons.style.borderTop = '1px solid rgba(0, 0, 0, 0.2)';
+      containerIcons.style.paddingTop = '20px';
+
+      let elementIconFav = document.createElement('img');
+      let elementIconAddToCart = document.createElement('img');
+      let elementProductDetail = document.createElement('a'); 
+
+      elementIconAddToCart.style.width = '20px';
+      elementIconAddToCart.style.height = '20px';
+
+      elementIconFav.style.width = '21px';
+      elementIconFav.style.height = '21px';
+
+      elementIconAddToCart.style.cursor = 'pointer';
+      elementIconFav.style.cursor = 'pointer';
+      
+      elementIconFav.className = 'icon-cards-products mr-3';
+      elementIconAddToCart.className = 'icon-cards-products mr-3';
+
+      let routeIconFav = '/public/icons/heart.svg';
+      let routeIconAddToCart = '/public/icons/bag-plus.svg';
+
+      elementIconFav.src = routeIconFav;
+      elementIconFav.style.marginRight = '10px';
+
+      elementIconAddToCart.src = routeIconAddToCart;
+      elementIconAddToCart.style.marginBottom = '2px';
+
+      elementProductDetail.text = 'Más detalles...';
+      elementProductDetail.style.cursor = 'pointer';
+      elementProductDetail.style.textDecoration = 'none';
+      elementProductDetail.className = 'link-product-detail ml-2 text-info';
+
+      cardBody.appendChild(cardTitle);
+      cardBody.appendChild(cardPrice);
+      cardBody.appendChild(cardSeller);
+      cardBody.appendChild(cardShipping);
+      
+      cardBody.appendChild(containerIcons);
+      
+      containerIcons.appendChild(elementIconAddToCart);
+      containerIcons.appendChild(elementIconFav);
+      containerIcons.appendChild(elementProductDetail);
+      
+      cardDiv.appendChild(imageByProduct);
+      cardDiv.appendChild(cardBody);
+      colDiv.appendChild(cardDiv);
+
+      mainContent.appendChild(colDiv);
 
     }); 
 
@@ -508,6 +579,7 @@ const addProductToFav = async(productId) => {
     let productDetailApi = await fetchProductDetail(productId);
     let productsInLocalStorage = getLocalStorage();
     let filterProduct = productDetailApi.find(product => product.id === productId);
+    
     filterProduct.isFavourite = true;
 
     productsInLocalStorage.push(filterProduct);
@@ -611,7 +683,9 @@ const productDetail = async(productId) => {
       <div class="modal-dialog custom-modal">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="main-font">Detalle del Producto</h5>
+            <h5 class="main-font">
+              <img class="image-descript-detail m-3" src="/public/icons/search_1265775.png" alt="ticket-detail">Detalle del Producto
+            </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -699,7 +773,7 @@ const viewMyCart = (event) => {
             <div class="modal-content">
               <div class="modal-header align-items-center text-center">
                 <h5 class="main-font">
-                  <img class="image-descript-cart m-3" src="${bagCheckImg}" class="ml-3 mr-3 img-cart">Mi carrito
+                  <img class="image-descript-cart m-3" src="${bagCheckImg}">Mi carrito
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
@@ -726,7 +800,10 @@ const viewMyCart = (event) => {
           event.preventDefault();
           
           let productId = event.target.closest('.remove-quantity-link').getAttribute('data-id');
-          await removeForQuantity(productId, viewMyCart);
+          let itsInTheCart = true;
+          let isFavouriteProduct = false;
+
+          await removeForQuantity(productId, viewMyCart, isFavouriteProduct, itsInTheCart);
         
         });
       
@@ -736,8 +813,11 @@ const viewMyCart = (event) => {
         button.addEventListener('click', async(event) => {
           event.preventDefault();
 
-          let produdctId = event.target.closest('.remove-all-link').getAttribute('data-id');
-          await removeAll(produdctId, viewMyCart);
+          let productId = event.target.closest('.remove-all-link').getAttribute('data-id');
+          let itsInTheCart = true;
+          let isFavouriteProduct = false;
+
+          await removeAll(productId, viewMyCart, isFavouriteProduct, itsInTheCart);
 
         });
 
@@ -817,7 +897,7 @@ const viewMyFavorites = (event) => {
             <div class="modal-content">
               <div class="modal-header align-items-center text-center">
                 <h5 class="main-font">
-                  <img class="image-descript-favourites m-3" src="${bagCheckImg}" class="ml-3 mr-3 img-cart">Mis favoritos
+                  <img class="image-descript-favourites m-3" src="${bagCheckImg}">Mis favoritos
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
@@ -846,19 +926,26 @@ const viewMyFavorites = (event) => {
           event.preventDefault();
           
           let productId = event.target.closest('.remove-quantity-link').getAttribute('data-id');
-          removeForQuantity(productId, viewMyFavorites);
+          let itsInTheCart = false;
+          let isFavouriteProduct = true;
+
+          removeForQuantity(productId, viewMyFavorites, isFavouriteProduct, itsInTheCart);
         
         });
       
       });
 
       document.querySelectorAll('.remove-all-link').forEach(button => {
-        button.addEventListener('click', (event) => {
+        button.addEventListener('click', async(event) => {
           event.preventDefault();
           
           let productId = event.target.closest('.remove-all-link').getAttribute('data-id');
-          removeAll(productId, viewMyFavorites);
-        
+          let itsInTheCart = false;
+          let isFavouriteProduct = true;
+
+          await removeAll(productId, viewMyFavorites, isFavouriteProduct, itsInTheCart);
+
+
         });
       
       });
@@ -880,7 +967,6 @@ const main = async() => {
   productByCategory('carousel-by-tecnology-products', 'electrónica');
   productByCategory('carousel-by-home-products', 'hogar');
   counterProductsInMyCart();
-  
 
 };
 
