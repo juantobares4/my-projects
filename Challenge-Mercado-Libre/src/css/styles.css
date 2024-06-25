@@ -196,6 +196,20 @@ nav{
 
 }
 
+.headshot{
+	flex-shrink: 0;
+	margin: 20px;
+	height: calc(150px + 6vw);
+	width: calc(150px + 6vw);
+	border: calc(8px + 0.2vw) solid aliceblue;
+	background-origin: border-box;
+	background-clip: content-box, border-box;
+	background-size: cover;
+	box-sizing: border-box;
+	box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
+
+}
+
 .button-53{
   background-color: #cb1b41;
   border: 0 solid #E5E7EB;
@@ -333,7 +347,8 @@ nav{
 }
 
 #container-section-newness{
-  margin-top: 50px;
+  background-color: rgba(209, 206, 206, 0.659);
+  height: 100%;
   
 }
 
@@ -345,6 +360,11 @@ nav{
 
 #cards-by-newness-products .col-lg-4{
   flex: 0 0 25%;
+
+}
+
+#card-by-newness{
+  background-color: rgba(255, 255, 255, 0.764);
 
 }
 
@@ -411,35 +431,6 @@ nav{
  
 }
 
-.border-card-image{
-  position: relative;
-  display: inline-block;
-  padding: 10px;
-  background-color: #cb1b41ba;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transform: rotate(-2deg);
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  overflow: hidden;
-
-}
-
-.border-card-image::before{
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  background-color: #000;
-  transform: translateY(-100%);
-  z-index: 1;
-
-}
-
 .product-seller{
   font-size: 13px;
 
@@ -461,10 +452,29 @@ nav{
 
 }
 
+.tv{
+  position: relative;
+  width: 350px;
+  height: 250px;
+  background-color: rgb(255, 255, 255) !important;
+  border-radius: 0% 0% 0% 0% / 0% 0% 0% 0% ;
+  color: rgb(0, 0, 0);
+  box-shadow: 20px 20px rgba(0,0,0,.15);
+  transition: all .4s ease;
+}
+
+.tv:hover{
+  border-radius: 0% 0% 50% 50% / 0% 0% 5% 5% ;
+  box-shadow: 10px 10px rgba(0,0,0,.25);
+
+}
+
 .card{
+  border-radius: 30px;
   overflow: hidden;
   transition: transform 0.3s ease;
   z-index: 1;
+  background-color: white;
 
 }
 

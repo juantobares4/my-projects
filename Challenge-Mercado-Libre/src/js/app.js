@@ -472,16 +472,16 @@ const resultsToSearch = async(event) => {
     
     productsApi.forEach(product => {
       let colDiv = document.createElement('div');
-      colDiv.className = 'col-lg-6 mb-4 w-50 mt-0';
+      colDiv.className = 'col-lg-4 mb-4 w-50 mt-0';
 
       let cardDiv = document.createElement('div');
-      cardDiv.className = 'card ml-5 h-100 mr-5';
+      cardDiv.className = 'card ml-5 h-100 mr-5 tv headshot';
       cardDiv.style.boxShadow = '15px 15px 15px 10px rgba(0, 0, 0, 0.3)';
 
       let imageByProduct = document.createElement('img');
       imageByProduct.src = product.images[0].url;
       imageByProduct.className = 'card-img-top';
-      imageByProduct.className = 'card-img-top mx-auto d-block';
+      imageByProduct.className = 'card-img-top mx-auto d-block headshot';
       imageByProduct.style.width = '200px';
       imageByProduct.style.height = '200px';
       imageByProduct.style.marginTop = '20px';
@@ -1020,15 +1020,16 @@ const filterByNewness = async(filter) => {
 
       let cardDiv = document.createElement('div');
       cardDiv.className = 'card h-100';
+      cardDiv.id = 'card-by-newness';
 
       let imageByProduct = document.createElement('img');
       imageByProduct.src = product.images[0].url;
-      imageByProduct.className = 'card-img-top';
-      imageByProduct.className = 'card-img-top mx-auto d-block';
-      imageByProduct.style.width = '100px';
-      imageByProduct.style.height = '100px';
-      imageByProduct.style.marginTop = '20px';
+      imageByProduct.className = 'card-img-top mx-auto d-block headshot headshot';
+      imageByProduct.style.width = '90%';
+      imageByProduct.style.height = '90%';
+      imageByProduct.style.marginTop = '20px'; 
       imageByProduct.style.marginBottom = '20px';
+      imageByProduct.style.padding = '10px';
         
       let cardBody = document.createElement('div');
       cardBody.className = 'card-body text-center d-flex flex-column justify-content-between';
@@ -1121,7 +1122,7 @@ const filterByNewness = async(filter) => {
 const main = async() => {
   let formSearchProduct = document.getElementById('searchForProductsOrCateogories');
   formSearchProduct.addEventListener('submit', resultsToSearch);
-  filterByNewness('ropa para invierno');
+  filterByNewness('ropa invierno');
 
   productByCategory('carousel-by-sports-products', 'deportes');
   productByCategory('carousel-by-tecnology-products', 'electrónica');
