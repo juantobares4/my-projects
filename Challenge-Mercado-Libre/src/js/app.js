@@ -34,11 +34,10 @@ const showToast = (message, title) => {
 
 };
 
-const scrollContactSection = (event) => {
-  event.preventDefault();
-  let footer = document.getElementById('section-contact');
+const scrollSection = (section) => {
+  let sectionToScroll = document.getElementById(section);
 
-  footer.scrollIntoView({
+  sectionToScroll.scrollIntoView({
     behavior: 'smooth'
   
   });
@@ -404,7 +403,7 @@ const productByCategory = async(container, filter) => {
 
   let titleOfSection = document.createElement('h5');
   titleOfSection.className = 'carousel-title';
-  titleOfSection.innerHTML = `Productos relacionados a ${capitalizeFirstLetter(filter)}`;
+  titleOfSection.innerHTML = `Descubrí nuestros productos de ${capitalizeFirstLetter(filter)}`;
 
   containerProducts.parentNode.insertBefore(titleOfSection, containerProducts);
   
@@ -430,7 +429,7 @@ const resultsToSearch = async(event) => {
     
     let elementTitle = document.createElement('h4');
     let elementResults = document.createElement('p');
-    
+
     let inputContent = document.getElementById('inputUser').value;
     let productsApi = await fetchCompleteProductsApi(inputContent);
     
@@ -452,9 +451,10 @@ const resultsToSearch = async(event) => {
       elementResults.className = 'main-font mb-5 mt-2';
       elementResults.style.color = 'white';
       
-      containerTitle.className = 'd-flex flex-column align-items-center pt-5 border shadow';
+      containerTitle.className = 'd-flex flex-column align-items-center pt-5 border';
       containerTitle.style.backgroundColor = '#3b3535';
-      
+      containerTitle.style.boxShadow = '15px 15px 15px 10px rgba(0, 0, 0, 0.3)';
+
       containerTitle.appendChild(elementTitle);
       containerTitle.appendChild(elementResults);
       searchContainer.parentNode.insertBefore(containerTitle, searchContainer);
@@ -1008,9 +1008,120 @@ const viewMyFavorites = (event) => {
 
 };
 
+const filterByNewness = async(filter) => {
+  try{
+    let products = await fetchCompleteProductsApi(filter);
+    let limitProducts = products.slice(6, 10); 
+    let containerCards = document.getElementById('cards-by-newness-products');
+
+    limitProducts.forEach(product => {
+      let colDiv = document.createElement('div');
+      colDiv.className = 'col-lg-4 mb-4 w-25 mt-0';
+
+      let cardDiv = document.createElement('div');
+      cardDiv.className = 'card h-100';
+
+      let imageByProduct = document.createElement('img');
+      imageByProduct.src = product.images[0].url;
+      imageByProduct.className = 'card-img-top';
+      imageByProduct.className = 'card-img-top mx-auto d-block';
+      imageByProduct.style.width = '100px';
+      imageByProduct.style.height = '100px';
+      imageByProduct.style.marginTop = '20px';
+      imageByProduct.style.marginBottom = '20px';
+        
+      let cardBody = document.createElement('div');
+      cardBody.className = 'card-body text-center d-flex flex-column justify-content-between';
+
+      let cardTitle = document.createElement('h5'); 
+      cardTitle.className = 'card-title';
+      cardTitle.style.fontSize = '17px';
+
+      let productTitle = `${product.title}`;
+      cardTitle.innerHTML = productTitle;
+
+      let cardPrice = document.createElement('p');
+      let price = `${product.price} <b>${product.currency}</b>`;
+      cardPrice.innerHTML = price;
+      cardPrice.style.fontSize = '15px';
+      cardPrice.className = 'card-text';
+
+      let cardSeller = document.createElement('p');
+      let seller = `<i>${product.seller}</i>`;
+      cardSeller.innerHTML = seller;
+      cardSeller.style.fontSize = '13px';
+
+      let cardShipping = document.createElement('p');
+      let shipping = `${product.isFreeShipping ? 'Envío Gratis' : ''}`;
+      cardShipping.className = 'product-shipping text-success';
+      cardShipping.style.fontSize = '14px';
+      cardShipping.innerHTML = shipping;
+
+      let containerIcons = document.createElement('div');
+      containerIcons.className = 'd-flex justify-content-center align-items-center';
+      containerIcons.style.borderTop = '1px solid rgba(0, 0, 0, 0.2)';
+      containerIcons.style.paddingTop = '20px';
+  
+      let elementIconFav = document.createElement('img');
+      let elementIconAddToCart = document.createElement('img');
+      let elementProductDetail = document.createElement('a'); 
+
+      elementIconAddToCart.style.width = '20px';
+      elementIconAddToCart.style.height = '20px';
+
+      elementIconFav.style.width = '21px';
+      elementIconFav.style.height = '21px';
+
+      elementIconAddToCart.style.cursor = 'pointer';
+      elementIconFav.style.cursor = 'pointer';
+      
+      elementIconFav.className = 'icon-cards-products mr-3';
+      elementIconAddToCart.className = 'icon-cards-products mr-3';
+
+      let routeIconFav = '/public/icons/heart.svg';
+      let routeIconAddToCart = '/public/icons/bag-plus.svg';
+
+      elementIconFav.src = routeIconFav;
+      elementIconFav.style.marginRight = '10px';
+
+      elementIconAddToCart.src = routeIconAddToCart;
+      elementIconAddToCart.style.marginBottom = '2px';
+
+      elementProductDetail.text = 'Más detalles...';
+      elementProductDetail.style.cursor = 'pointer';
+      elementProductDetail.style.textDecoration = 'none';
+      elementProductDetail.className = 'link-product-detail ml-2 text-info';
+
+      cardBody.appendChild(cardTitle);
+      cardBody.appendChild(cardPrice);
+      cardBody.appendChild(cardSeller);
+      cardBody.appendChild(cardShipping);
+      
+      cardBody.appendChild(containerIcons);
+      
+      containerIcons.appendChild(elementIconAddToCart);
+      containerIcons.appendChild(elementIconFav);
+      containerIcons.appendChild(elementProductDetail);
+      
+      cardDiv.appendChild(imageByProduct);
+      cardDiv.appendChild(cardBody);
+      colDiv.appendChild(cardDiv);
+
+      containerCards.appendChild(colDiv);
+  
+  });
+
+  }catch(error){
+    console.error(error);
+
+  };
+
+};
+
 const main = async() => {
   let formSearchProduct = document.getElementById('searchForProductsOrCateogories');
   formSearchProduct.addEventListener('submit', resultsToSearch);
+  filterByNewness('ropa para invierno');
 
   productByCategory('carousel-by-sports-products', 'deportes');
   productByCategory('carousel-by-tecnology-products', 'electrónica');

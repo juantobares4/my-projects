@@ -44,10 +44,10 @@
         </ul>
       </div>
       <div>
-        <a class="drop-link mr-4" href="" onclick="scrollContactSection(event)">Contactános</a>
+        <a class="drop-link mr-4" href="#" onclick="scrollSection('section-contact')">Contactános</a>
       </div>
       <div>
-        <a class="drop-link mr-3 ml-2" href="#" onclick="filterBy('novedades')">Novedades</a>
+        <a class="drop-link mr-3 ml-2" href="#" onclick="scrollSection('container-section-newness')">Novedades para el invierno</a>
       </div>
     </nav>
     <div class="cart-section navbar navbar-expand-lg justify-content-center p-1 align-items-center">
@@ -103,6 +103,16 @@
     </a>
   </div>
   <div class="horizontal-line-carousel"></div>
+
+  <section class="shadow">
+    <div id="container-section-newness" class="mb-2">
+      <div class="d-flex justify-content-center align-items-center">
+        <img src="/public/icons/snowflake_2076835.png" alt="cold" class="img-by-winter">
+      </div>
+      <h4 class="text-center mb-5 ml-3 mt-5 font-cold title-search-products">Tendencias de Invierno: mantenete caliente y a la moda con nuestra nueva colección</h4>
+      <div class="d-flex justify-content-center align-items-center" id="cards-by-newness-products"></div>
+    </div>
+  </section>
   
   <section class="section-search-products">
     <div class="container-search text-center">
@@ -167,9 +177,8 @@
         </div>
       </div>
     </div>
-    <div class="titles-carousel about-us text-center py-3">
-      <h5 class="mt-0">Contáctate con nosotros</h5>
-      <div class="m-0 d-flex justify-content-center align-items-center">
+    <div class="titles-carousel about-us text-center pt-3">
+      <div class="mt-4 d-flex justify-content-center align-items-center">
         <img src="/public/icons/contact/geo-alt.svg">
         <p class="mt-3 mr-3 ml-2">Tejerina Norte 783, Río Cuarto, Córdoba, CP 5800</p>
         <img src="/public/icons/contact/telephone.svg" alt="">
