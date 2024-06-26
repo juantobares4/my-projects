@@ -412,7 +412,10 @@ const productByCategory = async(container, filter) => {
 /* Buscar objetos mediante la barra de búsqueda */
 const resultsToSearch = async(event) => {
   try{
-    event.preventDefault();
+    if(event){
+      event.preventDefault();
+
+    }
     
     document.querySelectorAll('.section-products-by-categories, .horizontal-line, .title').forEach(element => {
       element.style.display = 'none';
@@ -842,8 +845,6 @@ const viewMyCart = (event) => {
       
       }
 
-      $(`#modal-cart`).modal('show');
-
       document.querySelectorAll('.remove-quantity-link').forEach(button => {
         button.addEventListener('click', async(event) => {
           event.preventDefault();
@@ -873,6 +874,8 @@ const viewMyCart = (event) => {
       });
 
     }
+    
+    $(`#modal-cart`).modal('show'); // NOTA: Al mostrar el modal, debemos enviarlo al fondo de la función para no tener problemas de retraso en la ejecución de las funciones anteriores.
   
   }catch(error){
     console.error(error);
@@ -1109,6 +1112,21 @@ const filterByNewness = async(filter) => {
       colDiv.appendChild(cardDiv);
 
       containerCards.appendChild(colDiv);
+
+      elementIconAddToCart.addEventListener('click', () => {
+        addProductToCart(product.id);
+
+      });
+
+      elementIconFav.addEventListener('click', () => {
+        addProductToFav(product.id);
+
+      });
+
+      elementProductDetail.addEventListener('click', () => {
+        productDetail(product.id);
+
+      });
   
   });
 
