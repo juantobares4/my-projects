@@ -210,6 +210,33 @@ nav{
 
 }
 
+.button-53-to-purchase{
+  background-color: #59c11d;
+  border: 0 solid #E5E7EB;
+  box-sizing: border-box;
+  color: #000000;
+  display: flex;
+  font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 1.75rem;
+  padding: .75rem 1.65rem;
+  position: relative;
+  text-align: center;
+  text-decoration: none #000000 solid;
+  text-decoration-thickness: auto;
+  width: 200px;
+  max-width: 460px;
+  position: relative;
+  cursor: pointer;
+  transform: rotate(-2deg);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+}
+
 .button-53{
   background-color: #cb1b41;
   border: 0 solid #E5E7EB;
@@ -237,12 +264,12 @@ nav{
 
 }
 
-.button-53:focus{
+.button-53:focus, .button-53-to-purchase:focus{
   outline: 0;
 
 }
 
-.button-53:after{
+.button-53:after, .button-53-to-purchase:after{
   content: '';
   position: absolute;
   border: 1px solid #000000;
@@ -253,7 +280,7 @@ nav{
 
 }
 
-.button-53:hover:after{
+.button-53:hover:after, .button-53-to-purchase:hover:after{
   bottom: 2px;
   left: 2px;
 
