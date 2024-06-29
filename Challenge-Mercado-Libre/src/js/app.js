@@ -1150,7 +1150,7 @@ const filterByNewness = async(filter) => {
 
 };
 
-const showPurchaseDetailsModal = async() => {
+const showPurchaseDetailsModal = async () => {
   const getCurrentDate = () => {
     let date = new Date();
     let currentDay = date.getDate();
@@ -1176,8 +1176,6 @@ const showPurchaseDetailsModal = async() => {
     localStorage.setItem('data', JSON.stringify(updatedProducts));
   
   };
-
-  $('#modal-cart').modal('hide');
 
   let products = getLocalStorage();
   let productsInMyCart = products.filter(product => product.itsInTheCart);
@@ -1228,8 +1226,6 @@ const showPurchaseDetailsModal = async() => {
   $('#purchase-details-modal').modal('show');
 
   $('#button-buy').on('click', () => {
-    clearCartLocalStorage();
-
     let modalBody = purchaseDetailsModal.querySelector('.modal-body');
     modalBody.innerHTML = '';
 
@@ -1255,10 +1251,13 @@ const showPurchaseDetailsModal = async() => {
     
     });
 
+    clearCartLocalStorage();
     counterProductsInMyCart();
-    
-  });
   
+  });
+
+  $('#modal-cart').modal('hide');
+
   await counterProductsInMyCart();
 
 };
