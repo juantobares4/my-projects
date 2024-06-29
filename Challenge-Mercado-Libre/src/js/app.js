@@ -364,20 +364,17 @@ const productByCategory = async(container, filter) => {
     containerIcons.appendChild(elementIconAddToCart);
     containerIcons.appendChild(elementProductDetail);
     
-    elementProductDetail.addEventListener('click', function(event){
-      event.stopPropagation();
+    elementProductDetail.addEventListener('click', () => {
       productDetail(product.id);
 
     });
     
-    elementIconFav.addEventListener('click', function(event){
-      event.stopPropagation();
+    elementIconFav.addEventListener('click', () => {
       addProductToFav(product.id);
 
     });
 
-    elementIconAddToCart.addEventListener('click', function(event){
-      event.stopPropagation();
+    elementIconAddToCart.addEventListener('click', () => {
       addProductToCart(product.id);
 
     })
@@ -885,13 +882,13 @@ const viewMyCart = (event) => {
 
     if(idButtonFinalizePurchase){
       idButtonFinalizePurchase.addEventListener('click', () => {
-        finalizePurchase();
-
+        showPurchaseDetailsModal();
+        
       });
 
     };
 
-    $(`#modal-cart`).modal('show'); // NOTA: Al mostrar el modal, debemos enviarlo al fondo de la función para no tener problemas de retraso en la ejecución de las funciones anteriores.
+    $(`#modal-cart`).modal('show');
   
   }catch(error){
     console.error(error);
@@ -1153,11 +1150,125 @@ const filterByNewness = async(filter) => {
 
 };
 
-const finalizePurchase = () => {
-  console.log('Funcionando...');
-  /* Tendría que renderizar únicamente los productos que tienen la clave itsInTheCart === true */
+const showPurchaseDetailsModal = () => {
+  const getCurrentDate = () => {
+    let date = new Date();
+    let currentDay = date.getDate();
+    let currentMonth = date.getMonth() + 1;
+    let currentYear = date.getFullYear();
 
-}
+    return `${currentDay}/${currentMonth}/${currentYear}`;
+
+  }
+
+  const getRandomNumber = () => {
+    let min = 10000000; 
+    let max = 99999999;
+    let randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+  
+    return randomNumber;
+
+  }
+
+  let products = getLocalStorage();
+  let productsInMyCart = products.filter(product => product.itsInTheCart);
+  let counter = countDuplicate(productsInMyCart);
+  let finalPrice = 0;
+  
+  productsInMyCart.forEach(product => {
+    let productCount = counter[product.title];
+    finalPrice += product.price * productCount;
+  
+  });
+  
+  let purchaseDetailsModal = document.createElement('div');
+  let modalCart = document.getElementById('modal-cart');
+
+  purchaseDetailsModal.className = 'modal fade';
+  purchaseDetailsModal.id = 'purchase-details-modal';
+  purchaseDetailsModal.tabIndex = -1;
+
+  if(purchaseDetailsModal){
+    purchaseDetailsModal.remove();
+  
+  }
+
+  if(modalCart){
+    $(`#modal-cart`).modal('hide'); 
+
+  }
+
+  let modalContent = `
+    <div class="modal-dialog custom-modal">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="main-font">Detalles de la Compra</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <div class="modal-body font-nav">
+          <p><b>Precio Final de la compra:</b> ${finalPrice} <b>ARS</b></p>
+          <p><b>Cantidad de productos:</b> ${productsInMyCart.length}</p>
+          <p><b>Fecha de realización de la compra:</b> ${getCurrentDate()}</p>
+          <hr>
+          <p><b>Número de seguimiento del envío:</b> ${getRandomNumber()}BT</p>
+          <p><b>Tiempo de devolución:</b> 30 días</p>
+          <p><b>Identificador de la compra:</b> ID${getRandomNumber()}</p>
+
+  `;
+
+  modalContent += `
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn button-53 mt-3 bg-success d-flex align-items-center" id="button-buy"><img src="public/icons/currency-dollar.svg">¡Comprar ahora!</button>
+        </div>
+      </div>
+    </div>
+  
+  `;
+
+  purchaseDetailsModal.innerHTML = modalContent;
+  document.body.appendChild(purchaseDetailsModal);
+
+  $('#purchase-details-modal').modal('show');
+  
+  let idButtonBuy = document.getElementById('button-buy');
+  idButtonBuy.id = 'finish-purchase';
+
+  idButtonBuy.addEventListener('click', () => {
+    let container = document.createElement('div');
+    let imgElement = document.createElement('img');
+    let textElement = document.createElement('h1');
+    
+    container.className = 'd-flex justify-content-center align-items-center';
+
+    let imgRoute = '/src/assets/images/undraw_order_confirmed_re_g0if.svg';
+    imgElement.src = imgRoute;
+    imgElement.className = 'img-fluid';
+
+    textElement.innerHTML = '¡Tu compra está en camino!';
+    textElement.className = 'font-nav';
+    textElement.style.fontSize = '22px';
+
+    let modalBody = purchaseDetailsModal.querySelector('.modal-body');
+
+    idButtonBuy.innerHTML = 'Finalizar';
+    modalBody.innerHTML = '';
+
+    idButtonBuy.addEventListener('click', () => {
+      $('#purchase-details-modal').modal('hide');
+    
+    });
+
+    container.appendChild(imgElement);
+    container.appendChild(textElement);
+
+    modalBody.appendChild(container);
+
+  }); 
+
+};
 
 const main = async() => {
   let formSearchProduct = document.getElementById('searchForProductsOrCateogories');
