@@ -1150,7 +1150,7 @@ const filterByNewness = async(filter) => {
 
 };
 
-const showPurchaseDetailsModal = () => {
+const showPurchaseDetailsModal = async() => {
   const getCurrentDate = () => {
     let date = new Date();
     let currentDay = date.getDate();
@@ -1158,55 +1158,47 @@ const showPurchaseDetailsModal = () => {
     let currentYear = date.getFullYear();
 
     return `${currentDay}/${currentMonth}/${currentYear}`;
-
-  }
+  
+  };
 
   const getRandomNumber = () => {
     let min = 10000000; 
     let max = 99999999;
     let randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-  
-    return randomNumber;
 
-  }
+    return randomNumber;
+  
+  };
+
+  const clearCartLocalStorage = () => {
+    let products = getLocalStorage();
+    let updatedProducts = products.filter(product => !product.itsInTheCart);
+    localStorage.setItem('data', JSON.stringify(updatedProducts));
+  
+  };
+
+  $('#modal-cart').modal('hide');
 
   let products = getLocalStorage();
   let productsInMyCart = products.filter(product => product.itsInTheCart);
   let counter = countDuplicate(productsInMyCart);
   let finalPrice = 0;
-  
+
   productsInMyCart.forEach(product => {
     let productCount = counter[product.title];
     finalPrice += product.price * productCount;
   
   });
-  
-  let purchaseDetailsModal = document.createElement('div');
-  let modalCart = document.getElementById('modal-cart');
-
-  purchaseDetailsModal.className = 'modal fade';
-  purchaseDetailsModal.id = 'purchase-details-modal';
-  purchaseDetailsModal.tabIndex = -1;
-
-  if(purchaseDetailsModal){
-    purchaseDetailsModal.remove();
-  
-  }
-
-  if(modalCart){
-    $(`#modal-cart`).modal('hide'); 
-
-  }
 
   let modalContent = `
     <div class="modal-dialog custom-modal">
       <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="main-font">Detalles de la Compra</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
+        <div class="modal-header">
+          <h5 class="main-font">Detalles de la Compra</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
         <div class="modal-body font-nav">
           <p><b>Precio Final de la compra:</b> ${finalPrice} <b>ARS</b></p>
           <p><b>Cantidad de productos:</b> ${productsInMyCart.length}</p>
@@ -1215,58 +1207,59 @@ const showPurchaseDetailsModal = () => {
           <p><b>Número de seguimiento del envío:</b> ${getRandomNumber()}BT</p>
           <p><b>Tiempo de devolución:</b> 30 días</p>
           <p><b>Identificador de la compra:</b> ID${getRandomNumber()}</p>
-
-  `;
-
-  modalContent += `
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn button-53 mt-3 bg-success d-flex align-items-center" id="button-buy"><img src="public/icons/currency-dollar.svg">¡Comprar ahora!</button>
+          <button type="button" class="btn button-53 mt-3 bg-success d-flex align-items-center" id="button-buy">
+            <img src="public/icons/currency-dollar.svg">¡Comprar ahora!
+          </button>
         </div>
       </div>
     </div>
   
   `;
 
+  let purchaseDetailsModal = document.createElement('div');
+  purchaseDetailsModal.className = 'modal fade';
+  purchaseDetailsModal.id = 'purchase-details-modal';
+  purchaseDetailsModal.tabIndex = -1;
   purchaseDetailsModal.innerHTML = modalContent;
   document.body.appendChild(purchaseDetailsModal);
 
   $('#purchase-details-modal').modal('show');
-  
-  let idButtonBuy = document.getElementById('button-buy');
-  idButtonBuy.id = 'finish-purchase';
 
-  idButtonBuy.addEventListener('click', () => {
+  $('#button-buy').on('click', () => {
+    clearCartLocalStorage();
+
+    let modalBody = purchaseDetailsModal.querySelector('.modal-body');
+    modalBody.innerHTML = '';
+
     let container = document.createElement('div');
-    let imgElement = document.createElement('img');
-    let textElement = document.createElement('h1');
-    
     container.className = 'd-flex justify-content-center align-items-center';
 
-    let imgRoute = '/src/assets/images/undraw_order_confirmed_re_g0if.svg';
-    imgElement.src = imgRoute;
+    let imgElement = document.createElement('img');
+    imgElement.src = '/src/assets/images/undraw_order_confirmed_re_g0if.svg';
     imgElement.className = 'img-fluid';
 
-    textElement.innerHTML = '¡Tu compra está en camino!';
+    let textElement = document.createElement('h1');
+    textElement.textContent = '¡Tu compra está en camino!';
     textElement.className = 'font-nav';
     textElement.style.fontSize = '22px';
 
-    let modalBody = purchaseDetailsModal.querySelector('.modal-body');
+    container.appendChild(imgElement);
+    container.appendChild(textElement);
+    modalBody.appendChild(container);
 
-    idButtonBuy.innerHTML = 'Finalizar';
-    modalBody.innerHTML = '';
-
-    idButtonBuy.addEventListener('click', () => {
+    $('#button-buy').text('Finalizar');
+    $('#button-buy').off('click').on('click', () => {
       $('#purchase-details-modal').modal('hide');
     
     });
 
-    container.appendChild(imgElement);
-    container.appendChild(textElement);
-
-    modalBody.appendChild(container);
-
-  }); 
+    counterProductsInMyCart();
+    
+  });
+  
+  await counterProductsInMyCart();
 
 };
 
