@@ -1,3 +1,18 @@
+const loader = document.getElementById("loaderPage");
+
+window.addEventListener("DOMContentLoaded", () => {
+  showLoader();
+
+});
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    hideLoader();
+  
+  }, 3000);
+
+});
+
 const getLocalStorage = () => {
   let data = localStorage.getItem('data');
 
@@ -31,6 +46,16 @@ const showToast = (message, title) => {
   };
 
   toastr.success(message, title);
+
+};
+
+const showLoader = () => {
+ loader.classList.add("show_loader");
+
+};
+
+const hideLoader = () => {
+  loader.classList.remove("show_loader");
 
 };
 
@@ -412,7 +437,7 @@ const resultsToSearch = async(event) => {
     if(event){
       event.preventDefault();
 
-    }
+    };
     
     document.querySelectorAll('.section-products-by-categories, .horizontal-line, .title').forEach(element => {
       element.style.display = 'none';
@@ -828,9 +853,7 @@ const viewMyCart = (event) => {
         <div class="modal-dialog custom-modal">
           <div class="modal-content">
             <div class="modal-header align-items-center text-center">
-              <h5 class="main-font">
-                <img class="image-descript-cart m-3" src="${bagCheckImg}">Mi carrito
-              </h5>
+                <img class="image-descript-cart m-1" src="${bagCheckImg}"><h5 class="main-font mt-2 ml-2">Mi carrito</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -961,9 +984,7 @@ const viewMyFavorites = (event) => {
           <div class="modal-dialog custom-modal">
             <div class="modal-content">
               <div class="modal-header align-items-center text-center">
-                <h5 class="main-font">
-                  <img class="image-descript-favourites m-3" src="${bagCheckImg}">Mis favoritos
-                </h5>
+                  <img class="image-descript-favourites m-1" src="${bagCheckImg}"><h5 class="main-font mt-1 ml-2">Mis favoritos</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -1041,8 +1062,8 @@ const filterByNewness = async(filter) => {
       let imageByProduct = document.createElement('img');
       imageByProduct.src = product.images[0].url;
       imageByProduct.className = 'card-img-top mx-auto d-block headshot headshot';
-      imageByProduct.style.width = '90%';
-      imageByProduct.style.height = '90%';
+      imageByProduct.style.width = '80%';
+      imageByProduct.style.height = '80%';
       imageByProduct.style.marginTop = '20px'; 
       imageByProduct.style.marginBottom = '20px';
       imageByProduct.style.padding = '10px';
