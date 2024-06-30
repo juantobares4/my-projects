@@ -431,8 +431,7 @@ const productByCategory = async(container, filter) => {
   
 };
 
-/* Buscar objetos mediante la barra de búsqueda */
-const resultsToSearch = async(event) => {
+const filterBy = async(filter, event = null) => {
   try{
     if(event){
       event.preventDefault();
@@ -455,8 +454,9 @@ const resultsToSearch = async(event) => {
     let elementTitle = document.createElement('h4');
     let elementResults = document.createElement('p');
 
-    let inputContent = document.getElementById('inputUser').value;
+    let inputContent = filter || document.getElementById('inputUser').value; // El parámetro filter lo recibiría desde el apartado "Categorías" de la Nav.
     let productsApi = await fetchCompleteProductsApi(inputContent);
+    let exist = document.getElementById('inputUser').value;
     
     let messageTitle = `Resultados de la búsqueda: ${inputContent}`;
     let messageResults = `${productsApi.length} resultados`;
@@ -606,7 +606,9 @@ const resultsToSearch = async(event) => {
 
       });
 
-    }); 
+    });
+    
+    scrollSection('products-container');
 
   }catch(error){
     console.error(error);
@@ -1322,7 +1324,12 @@ const showPurchaseDetailsModal = async () => {
 
 const main = async() => {
   let formSearchProduct = document.getElementById('searchForProductsOrCateogories');
-  formSearchProduct.addEventListener('submit', resultsToSearch);
+  formSearchProduct.addEventListener('submit', (event) => {
+    let inputContent = document.getElementById('inputUser').value;
+    filterBy(inputContent, event);
+
+  });
+
   filterByNewness('ropa invierno');
 
   productByCategory('carousel-by-sports-products', 'deportes');
