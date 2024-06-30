@@ -454,7 +454,7 @@ const filterBy = async(filter, event = null) => {
     let elementTitle = document.createElement('h4');
     let elementResults = document.createElement('p');
 
-    let inputContent = filter || document.getElementById('inputUser').value; // El parámetro filter lo recibiría desde el apartado "Categorías" de la Nav.
+    let inputContent = filter || document.getElementById('inputUser').value; // El parámetro filter lo recibiría desde el apartado "Categorías" de la Nav, si no existe, nos trae lo que el usuario introdujo en la barra de búsqueda.
     let productsApi = await fetchCompleteProductsApi(inputContent);
     let exist = document.getElementById('inputUser').value;
     
@@ -1063,9 +1063,10 @@ const filterByNewness = async(filter) => {
 
       let imageByProduct = document.createElement('img');
       imageByProduct.src = product.images[0].url;
-      imageByProduct.className = 'card-img-top mx-auto d-block headshot headshot';
-      imageByProduct.style.width = '80%';
-      imageByProduct.style.height = '80%';
+      imageByProduct.className = 'card-img-top mx-auto d-block';
+      imageByProduct.style.width = '100%';
+      imageByProduct.style.height = '370px';
+      imageByProduct.style.maxHeight = '390px'
       imageByProduct.style.marginTop = '20px'; 
       imageByProduct.style.marginBottom = '20px';
       imageByProduct.style.padding = '10px';
