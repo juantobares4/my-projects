@@ -19,7 +19,7 @@ export const Form = () => {
 
   }, [recipes]); // Cuando 'recipes' se actualice, tiene que ejecutar la función saveDataInLocalStorage.
 
-  const handleValueSubmit = (event) => {
+  const handleValueSubmit = (event) => { // OnSubmit
     let newRecipe = {
       id: nanoid(),
       title: recipeTitle, 

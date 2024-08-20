@@ -4,7 +4,7 @@ import { ImageComponent } from './ImageComponent';
 
 import '../styles/HamburgerMenu.css'
 
-export const HamburgerMenu = ( { imgButton, onOptionClick } ) => {
+export const HamburgerMenu = ({ imgButton, onOptionClick} ) => {
   let handleClick = (event, linkType) => {
     event.preventDefault();
 

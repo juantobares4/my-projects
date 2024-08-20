@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { getDataFromLocalStorage, saveDataInLocalStorage } from '../utils/localstorage';
 import { Recipe } from './Recipe';
 import { ImageComponent } from './ImageComponent';
+import { PortalCreate } from './PortalCreate';
 
 /* Estilos Personalizados */
 import imgDescriptCard from '../assets/flat-lay-assortment-with-delicious-brazilian-food.jpg'
@@ -13,7 +14,10 @@ import '../styles/RecipesList.css'
 
 export const RecipesList = () => {
   let recipesInLocalStorage = getDataFromLocalStorage('recipe');
-  const [recipes, setRecipes] = useState(recipesInLocalStorage);
+
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [recipes, setRecipes] = useState(Array.isArray(recipesInLocalStorage) ? recipesInLocalStorage : []); // Tengo que validar lo que recibe ya que sino tengo un error de parseo de datos.
 
   useEffect(() => {
     saveDataInLocalStorage(recipes);
@@ -25,6 +29,19 @@ export const RecipesList = () => {
     
     setRecipes(updatedRecipes);
 
+  };
+
+  const detailRecipe = (id) => {
+    const recipe = recipes.find(recipe => recipe.id === id);
+    setSelectedRecipe(recipe);
+    setIsModalOpen(true);
+  
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedRecipe(null);
+  
   };
 
   return(
@@ -49,9 +66,10 @@ export const RecipesList = () => {
                 description={recipe.description} 
                 img={imgDescriptCard}
                 removeRecipe={removeRecipe}
+                detailRecipe={detailRecipe}
               
-              />
-            
+                />
+                
             )
 
           ) : (
@@ -65,6 +83,15 @@ export const RecipesList = () => {
         
         }
       </section>
+
+      {isModalOpen && (
+        <PortalCreate
+          selectedRecipe={selectedRecipe}
+          onClose={closeModal}
+        />
+      
+      )}
+
     </>
   
   );

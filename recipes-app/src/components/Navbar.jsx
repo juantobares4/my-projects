@@ -7,7 +7,7 @@ import '../styles/Navbar.css'
 import search from '../assets/search.svg'
 import hamburgerLogo from '../assets/list.svg'
 
-export const Navbar = ( { onOptionClick } ) => {
+export const Navbar = ({ onOptionClick }) => {
   return (
     <header className='container'>
       <nav className="p-4 d-flex justify-content-center align-items-center">

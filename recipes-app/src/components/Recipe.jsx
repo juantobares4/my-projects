@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styles/Recipe.css'
 
-export const Recipe = ({ styles, id, name, description, img, removeRecipe }) => {
+export const Recipe = ({ styles, id, name, description, img, removeRecipe, detailRecipe }) => {
   return (
     <div className={styles}>
       <div className='p-3 container-title mt-3'>
@@ -22,7 +22,7 @@ export const Recipe = ({ styles, id, name, description, img, removeRecipe }) => 
       <hr className='w-100 my-0' />
       <div className='p-4 container-footer-card'>
         <button onClick={() => removeRecipe(id)} className='btn btn-outline-danger me-2'>Eliminar Receta</button>
-        <button className='btn btn-outline-dark'>Detalles de la receta</button>
+        <button onClick={() => detailRecipe(id)} className='btn btn-outline-dark'>Detalles de la receta</button>
       </div>
     </div>
 
