@@ -11,13 +11,15 @@ import { PortalCreate } from './PortalCreate';
 import imgDescriptCard from '../assets/flat-lay-assortment-with-delicious-brazilian-food.jpg'
 import recipesLogo from '../assets/recipe_9757071.png'
 import '../styles/RecipesList.css'
+import { filterSearch } from '../utils/filterSearch';
 
-export const RecipesList = () => {
+export const RecipesList = ({ searchTerm }) => {
   let recipesInLocalStorage = getDataFromLocalStorage('recipe');
 
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [recipes, setRecipes] = useState(Array.isArray(recipesInLocalStorage) ? recipesInLocalStorage : []); // Tengo que validar lo que recibe ya que sino tengo un error de parseo de datos.
+  let filteredResults = filterSearch(searchTerm);
 
   useEffect(() => {
     saveDataInLocalStorage(recipes);
@@ -31,6 +33,7 @@ export const RecipesList = () => {
 
   };
 
+  /* Cambiar por React Router DOM */
   const detailRecipe = (id) => {
     const recipe = recipes.find(recipe => recipe.id === id);
     setSelectedRecipe(recipe);
@@ -38,6 +41,7 @@ export const RecipesList = () => {
   
   };
 
+  /* Cambiar por React Router DOM */
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedRecipe(null);
@@ -56,13 +60,14 @@ export const RecipesList = () => {
       
       <section className='custom-bg p-5'>
         {
-          recipes.length > 0 ? (
-            recipes.map(recipe =>
+          filteredResults.length > 0 ? (
+            filteredResults.map(recipe =>
               <Recipe 
                 key={recipe.id}
                 id={recipe.id}
                 styles={'my-5 card d-flex justify-content-center align-items-center flex-column shadow'} 
                 name={recipe.title} 
+                category={recipe.category}
                 description={recipe.description} 
                 img={imgDescriptCard}
                 removeRecipe={removeRecipe}
@@ -75,7 +80,7 @@ export const RecipesList = () => {
           ) : (
             <div className='my-5 d-flex justify-content-center align-items-center'>
               <h5 className='text-start mt-5 lh-5'>
-                <b>No hay</b><br /> recetas<br />en tu listado
+                <b>No hay</b><br /> recetas<br /> para mostrar
               </h5>           
             </div>
 

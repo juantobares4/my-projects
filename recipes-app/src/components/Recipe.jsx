@@ -1,11 +1,11 @@
 import React from 'react'
 import '../styles/Recipe.css'
 
-export const Recipe = ({ styles, id, name, description, img, removeRecipe, detailRecipe }) => {
+export const Recipe = ({ styles, id, name, description, category, img, removeRecipe, detailRecipe }) => {
   return (
     <div className={styles}>
       <div className='p-3 container-title mt-3'>
-        <h4 className='text-start'>{name}</h4>
+        <h4 className='text-start'>{name} | <b><i>{category}</i></b></h4>
       </div>
       <hr className='w-100 my-0' />
       <div className='p-5 container-description'>
