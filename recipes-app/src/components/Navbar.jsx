@@ -7,7 +7,7 @@ import '../styles/Navbar.css'
 import search from '../assets/search.svg'
 import hamburgerLogo from '../assets/list.svg'
 
-export const Navbar = ({ onOptionClick, onSearch }) => {
+export const Navbar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState(''); // Actualiza el contenido del input y lo envía a la prop onSearch.
   
   const handleSubmit = (event) => {
@@ -24,8 +24,7 @@ export const Navbar = ({ onOptionClick, onSearch }) => {
   return (
     <header className='container'>
       <nav className="p-4 d-flex justify-content-center align-items-center">
-        <HamburgerMenu 
-          onOptionClick={onOptionClick} 
+        <HamburgerMenu  
           imgButton={hamburgerLogo} 
         />
         <form

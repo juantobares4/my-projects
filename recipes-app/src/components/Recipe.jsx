@@ -1,7 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
+
 import '../styles/Recipe.css'
 
-export const Recipe = ({ styles, id, name, description, category, img, removeRecipe, detailRecipe }) => {
+export const Recipe = ({ styles, id, name, description, category, img, removeRecipe }) => {
   return (
     <div className={styles}>
       <div className='p-3 container-title mt-3'>
@@ -22,7 +24,9 @@ export const Recipe = ({ styles, id, name, description, category, img, removeRec
       <hr className='w-100 my-0' />
       <div className='p-4 container-footer-card'>
         <button onClick={() => removeRecipe(id)} className='btn btn-outline-danger me-2'>Eliminar Receta</button>
-        <button onClick={() => detailRecipe(id)} className='btn btn-outline-dark'>Detalles de la receta</button>
+        <Link to={`/recipeDetail/${id}`}>
+          <button className='btn btn-outline-dark'>Detalles de la receta</button>
+        </Link>
       </div>
     </div>
 

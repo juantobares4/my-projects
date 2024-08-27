@@ -1,0 +1,39 @@
+.container-detail{
+  display: flex;
+  flex-direction: row;
+  height: 100vh; /* Ajusta la altura al 100% de la ventana */
+
+}
+
+.col-lg-3{
+  display: flex;
+  flex-direction: column;
+
+}
+
+.detail-title{
+  flex-shrink: 0; /* Mantiene el tamaño natural de este elemento */
+
+}
+
+.detail-content{
+  flex-shrink: 0; /* Mantiene el tamaño natural de este elemento */
+
+}
+
+.detail-footer{
+  flex-grow: 1; /* Me permite que este elemento crezca para ocupar el espacio disponible */
+  overflow-y: auto;
+  padding: 10px;
+  display: flex; /* Uso flexbox para alinear el contenido */
+  flex-direction: column;
+
+}
+
+.detail-footer h5,
+.detail-footer p{
+  margin: 0;
+  word-wrap: break-word; /* Permite que las palabras largas se rompan */
+  overflow-wrap: break-word; /* Permite que las palabras largas se rompan */
+
+}

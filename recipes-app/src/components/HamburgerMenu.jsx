@@ -1,26 +1,11 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 
 import { ImageComponent } from './ImageComponent';
 
 import '../styles/HamburgerMenu.css'
 
-export const HamburgerMenu = ({ imgButton, onOptionClick} ) => {
-  let handleClick = (event, linkType) => {
-    event.preventDefault();
-
-    switch(linkType){
-      case 'register':
-        onOptionClick(linkType);
-        break
-
-      case 'list': 
-        onOptionClick(linkType);
-        break
-
-    };
-
-  };
- 
+export const HamburgerMenu = ({ imgButton } ) => {
   return (
     <>
       <button
@@ -52,22 +37,14 @@ export const HamburgerMenu = ({ imgButton, onOptionClick} ) => {
         </div>
         <div className="gap-3 bg-body-tertiary offcanvas-body">
           <p className='p-1'>
-            <a 
-              onClick={(event) => handleClick(event, 'list')}
-              href=""
-              className='text-decoration-none text-dark'
-            >
+            <Link className='text-decoration-none text-dark' to={'/'}>
               Mis Recetas
-            </a>
+            </Link>
           </p>
           <p className='p-1'>
-            <a 
-              onClick={(event) => handleClick(event, 'register')}
-              href=""
-              className='text-decoration-none text-dark'
-            >
-              Registrar receta
-            </a>
+          <Link className='text-decoration-none text-dark' to={'/recipeCreate'}>
+              Registrar Receta
+            </Link>
           </p>
           <hr />
           <p className='my-0 ms-1'>

@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react'
 import { getDataFromLocalStorage, saveDataInLocalStorage } from '../utils/localstorage';
 import { Recipe } from './Recipe';
 import { ImageComponent } from './ImageComponent';
-import { PortalCreate } from './PortalCreate';
 
 /* Estilos Personalizados */
 import imgDescriptCard from '../assets/flat-lay-assortment-with-delicious-brazilian-food.jpg'
@@ -15,12 +14,9 @@ import { filterSearch } from '../utils/filterSearch';
 
 export const RecipesList = ({ searchTerm }) => {
   let recipesInLocalStorage = getDataFromLocalStorage('recipe');
-
-  const [selectedRecipe, setSelectedRecipe] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [recipes, setRecipes] = useState(Array.isArray(recipesInLocalStorage) ? recipesInLocalStorage : []); // Tengo que validar lo que recibe ya que sino tengo un error de parseo de datos.
   let filteredResults = filterSearch(searchTerm);
-
+  
   useEffect(() => {
     saveDataInLocalStorage(recipes);
 
@@ -31,21 +27,6 @@ export const RecipesList = ({ searchTerm }) => {
     
     setRecipes(updatedRecipes);
 
-  };
-
-  /* Cambiar por React Router DOM */
-  const detailRecipe = (id) => {
-    const recipe = recipes.find(recipe => recipe.id === id);
-    setSelectedRecipe(recipe);
-    setIsModalOpen(true);
-  
-  };
-
-  /* Cambiar por React Router DOM */
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedRecipe(null);
-  
   };
 
   return(
@@ -71,8 +52,7 @@ export const RecipesList = ({ searchTerm }) => {
                 description={recipe.description} 
                 img={imgDescriptCard}
                 removeRecipe={removeRecipe}
-                detailRecipe={detailRecipe}
-              
+                
                 />
                 
             )
@@ -88,15 +68,6 @@ export const RecipesList = ({ searchTerm }) => {
         
         }
       </section>
-
-      {isModalOpen && (
-        <PortalCreate
-          selectedRecipe={selectedRecipe}
-          onClose={closeModal}
-        />
-      
-      )}
-
     </>
   
   );
