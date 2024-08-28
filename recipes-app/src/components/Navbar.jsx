@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { HamburgerMenu } from './HamburgerMenu'
 
-import '../styles/Navbar.css'
 import hamburgerLogo from '../assets/list.svg'
 
 export const Navbar = () => {

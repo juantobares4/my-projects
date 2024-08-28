@@ -37,7 +37,7 @@ export const HamburgerMenu = ({ imgButton } ) => {
         </div>
         <div className="gap-3 bg-body-tertiary offcanvas-body">
           <p className='p-1'>
-            <Link className='text-decoration-none text-dark' to={'/'}>
+            <Link className='text-decoration-none text-dark' to={'/recipesList'}>
               Mis Recetas
             </Link>
           </p>
