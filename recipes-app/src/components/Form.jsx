@@ -11,8 +11,8 @@ import '../styles/Form.css'
 export const Form = () => {
   let getLocalStorage = getDataFromLocalStorage('recipe');
   
-  const [selectedCategory, setSelectedCategory] = useState('');
   const [recipeTitle, setRecipeTitle] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [recipeDescription, setRecipeDescription] = useState('');
   const [recipes, setRecipes] = useState(getLocalStorage);
   

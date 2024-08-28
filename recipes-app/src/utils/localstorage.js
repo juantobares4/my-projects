@@ -11,8 +11,3 @@ export const saveDataInLocalStorage = (value) => {
   // Es mejor pasarle una clave y un valor distintos para poder reutilizar la función, de forma que no se sobreescriba la información almacenada. 
 
 };
-
-export const deleteDataFromLocalStorage = (key) => {
-  localStorage.removeItem(key);
-
-};
