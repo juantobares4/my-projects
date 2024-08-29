@@ -1,0 +1,13 @@
+.effect{
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  z-index: 1;
+
+}
+
+.effect:hover{
+  -webkit-transform: scale(1.03);
+  transform: scale(1.03);
+  z-index: 2;
+
+}

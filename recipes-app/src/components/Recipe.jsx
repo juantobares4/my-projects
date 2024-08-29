@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
+import '../styles/Recipe.css'
+
 export const Recipe = ({ styles, id, name, category, img, removeRecipe }) => {
   return (
-    <div className={`card ${styles}`} style={{ width: '100%' }}>
+    <div className={`effect card ${styles}`} style={{ width: '100%' }}>
       <img src={img} className="card-img-top" alt="Descripción" />
       <div className="card-body">
         <h5 className="my-3 card-title text-start">

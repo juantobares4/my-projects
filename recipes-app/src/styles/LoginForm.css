@@ -1,0 +1,10 @@
+.redirect-register{
+  font-size: 12px;
+
+}
+
+.redirect-register:hover{
+  text-decoration: underline;
+  cursor: pointer;
+
+}
