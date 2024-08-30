@@ -9,11 +9,10 @@ import imgDescriptCard from '../assets/flat-lay-assortment-with-delicious-brazil
 export const RecipeDetail = () => {
   let recipes = getDataFromLocalStorage('recipe');
   let { id } = useParams(null); // Tengo que desestructurar el id que recibo de la URL para que sea un str y no un objeto. IMPORTANTE: desestructurarlo con el mismo nombre que lo pase en App.jsx
-  let navigate = useNavigate();
   let filterRecipe = recipes.find(recipe => recipe.id === id);
   let arrayRecipe = [filterRecipe];
 
-  return (
+  return(
     <>
       <div>
         {
