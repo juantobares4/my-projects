@@ -17,7 +17,7 @@ export const Form = () => {
   const [recipes, setRecipes] = useState(getLocalStorage);
   
   useEffect(() => {
-    saveDataInLocalStorage(recipes);
+    saveDataInLocalStorage('recipe', recipes);
 
   }, [recipes]); // Cuando 'recipes' se actualice, tiene que ejecutar la función saveDataInLocalStorage.
 

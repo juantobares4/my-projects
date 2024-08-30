@@ -20,7 +20,7 @@ export const RecipesList = () => {
   let filteredResults = filterSearch(searchTerm);
 
   useEffect(() => {
-    saveDataInLocalStorage(recipes);
+    saveDataInLocalStorage('recipe', recipes);
 
   }, [recipes]);
 
@@ -30,8 +30,6 @@ export const RecipesList = () => {
     setRecipes(updatedRecipes);
 
   };
-
-  console.log(recipes);
 
   return(
     <>
