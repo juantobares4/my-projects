@@ -17,8 +17,6 @@ export const LoginRegister = ({ isVisible }) => {
     saveDataInLocalStorage('user', users);
 
   }, [users]);
-
-  console.log(usersLocalStorage);
   
   const userData = (event) => {
     event.preventDefault();

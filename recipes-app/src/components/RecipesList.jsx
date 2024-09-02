@@ -15,7 +15,7 @@ import { filterSearch } from '../utils/filterSearch';
 
 export const RecipesList = () => {
   let recipesInLocalStorage = getDataFromLocalStorage('recipe');
-  const [searchTerm, setSearchTerm] = useState(''); // Actualiza el contenido del input y lo envía a la prop onSearch.
+  const [searchTerm, setSearchTerm] = useState(''); 
   const [recipes, setRecipes] = useState(Array.isArray(recipesInLocalStorage) ? recipesInLocalStorage : []); // Tengo que validar lo que recibe ya que sino tengo un error de parseo de datos.
   let filteredResults = filterSearch(searchTerm);
 
