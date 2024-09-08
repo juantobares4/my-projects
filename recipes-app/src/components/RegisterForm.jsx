@@ -5,7 +5,7 @@ import { getDataFromLocalStorage, saveDataInLocalStorage } from '../utils/locals
 import { ImageComponent } from './ImageComponent';
 import { toastError, toastSuccess } from '../utils/toast';
 
-export const LoginRegister = ({ isVisible }) => {
+export const RegisterForm = ({ isVisible }) => {
   let usersLocalStorage = getDataFromLocalStorage('user');
 
   const [users, setUsers] = useState(Array.isArray(usersLocalStorage) ? usersLocalStorage : []);

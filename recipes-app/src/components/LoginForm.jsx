@@ -16,7 +16,7 @@ export const LoginForm = ({ isVisible }) => {
   const [usernameLogin, setUsernameLogin] = useState('');
   const [passwordLogin, setPasswordLogin] = useState('');
   const [users, setUsers] = useState(Array.isArray(usersLocalStorage) ? usersLocalStorage : []);
-  const {login} = useStore();
+  const { login } = useStore();
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -25,6 +25,7 @@ export const LoginForm = ({ isVisible }) => {
 
     if(auth){
       login({id: 1, username: usernameLogin});
+      saveDataInSessionStorage('currentUser', auth);
 
       navigate('/recipesList');
       toastSuccess(`Sesión iniciada correctamente.`);

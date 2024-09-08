@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { ImageComponent } from './ImageComponent';
 import { LoginForm } from './LoginForm';
-import { LoginRegister } from './LoginRegister';
+import { RegisterForm } from './RegisterForm';
 
 export const StartPage = () => {
   const [renderForm, setRenderForm] = useState(true);
@@ -20,7 +20,7 @@ export const StartPage = () => {
               <LoginForm isVisible={handleClick} />
 
             ) : (
-              <LoginRegister isVisible={handleClick} />
+              <RegisterForm isVisible={handleClick} />
           
             )
           

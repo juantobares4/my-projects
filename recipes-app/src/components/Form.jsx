@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import { ImageComponent } from './ImageComponent'
 import { options } from '../utils/options.js';
 import { saveDataInLocalStorage, getDataFromLocalStorage } from '../utils/localstorage.js'
+import { toastSuccess } from '../utils/toast.js';
 
 import formImage from '../assets/chef_4078682.png'
 import '../styles/Form.css'
@@ -39,6 +40,8 @@ export const Form = () => {
     setRecipeTitle(''); 
     setRecipeDescription('');
     setSelectedCategory('');
+
+    toastSuccess('Receta anotada con éxito.')
 
   };
 

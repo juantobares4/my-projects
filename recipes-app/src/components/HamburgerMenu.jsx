@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom';
 
 import { ImageComponent } from './ImageComponent';
@@ -25,7 +25,7 @@ export const HamburgerMenu = ({ imgButton } ) => {
         aria-labelledby="Enable both scrolling & backdrop"
       >
         <div className="offcanvas-header">
-          <h5 className="offcanvas-title title-hamburger-menu" id="Enable both scrolling & backdrop">
+          <h5 className="offcanvas-title" id="Enable both scrolling & backdrop">
             <b>Bienvenido a NutriChef</b>
           </h5>
           <button
