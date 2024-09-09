@@ -4,6 +4,6 @@ export const useStore = create((set) => ({
   user: null,
   isAuthenticated: false,
   login: (loginUser) => set({ user: loginUser, isAuthenticated: true }),
-  logout: () => user({ user: null, isAuthenticated: false })
+  logout: () => set({ user: null, isAuthenticated: false })
 
 }));

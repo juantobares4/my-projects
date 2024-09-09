@@ -15,10 +15,13 @@ import './App.css'
 
 function App(){
   const location = useLocation();
-  
+  const validRoutes = ['/', '/recipesList', '/recipeCreate', '/recipeDetail/:id'];
+
+  const isValidRoute = validRoutes.some(route => location.pathname === route || location.pathname.startsWith('/recipeDetail')); // location.pathname es la ubicación actual del usuario en las rutas.
+
   return(
     <>
-      {location.pathname !== '/' && <Navbar />} {/* No renderiza la Navbar en el la ruta '/' (Login) */}
+      {isValidRoute && location.pathname !== '/' && <Navbar />} {/* No renderiza la Navbar en la ruta '/' (Login) */}
 
       <ToastContainer />
 

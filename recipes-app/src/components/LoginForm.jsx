@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { getDataFromLocalStorage } from '../utils/localstorage'
 import { ImageComponent } from './ImageComponent'
-import { getDataFromSessionStorage, saveDataInSessionStorage } from '../utils/sessionstorage';
+import { saveDataInSessionStorage } from '../utils/sessionstorage';
 import { toastError, toastSuccess } from '../utils/toast';
 import { useStore } from '../context/useStore';
 
@@ -80,7 +80,7 @@ export const LoginForm = ({ isVisible }) => {
           <button type='submit' className="m-auto btn btn-outline-primary">Iniciar Sesión</button>
           <p 
             className='ms-2 text-center m-auto redirect-register text-dark'
-            onClick={() => isVisible(!isVisible)}
+            onClick={() => isVisible()}
           >
             Registrarse
           </p>
