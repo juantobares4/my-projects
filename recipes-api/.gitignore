@@ -22,7 +22,6 @@ yarn-error.log*
 .idea/
 
 # Archivos de lock para dependencias
-package-lock.json
 yarn.lock
 
 # Archivos de salida de pruebas
