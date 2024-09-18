@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import { Form } from './components/Form';
 import { Navbar } from './components/Navbar'
 import { PageNotFound } from './components/PageNotFound';
+import { ProfileDetail } from './components/ProfileDetail';
 import { ProtectedRoutes } from './utils/ProtectedRoutes';
 import { RecipeDetail } from './components/RecipeDetail';
 import { RecipesList } from './components/RecipesList';
@@ -40,6 +41,11 @@ function App(){
         <Route path='/recipeDetail/:id' element={
           <ProtectedRoutes>
             <RecipeDetail />
+          </ProtectedRoutes>
+        } />
+        <Route path='/profile/:id' element={
+          <ProtectedRoutes>
+            <ProfileDetail />
           </ProtectedRoutes>
         } />
         <Route path='*' element={<PageNotFound />} />

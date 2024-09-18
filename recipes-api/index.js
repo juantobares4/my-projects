@@ -18,10 +18,18 @@ app.get('/', (req, res) => {
 });
 
 app.post('/create_recipe', (req, res) => {
+  
+  const { recipeName, ingredients, instructions } = req.body;
   const newRecipe = req.body;
   newRecipe.id = recipes.length + 1;
-  recipes.push(newRecipe);
+  
+  if (!recipeName || !ingredients || !instructions) { 
+    console.log('Faltan campos obligatorios.');
 
+  };
+
+  recipes.push(newRecipe);
+  
   res.status(200).json(newRecipe);
 
 });
