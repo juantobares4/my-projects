@@ -5,7 +5,6 @@ import { ToastContainer } from 'react-toastify';
 import { Form } from './components/Form';
 import { Navbar } from './components/Navbar'
 import { PageNotFound } from './components/PageNotFound';
-import { ProfileDetail } from './components/ProfileDetail';
 import { ProtectedRoutes } from './utils/ProtectedRoutes';
 import { RecipeDetail } from './components/RecipeDetail';
 import { RecipesList } from './components/RecipesList';
@@ -16,9 +15,9 @@ import './App.css'
 
 function App(){
   const location = useLocation();
-  const validRoutes = ['/', '/recipesList', '/recipeCreate', '/recipeDetail/:id'];
+  const validRoutes = ['/', '/recipesList', '/recipeCreate', '/recipeDetail/:id', '/profile/:id'];
 
-  const isValidRoute = validRoutes.some(route => location.pathname === route || location.pathname.startsWith('/recipeDetail')); // location.pathname es la ubicación actual del usuario en las rutas.
+  const isValidRoute = validRoutes.some(route => location.pathname === route || location.pathname.startsWith('/recipeDetail') || location.pathname.startsWith('/profile')); // location.pathname es la ubicación actual del usuario en las rutas.
 
   return(
     <>
@@ -41,11 +40,6 @@ function App(){
         <Route path='/recipeDetail/:id' element={
           <ProtectedRoutes>
             <RecipeDetail />
-          </ProtectedRoutes>
-        } />
-        <Route path='/profile/:id' element={
-          <ProtectedRoutes>
-            <ProfileDetail />
           </ProtectedRoutes>
         } />
         <Route path='*' element={<PageNotFound />} />

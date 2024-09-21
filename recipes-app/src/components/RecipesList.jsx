@@ -12,15 +12,17 @@ import recipesLogo from '../assets/recipe_9757071.png'
 import search from '../assets/search.svg'
 import '../styles/RecipesList.css'
 import { filterSearch } from '../utils/filterSearch';
+import { useStore } from '../context/useStore';
 
 export const RecipesList = () => {
-  let recipesInLocalStorage = getDataFromLocalStorage('recipe');
+  const { user } = useStore();
+  let recipesInLocalStorage = getDataFromLocalStorage(user.username);
   const [searchTerm, setSearchTerm] = useState(''); 
   const [recipes, setRecipes] = useState(Array.isArray(recipesInLocalStorage) ? recipesInLocalStorage : []); // Tengo que validar lo que recibe ya que sino tengo un error de parseo de datos.
   let filteredResults = filterSearch(searchTerm);
 
   useEffect(() => {
-    saveDataInLocalStorage('recipe', recipes);
+    saveDataInLocalStorage(user.username, recipes);
 
   }, [recipes]);
 

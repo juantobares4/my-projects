@@ -5,6 +5,7 @@ import { ImageComponent } from './ImageComponent'
 import { options } from '../utils/options.js';
 import { saveDataInLocalStorage, getDataFromLocalStorage } from '../utils/localstorage.js'
 import { toastSuccess } from '../utils/toast.js';
+import { useStore } from '../context/useStore.jsx';
 
 import formImage from '../assets/chef_4078682.png'
 import '../styles/Form.css'
@@ -12,13 +13,14 @@ import '../styles/Form.css'
 export const Form = () => {
   let getLocalStorage = getDataFromLocalStorage('recipe');
   
+  const { user } = useStore();
   const [recipeTitle, setRecipeTitle] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [recipeDescription, setRecipeDescription] = useState('');
   const [recipes, setRecipes] = useState(getLocalStorage);
-  
+
   useEffect(() => {
-    saveDataInLocalStorage('recipe', recipes);
+    saveDataInLocalStorage(user.username, recipes);
 
   }, [recipes]); // Cuando 'recipes' se actualice, tiene que ejecutar la función saveDataInLocalStorage.
 
@@ -27,8 +29,9 @@ export const Form = () => {
       id: nanoid(),
       title: recipeTitle,
       category: selectedCategory,
-      description: recipeDescription
-      
+      description: recipeDescription,
+      author: user.username
+
     };
     
     event.preventDefault();
@@ -41,7 +44,7 @@ export const Form = () => {
     setRecipeDescription('');
     setSelectedCategory('');
 
-    toastSuccess('Receta anotada con éxito.')
+    toastSuccess('Receta anotada con éxito.');
 
   };
 

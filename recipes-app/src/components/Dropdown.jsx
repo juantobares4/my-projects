@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import { ImageComponent } from './ImageComponent';
 import { removeDataFromSessionStorage } from '../utils/sessionstorage';
@@ -15,7 +15,6 @@ export const Dropdown = () => {
 
   const logoutUser = () => {
     logout();
-    removeDataFromSessionStorage('currentUser');
 
     navigate('/');
 
@@ -30,9 +29,7 @@ export const Dropdown = () => {
       </a>
 
       <ul className="dropdown-menu">
-        <li><a className="dropdown-item" href="#">Mi Perfil</a></li>
-        <li><hr className="dropdown-divider" /></li>
-        <li><a onClick={logoutUser} className="dropdown-item" href="#">Cerrar Sesión</a></li>
+        <li><a onClick={logoutUser} className="dropdown-item">Cerrar Sesión</a></li>
       </ul>
     </div>
   

@@ -5,3 +5,15 @@
   filter: invert(1);
 
 }
+
+.dropdown-item:hover{
+  cursor: pointer;
+
+
+}
+
+.dropdown-item:active{
+  background-color: rgba(222, 221, 221, 0.181);
+  color: black;
+
+}
