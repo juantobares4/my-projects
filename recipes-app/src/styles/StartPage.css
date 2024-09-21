@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap');
+
+:root{
+  --font-brand: "Playfair", serif;
+
+}
+
+.font-brand{
+  font-family: var(--font-brand);
+
+}

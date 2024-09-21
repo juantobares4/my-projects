@@ -108,7 +108,7 @@ export const RegisterForm = ({ isVisible }) => {
           <button type='submit' className="m-auto btn btn-outline-primary">Registrarme</button>
           <p 
             className='ms-2 text-center m-auto redirect-register text-dark'
-            onClick={() => isVisible(!isVisible)}
+            onClick={() => isVisible()}
           >
             Iniciar Sesión
           </p>
