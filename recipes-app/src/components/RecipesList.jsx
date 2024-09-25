@@ -61,7 +61,6 @@ export const RecipesList = () => {
             />
           </div>
         </form>  
-
         {
           filteredResults.length > 0 ? (
             <div className='row mt-5'>
