@@ -257,6 +257,6 @@ function renderTasks(){
 tasks.addEventListener("submit", receiveTasks); // Evento para enviar tareas a la lista.
 clearTasks.addEventListener("click", emptyTasks); // Evento para vaciar la lista de tareas.
 searchTask.addEventListener("submit", searchForTask); /* Evento para filtrar por tarea en la barra de búsqueda | 
-Debe ser tipo "submit" porque si no no se vincula con la función si es de tipo "click". */
+Debe ser tipo "submit" porque sino no se vincula con la función si es de tipo "click". */
 
 renderTasks();
