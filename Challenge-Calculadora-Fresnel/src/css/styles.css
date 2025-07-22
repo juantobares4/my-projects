@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap');
+
+:root{
+  --brand-font: "Roboto Serif", serif;
+  --main-font: "Lato", sans-serif;
+  --nav-color: #E2F9B8;
+  --color-container-buttons: #BBCE8A;
+  --footer-color: #141414e8;
+
+}
+
+body{
+  background-color: aliceblue;
+  font-size: 19px;
+
+}
+
+.custom-mark{
+  background-color: #bbce8a5d;
+
+}
+
+.title{
+  font-family: var(--brand-font);
+
+}
+
+.bg-color-nav{
+  background-color: var(--nav-color);
+
+}
+
+.img-brand{
+  width: 50px;
+  height: 50px;
+
+}
+
+.container-buttons{
+  font-family: var(--main-font);
+  background-color: var(--color-container-buttons);
+
+}
+
+.container-buttons a{
+  font-size: 17px;
+
+}
+
+.container-buttons a:hover{
+  background-color: rgba(179, 233, 157, 0.668);
+
+}
+
+main{
+  font-family: var(--main-font);
+
+}
+
+.main-content, .form-calculator{
+  padding: 100px 40px 40px;
+
+}
+
+.btn-start-custom{
+  background-color: var(--color-container-buttons);
+
+}
+
+.btn-start-custom:hover{
+  background-color: #bbce8aac;
+
+}
+
+.btn-start-custom:active{
+  background-color: #bbce8aac !important;
+
+}
+
+form{
+  height: 370px;
+
+}
+
+.form-calculator{
+  margin-top: 100px;
+  margin-bottom: 200px;
+
+}
+
+.form-calculator h4{
+  font-family: var(--brand-font);
+
+}
+
+footer{
+  background-color: var(--footer-color);
+  font-family: var(--main-font);
+  height: 70px;
+  font-size: 11px;
+  color: white;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+
+}

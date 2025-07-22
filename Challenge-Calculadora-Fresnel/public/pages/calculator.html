@@ -1,0 +1,20 @@
+<section class="d-flex justify-content-center align-items-center">
+  <div class="w-50 card shadow form-calculator d-flex flex-column justify-content-center align-items-center">
+    <h4 class="mb-5 title-form">Ingresá los Datos<hr></h4>
+    <div id="container-form">
+      <form id="data-form">
+        <div class="form-group d-flex flex-column">
+          <label>Distancia entre transmisor y receptor</label>
+          <input id="input-distance" class="mt-2" type="number" placeholder="(KMs o Kilómetros)" required min="1">
+        </div>
+        <div class="form-group d-flex flex-column mt-4">
+          <label>Frecuencia de la señal</label>
+          <input class="mt-2" type="number" id="input-frequency" placeholder="(GHz o Gigahercios)" required min="1">
+        </div>
+        <div class="mt-5 d-flex justify-content-center align-items-center">
+          <button class="mt-5 btn btn-start-custom w-50" onclick="calculate(event)"><b>Calcular</b></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
