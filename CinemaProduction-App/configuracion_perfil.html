@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/style_confPerfil.css">
+    <link rel="icon" type="image/png" href="/img/Logo.png">
+    <title>CinemaProduction • Configuracion de Perfil</title>
+</head>
+
+<body class="background-color color-font">
+    <nav class="navbar_home navbar navbar-expand-lg secondary-font">
+        <a class="navbar-brand" href="/home.html">
+            <img src="./img/Logo-horizontal.svg" alt="Logo" height="50" width="100">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="/home.html">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="/eventos.html">Eventos</a></li>
+                <li class="nav-item"><a class="nav-link" href="/novedadesPopulares.html">Novedades populares</a></li>
+                <li class="nav-item"><a class="nav-link" href="/miLista.html">Mi lista</a></li>
+            </ul>
+            <form class="form-inline ml-auto search-bar">
+                <button class="btn btn-outline-light search-button" type="submit">
+                    <img src="/img/search.svg" height="20">
+                </button>
+                <input class="form-control mr-sm-2 search-input border border-white" type="search" placeholder="Buscar" aria-label="Buscar">
+            </form>
+            <ul class="navbar-nav ml-2">
+                <img src="/img/Campanita.png"
+                    alt="Perfil" class="profile-img">
+                <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-bell"></i></a></li>
+                <li class="nav-item"><img
+                        src="https://rajueditor.com/wp-content/uploads/2023/09/fotos-de-anime-para-perfil-1024x1024.jpg"
+                        alt="Perfil" class="profile-img"></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="contenedor">
+        <div class="d-flex align-items-center foto_perfil">
+            <img id="fotoPerfil"
+                src="https://rajueditor.com/wp-content/uploads/2023/09/fotos-de-anime-para-perfil-1024x1024.jpg"
+                alt="Foto de perfil">
+            <div class="nombre_perfil">
+                <h1>Kakashi</h1>
+                <h3>Miembro Premium</h3>
+            </div>
+        </div>
+
+        <ul class="card card-body secondary-font d-inline-block menu">
+            <li class="title">General</li>
+            <li class="opcion_menu ">Informacion de Subscripcion
+                <div class="opciones card-body">
+                    <div class="p-4">
+                        <h4 class="title">Información de suscripción</h4>
+                        <br>
+                        <h5>Gestiona tu plan de suscripción y tu historial de pedidos </h5>
+                        <br>
+                        <h5 class="font-weight-bold text-warning">Miembro Mega Fan</h5>
+                        <br>
+                        <br>
+                        <p>La suscripción se realizó vía Google Play. Para modificarla o cancelarla,
+                            por favor, accede a las opciones dentro de la aplicación.</p>
+                        <br>
+                    </div>
+                </div>
+            </li>
+            <li class="opcion_menu">Informacion General
+                <div class="opciones">
+                    <ul class="card-body">
+                        <li class="title">Informacion General</li>
+                        <li class="text-center">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <span class="static-text">Nombre:</span>
+                                <input type="text" value="Kakashi" class="w-50 readonly-input bg-secondary rounded"
+                                    readonly>
+                            </div>
+                        </li>
+                        <li class="text-center">
+                            <div class="d-flex justify-content-center align-items-center pl-3">
+                                <span class="static-text">Email:</span>
+                                <input type="text" value="kakashi_ojoslocos@example.com"
+                                    class="readonly-input bg-secondary w-50 rounded" readonly>
+                            </div>
+                        </li>
+                        <li class="text-center">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <span class="static-text ">Idioma:</span>
+                                <select class="readonly-input rounded bg-secondary  ">
+                                    <option value="es">Español</option>
+                                    <option value="en">English</option>
+                                    <option value="fr">Français</option>
+                                </select>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="opcion_menu">Plan de Pago
+                <div class="opciones">
+                    <ul class="card-body">
+                        <li class="title">Plan de Pago</li>
+                        <li>
+                            <div class="container mt-3">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                id="flexRadioDefault1">
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                <h4>Free</h4>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                id="flexRadioDefault2" checked>
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                <h4>Premium</h4>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="text-center row">
+                            <div class="col-md-3">
+                                <span class="static-text">Nombre Completo:</span>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control bg-secondary" value="Ej. Kakashi Uchiha"
+                                    placeholder="Nombre y Apellido" readonly />
+                            </div>
+                            <div class="col-md-1">
+                                <img class="mr-1" src="./img/credit-card-2-front.svg" width="30">
+                            </div>
+                        </li>
+                        <li class="text-center row">
+                            <div class="col-md-3">
+                                <span class="static-text">DNI del titular:</span>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control bg-secondary" value="Ej. 99.999.999"
+                                    placeholder="DNI Del responsable" readonly />
+                            </div>
+                        </li>
+                        <li class="text-center row">
+                            <div class="col-md-3">
+                                <span class="static-text">Número de tarjeta:</span>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" value="XXXX-XXXX-XXXX-XXXX" class="form-control bg-secondary"
+                                    placeholder="Enter Card Number" readonly />
+                            </div>
+                            <div class="col-md-1">
+                                <img class="mt-2" src="./img/credit-card-2-front.svg" width="30">
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="text-center row">
+                                <div class="col-md-3">
+                                    <span class="static-text">Fecha de vencimiento:</span>
+                                </div>
+                                <div class="col-md-3 pl-4">
+                                    <input type="text" value="mm/aa" class="form-control bg-secondary"
+                                        placeholder="MM/YY" readonly />
+                                </div>
+                                <div class="col-md-1">
+                                    <img class="mt-2" src="./img/credit-card-2-front.svg" width="30">
+                                </div>
+                                <div class="col-md-2">
+                                    <span class="static-text">Código de seguirdad:</span>
+                                </div>
+                                <div class="col-md-2 pr-3">
+                                    <input type="text" value="XXX" class="form-control bg-secondary"
+                                        placeholder="CCV" readonly />
+                                </div>
+                                <div class="col-md-1">
+                                    <img class="mt-2" src="./img/credit-card.svg" width="30">
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="text-center row">
+                            <div class="col-md-2 offset-md-10">
+                                <input type="submit" class="boton-edit btn btn-danger" value="Guardar" />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="opcion_menu">Cambiar Correo
+                <div class="opciones">
+                    <ul class="card-body">
+                        <li class="title">Proyecto 4</li>
+                        <li>Información del proyecto</li>
+                        <li>Documentos del proyecto</li>
+                        <li>Comentarios del proyecto</li>
+                        <li>...</li>
+                    </ul>
+                </div>
+            </li>
+            <li class="opcion_menu">Cambiar Contraseña
+                <div class="opciones">
+                    <ul class="card-body">
+                        <li class="title">Proyecto 5</li>
+                        <li>Información del proyecto</li>
+                        <li>Documentos del proyecto</li>
+                        <li>Comentarios del proyecto</li>
+                        <li>...</li>
+                    </ul>
+                </div>
+            </li>
+            <li class="opcion_menu">Gestion de Dispositivos
+                <div class="opciones">
+                    <ul class="card-body">
+                        <li class="title">Proyecto 6</li>
+                        <li>Información del proyecto</li>
+                        <li>Documentos del proyecto</li>
+                        <li>Comentarios del proyecto</li>
+                        <li>...</li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    <footer class="pt-5">
+        <div class="card secondary-color">
+            <div class="div-footer card-body text-center pb-3">
+                <a href="/home.html"><img class="img-footer mt-5" src="/img/film.svg"></a>
+                <blockquote class="blockquote mb-0">
+                    <br>
+                    <code class="secondary-font"> &copy; Términos y condiciones | CinemaProduction</code>
+                    <footer class="blockquote-footer secondary-font">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                    <p class="adress">atencion@cinema.ar (Hollywood, Estados Unidos)</p>
+                    <hr>
+                </blockquote>
+                <div class="social">
+                    <a href="https://www.youtube.com/@productionCinema./">
+                        <img class="logos-social" src="/img/youtube.svg">
+                    </a>
+                    <a href="https://www.facebook.com/cinema.production/">
+                        <img class="logos-social" src="/img/facebook.svg">
+                    </a>
+                    <a href="https://www.instagram.com/cinemaproduction/">  
+                        <img class="logos-social" src="/img/instagram.svg">
+                    </a>
+                    <a href="mailto:atencion@cinema.ar">
+                        <img class="logos-social" src="/img/google.svg">
+                    </a>
+                    <a href="https://forms.gle/NSKxhZdvZ5XEBnxy7" target="_blank">
+                        <img class="logos-social" src="/img/envelope-paper.svg">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts de Bootstrap (jQuery y Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.menu li').click(function () {
+                // Cerrar todas las opciones abiertas
+                $('.opciones').not($(this).find('.opciones')).removeClass('open');
+
+                // Abrir o cerrar la opción correspondiente
+                $(this).find('.opciones').toggleClass('open');
+            });
+        });
+    </script>
+</body>
+</html>
+

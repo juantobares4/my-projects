@@ -1,0 +1,69 @@
+#contenedor {
+  width: 100%;
+  height: 100%;
+  background-color: #031633;
+  overflow: hidden;
+  margin-top: 10vh;
+  position: relative;
+  color: white;
+
+}
+
+.cuadrado {
+  margin-bottom: 50px;
+  display: none; 
+  background-color:#2E2C30;
+  margin-left: 10%;
+  position: relative;
+  height: 100%;
+}
+
+.cuadrado.active {
+  width: 80%;
+  height: 70%;
+  display: block; 
+}
+
+.botones {
+  display: flex;
+  position: relative;
+  margin-top: 5%;
+  bottom: 0;
+  z-index: 1;
+  margin-left: 10%;
+}
+
+.imagen-lista {
+  width: 100%;
+  height: auto;
+}
+
+.titulo-descripcion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 0; 
+}
+
+.titulo-descripcion h1,
+.titulo-descripcion h3 {
+  margin: 0; 
+}
+
+.pelicula {
+  display: flex;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.boton{
+  background-color: #2E2C30;
+  color: #fff;
+
+}
+
+.boton:hover{
+  background-color: #FFFFFF;
+
+}
