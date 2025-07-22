@@ -34,6 +34,5 @@ Este repositorio nace con el objetivo de documentar mi crecimiento como desarrol
   
 ###  📬 Contacto
 **Para contactarme podés enviarme un mensaje o correo a:**
-
 	[LinkedIn](https://www.linkedin.com/in/juancruz-tobares-dev/)
 	[Gmail](mailto:juantobares4@gmail.com)	
