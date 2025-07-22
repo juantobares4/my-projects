@@ -1,0 +1,78 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %} Ofertas - Listado de Ofertas | AutoModo {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'styles/css/styles-offer.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mb-5">
+    <div class="d-flex flex-column justify-content-center align-items-center mt-5">
+      <h2 class="text-justify mb-5"><b><i>Ofertas</i></b><br>de la<br>comunidad</h4>
+          <a href="{% url 'createOffers' %}" class="btn btn-dark mb-3 w-50">Crear Oferta</a>
+          <div class="horizontal-rule mt-4"></div>
+    </div>
+    {% if not grouped_offers %}
+    <div class="d-flex flex-column justify-content-center align-items-center container mt-5">
+      <div>
+        <img class="empty-offers" src="{% static 'images/undraw_towing_re_wesa.svg' %}" alt="">
+        <h4 class="text-center mt-5 title-empty-offers"><b><i>No hay ofertas</i></b><br> disponibles</h4>
+      </div>
+    </div>
+    {% else %}
+    <div class="container d-flex justify-content-center align-items-center">
+      <img class="pending-offers-img" src="{% static 'images/undraw_automobile_repair_ywci.svg' %}" alt="">
+      <h4 class=""><b><i>Ofertas</i></b><br>Disponibles</h4>
+    </div>
+    <div class="container">
+      {% for offer_group, offers in grouped_offers.items %}
+      <div class="card mb-4 shadow">
+        <div class="card-header text-center">
+          <h5>{{ offer_group.cars }}</h5>
+        </div>
+        <div class="card-body">
+          <table class="table border">
+            <thead>
+              <tr class="align-middle">
+                <th>Vendedor</th>
+                <th>Ubicación</th>
+                <th>Precio</th>
+                <th>Año</th>
+                <th>Más información</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for offer in offers %}
+              <tr class="align-middle">
+                <td>{{ offer.seller.username }}</td>
+                <td>{{ offer.location }}</td>
+                <td>${{ offer.price }}</td>
+                <td>{{ offer.year }}</td>
+                <td>
+                  <a href="{% url 'DetailOffers' offer.id %}"
+                    class="btn btn-outline-info text-decoration-none me-1">
+                    <img src="{% static 'images/three-dots.svg' %}" alt="Detalle de la venta"
+                        title="Más información">
+                  </a>
+                  {% if offer.seller.profile.is_seller and offer.seller.id == request.user.id %}
+                    <a href="{% url 'UpdateOffer' offer.id %}" class="btn btn-outline-success text-decoration-none me-1">
+                      <img src="{% static 'images/pencil-square.svg' %}" class="" alt="Editar mi oferta" title="Editar mi oferta">
+                    </a>
+                  {% endif %}
+                  {% if request.user.is_staff or offer.seller.profile.is_seller and offer.seller.id == request.user.id %}
+                    <a href="{% url 'DeleteOffer' offer.id %}" class="btn btn-outline-danger me-2"><img src="{% static 'images/trash.svg' %}" alt=""></a>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

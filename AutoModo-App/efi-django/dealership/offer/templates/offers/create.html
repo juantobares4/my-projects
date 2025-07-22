@@ -1,0 +1,129 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %} Ofertas - Crear Oferta | AutoModo {% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'styles/css/styles-offer.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="d-flex flex-column justify-content-center align-items-center mt-5">
+    <div class="d-flex flex-row align-items-center">
+      <img class="mr-3 create-offer-img"
+        src="{% static 'images/DrawKit-Vector-Illustration-ecommerce-02-Photoroom.png' %}" alt="">
+      <div class="ms-5">
+        <h2 class="text-justify mb-4"><b><i>Publicá </i></b>tu<br>oferta</h4>
+          <a href="{% url 'listOffers' %}" class="btn btn-dark mb-3">Volver al listado de ofertas</a>
+      </div>
+    </div>
+    <div class="horizontal-rule mt-4"></div>
+  </div>
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <form class="w-50 mx-auto" action="" method="POST" enctype="multipart/form-data">
+      <h2 class="mb-5 text-center mt-5"><b>Personalizá tu venta</b></h2>
+      {% csrf_token %}
+      <div class="card h-25 form-group row justify-content-center align-items-center w-100 mt-3 mb-3">
+        <p class="ps-4 text-left"><b>Vehículo</b></p>
+        <hr class="w-100">
+        <div class="d-flex col-lg-9 w-100 justify-content-center">
+          <label class="label-inputs">Seleccioná el vehículo que querés vender</label>
+          {{ form.cars }}
+        </div>
+      </div>
+      <div class="card h-25 form-group row justify-content-center align-items-center w-100 mt-3 mb-3">
+        <p class="ps-4 text-left"><b>Ubicación</b></p>
+        <hr class="w-100">
+        <div class="d-flex col-lg-9 w-100 justify-content-center">
+          <label class="label-inputs">Seleccioná desde dónde vendes</label>
+          {{ form.location }}
+        </div>
+      </div>
+      <div class="card h-25 form-group row justify-content-center align-items-center w-100 mt-3 mb-3">
+        <p class="ps-4 text-left"><b>Precio</b></p>
+        <hr class="w-100">
+        <div class="d-flex col-lg-9 w-100 justify-content-center">
+          <label class="label-inputs">Elegí el precio adecuado</label>
+          {{ form.price }}
+        </div>
+      </div>
+      <div class="card h-25 form-group row justify-content-center align-items-center w-100 mt-3 mb-3">
+        <p class="ps-4 text-left"><b>Año de fabricación</b></p>
+        <hr class="w-100">
+        <div class="d-flex col-lg-9 w-100 justify-content-center">
+          <label class="label-inputs">Seleccioná el año de tu vehículo</label>
+          {{ form.year }}
+        </div>
+      </div>
+      <div class="card form-group row justify-content-center align-items-center w-100 mt-3 mb-3" style="height: auto;">
+        <p class="ps-4 pt-4 text-left"><b>Métodos de Pago</b></p>
+        <hr class="w-100">
+        <div class="d-flex col-lg-9 w-100 mb-3 justify-content-start">
+          <label class="label-inputs">Elegí métodos de pago disponibles</label>
+          <div>
+            {{ formPayments.payment_options }}
+          </div>
+          <hr>
+        </div>
+      </div>
+
+      <div class="card form-group row justify-content-center align-items-center w-100 mt-3 mb-3" style="height: auto;">
+        <p class="ps-4 pt-3 text-left"><b>Imágenes</b></p>
+        <hr class="w-100">
+        <div class="d-flex col-lg-9 w-100 mb-3 justify-content-start">
+          <label class="label-inputs">Selecciona las imágenes que desees</label>
+          <div>
+            <div id="image-section">
+              <div class="input-group mt-2">
+                <input id="image-input" name="images" type="file" multiple class="form-control" onchange="updateDescriptions()">
+              </div>
+              <div id="description-section"></div>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+
+
+      <div class="card h-25 form-group row justify-content-center align-items-left w-100 mt-3 mb-5">
+        <p class="ps-4 text-left"><b>Publicar oferta</b></p>
+        <hr class="w-100">
+        <div class="d-flex col-lg-9 w-100 justify-content-center">
+          <a href="{% url 'listOffers' %}" class="btn btn-outline-primary mt-2 mb-4 w-100 me-3">Volver atrás</a>
+          <button type="submit" class="btn btn-outline-success mt-2 mb-4 w-100 me-3">Publicar Vehículo</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function updateDescriptions() {
+    const fileInput = document.getElementById('image-input');
+    const descriptionSection = document.getElementById('description-section');
+    const files = fileInput.files;
+
+    descriptionSection.innerHTML = '';
+
+    for (let i = 0; i < files.length; i++) {
+      const descriptionDiv = document.createElement('div');
+      descriptionDiv.className = 'input-group mt-3';
+
+      const label = document.createElement('label');
+      label.innerText = `Description for Image ${i + 1}:`;
+      descriptionDiv.appendChild(label);
+
+      const input = document.createElement('input');
+      input.name = 'descriptions';
+      input.type = 'text';
+      input.placeholder = 'Enter description';
+      input.className = 'form-control';
+      descriptionDiv.appendChild(input);
+
+      descriptionSection.appendChild(descriptionDiv);
+    }
+  }
+</script>
+
+{% endblock %}

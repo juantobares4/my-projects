@@ -1,0 +1,169 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-05 23:03-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: cars/models.py:5
+msgid "brand"
+msgstr "Brand"
+
+#: cars/models.py:10
+msgid "model"
+msgstr "Model"
+
+#: cars/models.py:21
+msgid "category"
+msgstr "Category"
+
+#: dealership/settings.py:132
+msgid "English"
+msgstr "English"
+
+#: dealership/settings.py:133
+msgid "Spanish"
+msgstr "Spanish"
+
+#: home/templates/home/base.html:32 home/templates/home/base.html:116
+msgid "Inicio"
+msgstr "Home"
+
+#: home/templates/home/base.html:35
+msgid "Nuestras Ofertas"
+msgstr "Our Offers"
+
+#: home/templates/home/base.html:40
+msgid "Categorías"
+msgstr "Categories"
+
+#: home/templates/home/base.html:59 home/templates/home/base.html:120
+msgid "Cerrar Sesión"
+msgstr "Sign Out"
+
+#: home/templates/home/base.html:61 home/templates/home/login.html:15
+msgid "Ingresá"
+msgstr "Enter"
+
+#: home/templates/home/base.html:64
+msgid "Registrate"
+msgstr "Register"
+
+#: home/templates/home/base.html:77
+msgid "¡Hola,"
+msgstr "Hi,"
+
+#: home/templates/home/base.html:79 home/templates/home/base.html:81
+msgid "Bienvenido a AutoMundo"
+msgstr "Welcome to AutoMundo"
+
+#: home/templates/home/base.html:90
+msgid "Ubicaciones"
+msgstr "Locations"
+
+#: home/templates/home/base.html:92
+msgid "Administrar Ubicaciones"
+msgstr "Manage Locations"
+
+#: home/templates/home/base.html:96
+msgid "Vehículos"
+msgstr "Vehicles"
+
+#: home/templates/home/base.html:98
+msgid "Administrar Vehículos"
+msgstr "Manage Vehicles"
+
+#: home/templates/home/base.html:103
+msgid "Métodos de Pago"
+msgstr "Payments Methods"
+
+#: home/templates/home/base.html:105
+msgid "Administrar Métodos de Pago"
+msgstr "Manage Payment Methods"
+
+#: home/templates/home/base.html:109 home/templates/home/base.html:118
+#: home/templates/home/base.html:126
+msgid "Ofertas"
+msgstr "Offers"
+
+#: home/templates/home/base.html:111
+msgid "Administrar Ofertas"
+msgstr "Manage Offers"
+
+#: home/templates/home/base.html:124 home/templates/home/index.html:65
+msgid "Nosotros"
+msgstr "About Us"
+
+#: home/templates/home/index.html:4
+msgid "Sitio Oficial: Inicio"
+msgstr "Official Site"
+
+#: home/templates/home/index.html:40
+msgid "Vendé"
+msgstr "Sell"
+
+#: home/templates/home/index.html:52
+msgid "Mi Perfil"
+msgstr "My Profile"
+
+#: home/templates/home/index.html:54 home/templates/home/register.html:60
+msgid "Registrarme"
+msgstr "Register Here"
+
+#: home/templates/home/index.html:74
+msgid "Comprá"
+msgstr "Buy"
+
+#: home/templates/home/index.html:93
+msgid "Dónde"
+msgstr "Where"
+
+#: home/templates/home/index.html:93
+msgid "nos encontramos"
+msgstr "we are"
+
+#: home/templates/home/login.html:4
+msgid "Regístrate"
+msgstr "Register"
+
+#: home/templates/home/login.html:15
+msgid "tus datos"
+msgstr "your data"
+
+msgid "Ingresar"
+msgstr "Enter"
+
+msgid "Registrate gratis"
+msgstr "Register for free"
+
+#: home/templates/home/register.html:15
+msgid "Conectate"
+msgstr "Contact"
+
+msgid "con nosotros"
+msgstr "whit us"
+
+
+#: home/templates/home/register.html:62
+msgid "¿Ya tenés cuenta?"
+msgstr "Do you have an account?"
+
+#: home/templates/home/register.html:62
+msgid "Iniciá sesión"
+msgstr "Sign in"
+
+msgid "¿No tenés una cuenta?"
+msgstr "Don't have an account?"

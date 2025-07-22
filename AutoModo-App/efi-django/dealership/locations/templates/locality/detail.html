@@ -1,0 +1,29 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %} Localidades - Detalle | {{locality.name}} | AutoModo {% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'styles/css/styles-location.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mb-5">
+  <div class="d-flex flex-column justify-content-center align-items-center mt-5">
+    <h2 class="text-center mb-5 title">Información sobre - {{locality.name}}</h2>
+    <p class="text-center mb-5">Localidad perteneciente a la Provincia/Estado de: <b>{{locality.province}}</b></p>
+    <a href="{% url 'localities_list' %}" class="btn btn-dark mb-3 w-50">Volver al listado</a>
+    <div class="horizontal-rule mt-4"></div>
+  </div>
+  <div class="mt-5 w-75 mx-auto">
+    <div class="d-flex flex-column align-items-center">
+      <div class="form-group row w-100">
+        <div class="col-lg-12 d-flex justify-content-center gap-3">
+          <a href="{% url 'locality_delete' locality.id %}" class="btn btn-outline-dark w-50 mt-3">Borrar</a>
+          <a href="{% url 'locality_update' locality.id %}" class="btn btn-outline-dark w-50 mt-3">Editar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

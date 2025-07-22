@@ -1,0 +1,30 @@
+{% extends "home/base.html" %}
+
+{% load static %}
+
+{% block title %} Modelos - Detalle | {{car_model.name}} | AutoModo {% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'styles/css/styles-cars.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mb-5">
+  <div class="d-flex flex-column justify-content-center align-items-center mt-5">
+    <h2 class="text-center mb-5 title">Información sobre modelo - {{car_model.name}}</h2>
+    <p class="text-center mb-5"><b>Modelo:</b> {{car_model.name}} | <b>Marca:</b> {{car_model.brand}}</p>
+    <a href="{% url 'car_model_list' %}" class="btn btn-dark mb-3 w-50">Volver al listado</a>
+    <div class="horizontal-rule mt-4"></div>
+  </div>
+  <div class="mt-5 w-75 mx-auto">
+    <div class="d-flex flex-column align-items-center">
+      <div class="form-group row w-100">
+        <div class="col-lg-12 d-flex justify-content-center gap-3">
+          <a href="{% url 'car_model_delete' car_model.id %}" class="btn btn-outline-dark w-50 mt-3">Borrar</a>
+          <a href="{% url 'car_model_update' car_model.id %}" class="btn btn-outline-dark w-50 mt-3">Editar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

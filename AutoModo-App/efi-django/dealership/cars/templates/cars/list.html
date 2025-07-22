@@ -1,0 +1,55 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %} Vehículos - Listado de Autos | AutoModo {% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'styles/css/styles-cars.css' %}">
+{% endblock %}
+
+{% block content%}
+<div class="container mb-5">
+  <div class="d-flex flex-column justify-content-center align-items-center mt-5">
+    <h2 class="text-center mb-4 title">Vehículos registrados</h2>
+    <a href="{% url 'car_create' %}" class="btn btn-dark mb-3 w-50">Registrar Vehículo</a>
+    <div class="horizontal-rule mt-4"></div>
+  </div>
+  <div class="d-flex justify-content-center align-items-center mt-5 gap-3">
+    <a href="{% url 'brand_list' %}" class="btn btn-outline-dark w-25 mb-3">Listado de Marcas</a>
+    <a href="{% url 'car_model_list' %}" class="btn btn-outline-dark w-25 mb-3">Listado de Modelos</a>
+    <a href="{% url 'category_list' %}" class="btn btn-outline-dark w-25 mb-3">Listado de Categorías</a>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="bg-secondary text-white border">ID</th>
+        <th class="bg-secondary text-white border">Marca</th>
+        <th class="bg-secondary text-white border">Modelo</th>
+        <th class="bg-secondary text-white border">Categoria</th>
+        <th class="bg-secondary text-white border">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for car in cars %}
+        <tr>
+          <td class="align-middle">{{ car.id }}</td>
+          <td class="align-middle">{{ car.car_model.brand.name }}</td>
+          <td class="align-middle">{{ car.car_model.name }}</td>
+          <td class="align-middle">{{ car.category.name }}</td>   
+          <td>
+          <a href="{% url 'car_detail' car.id %}" class="btn btn-outline-info text-decoration-none me-1">
+            <img src="{% static 'images/three-dots.svg' %}" class="" alt="Detalle Vehículo" title="Más información">
+          </a>
+          <a href="{% url 'car_delete' car.id %}" class="btn btn-outline-danger text-decoration-none me-1">
+            <img src="{% static 'images/trash3.svg' %}" alt="Borrar Vehículo" title="Borrar Vehículo">
+          </a>
+          <a href="{% url 'car_update' car.id %}" class="btn btn-outline-success text-decoration-none">
+            <img src="{% static 'images/pencil-square.svg' %}" alt="Editar Vehículo" title="Editar Vehículo">
+          </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

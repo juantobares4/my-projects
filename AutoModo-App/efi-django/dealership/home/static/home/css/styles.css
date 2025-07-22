@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
+
+:root{
+  --font-subtitles: "DM Mono", monospace;
+
+}
+
+body{
+  background-color: #efefef;
+  font-family: "Lato", sans-serif;
+  overflow-x: hidden;
+
+}
+
+.container-form{
+  background-color: aliceblue;
+  width: 500px;
+
+}
+
+.container{
+  margin-top: 200px;
+
+}
+
+form{
+  margin-top: 80px;
+  height: 700px;
+  
+}
+
+.subtitle{
+  font-family: var(--font-subtitles);
+
+}
+
+.img-form{
+  width: 150px;
+  height: 150px;
+
+}
+
+.container-register-btn, .container-login-btn{
+  margin-top: 90px;
+
+
+}
+
+.dropdown button{
+  font-size: 20px;
+
+}
+
+nav{
+  background-color: rgba(255, 255, 255, 0.559);
+  padding: 0;
+
+}
+
+.dropdown-item:active{
+  background-color: rgba(255, 255, 255, 0.577);
+
+}
+
+.img-brand{
+  margin-left: 20px;
+  width: 220px;
+  height: 100px;
+  transition: transform 0.3s ease-in-out;
+
+}
+
+.img-brand:hover{
+  background-color: #ffffff00;
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+
+}
+
+.navbar-brand:hover{
+  background-color: #ffffff00;
+
+}
+
+nav a:hover, .dropdown button:hover{
+  background-color: rgba(255, 255, 255, 0.577);
+  border-radius: 7px;
+
+}
+
+.vertical-line{
+  height: 50px;
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.675);
+
+}
+
+.hamburguer-logo{
+  width: 20px;
+  height: 20px;
+  
+}
+
+.link{
+  font-size: 14px;
+
+}
+
+.register-title, .login-title{
+  font-size: 12px;
+
+}
+
+.carousel-img{
+  height: 550px;
+  mask-image: 
+  linear-gradient(
+    to bottom,
+    black 80%,
+    transparent
+
+  )
+
+}
+
+.container-section-links{
+  gap: 170px;
+
+}
+
+.img-section-links{
+  width: 50px;
+  height: 50px;
+  filter: invert(1);
+  transition: transform 0.3s ease-in-out;
+
+}
+
+.img-section-links:hover{
+  -webkit-transform: scale(1.3);
+  transform: scale(1.3);
+
+}
+
+.links:hover{
+  text-decoration: underline;
+
+}
+
+.modal-profile-index{
+  width: 2200px;
+
+}
+
+iframe{
+  mask-image: linear-gradient(
+    to top,
+    black 80%,
+    transparent
+
+  )
+
+}
+.social-link{
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 5px;
+
+}
+
+.social-link:hover{
+  background-color: rgba(118, 116, 116, 0.294);
+  border-radius: 10%; 
+  transition: background-color 0.3s, border 0.3s;
+
+}

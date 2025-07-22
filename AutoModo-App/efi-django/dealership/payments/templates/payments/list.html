@@ -1,0 +1,50 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %} Métodos de Pago - Listado de Métodos de Pago | AutoModo {% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'styles/css/styles-payments.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mb-5">
+  <div class="d-flex flex-column justify-content-center align-items-center mt-5">
+    <h2 class="text-center mb-4 title">Métodos de Pago registrados</h2>
+    <a href="{% url 'payment_create' %}" class="btn btn-dark mb-3 w-50">Registrar Método de Pago</a>
+    <div class="horizontal-rule mt-4"></div>
+  </div>
+  <div class="d-flex justify-content-center align-items-center mt-5 gap-3">
+    <a href="{% url 'listOffers' %}" class="btn btn-outline-dark w-25 mb-3">Listado de Ofertas</a>
+    <a href="" class="btn btn-outline-dark w-25 mb-3">Listado de Comentarios</a>
+  </div>
+  <table class="table table-striped shadow">
+    <thead>
+      <tr>
+        <th class="bg-secondary text-white border">ID</th>
+        <th class="bg-secondary text-white border">Método de Pago</th>
+        <th class="bg-secondary text-white border">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for payment in payments %}
+      <tr>
+        <td class="align-middle subtitle">{{ payment.id }}</td>
+        <td class="align-middle">{{ payment.name }}</td>
+        <td>
+          <a href="{% url 'payment_detail' payment.id %}" class="btn btn-outline-info text-decoration-none me-1">
+            <img src="{% static 'images/three-dots.svg' %}" class="" alt="Detalles Método de Pago" title="Más información">
+          </a>
+          <a href="{% url 'payment_delete' payment.id %}" class="btn btn-outline-danger text-decoration-none me-1">
+            <img src="{% static 'images/trash3.svg' %}" alt="Borrar País" title="Borrar País">
+          </a>
+          <a href="{% url 'payment_update' payment.id %}" class="btn btn-outline-success text-decoration-none">
+            <img src="{% static 'images/pencil-square.svg' %}" alt="Editar País" title="Editar País">
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div> 
+{% endblock %}

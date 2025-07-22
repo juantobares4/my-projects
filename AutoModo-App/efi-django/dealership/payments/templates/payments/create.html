@@ -1,0 +1,36 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %} Métodos de Pago - Registrar Método de Pago | AutoModo {% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'styles/css/styles-payments.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="d-flex flex-column justify-content-center align-items-center mt-5">
+    <h2 class="text-center mb-5 title">Carga de datos - Métodos de Pago</h2>
+    <a href="{% url 'payments_list' %}" class="btn btn-dark mb-3 w-50">Volver al listado</a>
+    <div class="horizontal-rule mt-4"></div>
+  </div>
+  <form method="post" class="w-50 mx-auto">
+    {% csrf_token %}
+    <div class="d-flex flex-column align-items-center">
+      <div class="card h-50 form-group row justify-content-center align-items-center w-100 mt-3 mb-3">
+        <p class="ps-4 mt-3 text-left"><b>Métodos de Pago</b></p>
+        <hr class="w-100">
+        <div class="d-flex col-lg-9 w-100 justify-content-center pb-3">
+          <label class="label-inputs">Registrá un método de pago</label>
+          {{ form.name }}
+        </div>
+      </div>
+      <div class="form-group row w-100">
+        <div class="col-lg-12 d-flex justify-content-center">
+          <button type="submit" class="btn btn-outline-dark w-50 mt-3">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

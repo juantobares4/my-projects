@@ -1,0 +1,75 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %} Ofertas - Editar Oferta | AutoMundo {% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'styles/css/styles-location.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="">
+  <div class="mt-5">
+    <img class="me-2" src="{% static 'images/arrow-90deg-left.svg' %}" alt=""><a class="text-decoration-none text-dark" href="{% url 'listOffers' %}"><b>Volver atrás</b></a>  
+  </div>
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <form class="w-50 mx-auto" action="" method="POST" enctype="multipart/form-data">
+      <h2 class="mb-5 text-center mt-5"><b>Editá tu oferta</b></h2>
+      {% csrf_token %}
+      <div class="card h-25 form-group row justify-content-center align-items-center w-100 mt-3 mb-3">
+        <p class="ps-4 text-left"><b>Vehículo</b></p>
+        <hr class="w-100">
+        <div class="d-flex col-lg-9 w-100 justify-content-center">
+          <label class="label-inputs">Seleccioná el vehículo que querés vender</label>
+          {{ form.cars }}
+        </div>
+      </div>
+      <div class="card h-25 form-group row justify-content-center align-items-center w-100 mt-3 mb-3">
+        <p class="ps-4 text-left"><b>Ubicación</b></p>
+        <hr class="w-100">
+        <div class="d-flex col-lg-9 w-100 justify-content-center">
+          <label class="label-inputs">Seleccioná desde dónde vendes</label>
+          {{ form.location }}
+        </div>
+      </div>
+      <div class="card h-25 form-group row justify-content-center align-items-center w-100 mt-3 mb-3">
+        <p class="ps-4 text-left"><b>Precio</b></p>
+        <hr class="w-100">
+        <div class="d-flex col-lg-9 w-100 justify-content-center">
+          <label class="label-inputs">Elegí el precio adecuado</label>
+          {{ form.price }}
+        </div>
+      </div>
+      <div class="card h-25 form-group row justify-content-center align-items-center w-100 mt-3 mb-3">
+        <p class="ps-4 text-left"><b>Año de fabricación</b></p>
+        <hr class="w-100">
+        <div class="d-flex col-lg-9 w-100 justify-content-center">
+          <label class="label-inputs">Seleccioná el año de tu vehículo</label>
+          {{ form.year }}
+        </div>
+      </div>
+      <div class="card form-group row justify-content-center align-items-center w-100 mt-3 mb-3" style="height: auto;">
+        <p class="ps-4 pt-4 text-left"><b>Métodos de Pago</b></p>
+        <hr class="w-100">
+        <div class="d-flex col-lg-9 w-100 mb-3 justify-content-start">
+          <label class="label-inputs">Elegí métodos de pago disponibles</label>
+          <div>
+            {{ formPayments.payment_options }}
+          </div>
+          <hr>
+        </div>
+      </div>
+
+      <div class="card h-25 form-group row justify-content-center align-items-left w-100 mt-3 mb-5">
+        <p class="ps-4 text-left"><b>Modificar oferta</b></p>
+        <hr class="w-100">
+        <div class="d-flex col-lg-9 w-100 justify-content-center">
+          <a href="{% url 'listOffers' %}" class="btn btn-outline-primary mt-2 mb-4 w-100 me-3">Volver atrás</a>
+          <button type="submit" class="btn btn-outline-success mt-2 mb-4 w-100 me-3">Modificar Vehículo</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+  </div>
+{% endblock %}

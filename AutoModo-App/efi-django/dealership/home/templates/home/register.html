@@ -1,0 +1,69 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "Regístrate" %} | AutoModo {% endblock %}
+
+{% block content %}
+<div class="mt-5 mb-5 d-flex justify-content-center align-items-center" style="margin-left: 95px;">
+  <div class="row align-items-stretch w-75">
+    <div class="col-md-3 m-0 p-0 bg-white d-flex align-items-center justify-content-center shadow">
+      <img src="{% static 'home/images/plugin.svg' %}" alt="" class="img-form">
+    </div>
+    <div class="col-md-9 m-0 p-0">
+      <div class="container-form shadow p-5">
+        <div class="d-flex justify-content-center align-items-center mt-4">
+          <h2 class="text-start"><b>{% trans "Conectate" %}</b><br>{% trans "con nosotros" %}</h2>
+          <hr class="w-100">
+        </div>
+        <form action="" method="POST">
+          {% csrf_token %}
+          <div class="input-group">
+            {{ form.first_name }}
+            {{ form.last_name }}
+          </div>
+          <div class="input-group">
+            {{ form.username }}
+            {% if form.username.errors %}
+            <p class="text-danger">{{ form.username.errors }}</p>
+            {% endif %}
+          </div>
+          <div class="input-group">
+            {{ form.email }}
+            {% if form.email.errors %}
+            <p class="text-danger">{{ form.email.errors }}</p>
+            {% endif %}
+          </div>
+          <div class="input-group">
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+            <p class="text-danger">{{ form.password1.errors }}</p>
+            {% endif %}
+
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+            <p class="text-danger">{{ form.password2.errors }}</p>
+            {% endif %}
+          </div>
+          <div class="input-group d-flex justify-content-center align-items-center mt-5">
+            <div class="me-2">
+              {{ form.is_seller.label_tag }}
+            </div>
+            <div>
+              {{ form.is_seller }}
+            </div>
+
+            {% if form.is_seller.errors %}
+            <p class="text-danger">{{form.is_seller.errors}}</p>
+            {% endif %}
+          </div>
+          <div class="ms-4 d-flex justify-content-center align-items-center container-register-btn">
+            <button type="submit" class="btn btn-outline-primary mt-3 w-50">{% trans "Registrarme" %}</button>
+            <a class="text-decoration-none ms-4 text-center text-dark title login-title mt-3"
+              href="{% url 'login' %}">{% trans "¿Ya tenés cuenta?" %} <b>{% trans "Iniciá sesión" %}</b></a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

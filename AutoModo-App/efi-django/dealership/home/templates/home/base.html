@@ -1,0 +1,142 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'home/css/styles.css' %}">
+  <link rel="icon" href="{% static 'home/images/favicon.ico' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid p-3">
+      <div class="d-block">
+        <a class="navbar-brand" href="{% url 'index' %}">
+          <img class="img-brand" src="{% static 'home/images/Logo.svg' %}" alt="">
+        </a>
+      </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'index' %}">{% trans "Inicio" %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'listOffers' %}">{% trans "Nuestras Ofertas" %}</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" href="#" id="dropdownMenuButton" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              {% trans "Categorías" %}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {% for name in names_categories %}
+              <li><a class="dropdown-item text-dark" href="#">{{name}}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+          <button class="btn p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#Id1" aria-controls="Id1">
+            <img class="hamburguer-logo mx-2" src="{% static 'home/images/list.svg' %}">
+          </button>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" href="#" id="dropdownProfileButton" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="{% static 'home/images/person-lines-fill.svg' %}" alt="">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownProfileButton">
+              {% if user.is_authenticated %}
+              <a href="{% url 'logout' %}" class="dropdown-item text-decoration-none text-dark">
+                {% trans "Cerrar Sesión" %}</a>
+              {% else %}
+              <a href="{% url 'login' %}" class="dropdown-item text-decoration-none text-dark">{% trans "Ingresá" %}</a>
+              <hr class="dropdown-divider">
+              <a href="{% url 'register' %}" class="dropdown-item text-decoration-none text-dark">
+                {% trans "Registrate" %}</a>
+              {% endif %}
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="Id1"
+    aria-labelledby="Enable both scrolling & backdrop">
+    <div class="offcanvas-header">
+      <h6 class="offcanvas-title" id="Enable both scrolling & backdrop">
+        {% if user.is_authenticated %}
+        {% trans "¡Hola," %} <b>{{username}}!</b>
+        <br>
+        <i>{% trans "Bienvenido a AutoMundo" %}</i>
+        {% else %}
+        <i>{% trans "Bienvenido a AutoMundo" %}</i>
+        {% endif %}
+      </h6>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      {% if user.is_authenticated %}
+      {% if user.is_staff %}
+      <div>
+        <h6 class="mb-4"><b>{% trans "Ubicaciones" %}</b></h6>
+        <a href="{% url 'countries_list' %}" class="link p-2 text-decoration-none text-dark">
+          {% trans "Administrar Ubicaciones" %}</a>
+        <hr>
+      </div>
+      <div>
+        <h6 class="mt-4 mb-4"><b>{% trans "Vehículos" %}</b></h6>
+        <a href="{% url 'car_list' %}" class="link p-2 text-decoration-none text-dark">
+          {% trans "Administrar Vehículos" %}
+        </a>
+        <hr>
+      </div>
+      <div>
+        <h6 class="mt-4 mb-4"><b>{% trans "Métodos de Pago" %}</b></h6>
+        <a href="{% url 'payments_list' %}" class="link p-2 text-decoration-none text-dark">
+          {% trans "Administrar Métodos de Pago" %}</a>
+        <hr>
+      </div>
+      <div>
+        <h6 class="mt-4 mb-4"><b>{% trans "Ofertas" %}</b></h6>
+        <a href="{% url 'listOffers' %}" class="link p-2 text-decoration-none text-dark">
+          {% trans "Administrar Ofertas" %}</a>
+        <hr>
+      </div>
+      {% elif not user.is_staff %}
+      <div>
+        <a href="{% url 'index' %}" class="link p-2 text-decoration-none text-dark">{% trans "Inicio" %}</a>
+        <hr>
+        <a href="{% url 'listOffers' %}" class="link p-2 text-decoration-none text-dark">{% trans "Ofertas" %}</a>
+        <hr>
+        <a href="{% url 'logout' %}" class="link p-2 text-decoration-none text-danger">{% trans "Cerrar Sesión" %}</a>
+      </div>
+      {% endif %}
+      {% else %}
+      <p class="p-2 text-decoration-none text-dark">{% trans "Nosotros" %}</p>
+      <hr>
+      <a href="{% url 'listOffers' %}" class="p-2 text-decoration-none text-dark">{% trans "Ofertas" %}</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="container mt-4">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

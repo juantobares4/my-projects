@@ -1,0 +1,220 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "Sitio Oficial: Inicio" %}| AutoModo Argentina{% endblock %}
+
+{% block content %}
+<div id="carouselId" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner" role="listbox">
+    <div class="carousel-item active">
+      <img class="d-block w-100 carousel-img" src="{% static 'home/images/index/car-dealership.jpg' %}"
+        alt="First slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100 carousel-img"
+        src="{% static 'home/images/index/headlights-hood-black-luxury-car.jpg' %}" alt="Second slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100 carousel-img"
+        src="{% static 'home/images/index/sport-car-with-black-white-autotuning-driving-forest.jpg' %}"
+        alt="Third slide">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselId" role="button" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only"></span>
+  </a>
+  <a class="carousel-control-next" href="#carouselId" role="button" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only"></span>
+  </a>
+</div>
+
+<section class="">
+  <div class="container-section-links container d-flex justify-content-center align-items-center mb-5">
+    <!-- Primer div -->
+    <a class="links d-flex flex-column align-items-center text-decoration-none text-dark" {% if user.is_authenticated %}
+      href="{% url 'createOffers' %}" {% else %} href="{% url 'login' %}" {% endif %}>
+      <div class="d-flex justify-content-center align-items-center bg-dark rounded-circle"
+        style="height: 100px; width: 100px;">
+        <img class="img-fluid img-section-links p-1" src="{% static 'home/images/index/laptop.svg' %}" alt="">
+      </div>
+      <p class="links text-center mt-2"><b><i>{% trans "Vendé" %}</i></b></p>
+    </a>
+
+    <!-- Segundo div -->
+    <a class="d-flex flex-column align-items-center text-dark text-decoration-none" {% if user.is_authenticated %}
+      id="modal-my-profile" href="{% url 'countries_list' %}" onclick="showMyProfile(event)" {% else %}
+      href="{% url 'register' %}" {% endif %}>
+      <div class="d-flex justify-content-center align-items-center bg-dark rounded-circle"
+        style="height: 100px; width: 100px;">
+        <img class="img-fluid img-section-links p-1" src="{% static 'home/images/index/person-circle.svg' %}" alt="">
+      </div>
+      {% if user.is_authenticated %}
+      <p class="links text-center mt-2"><b><i>{% trans "Mi Perfil" %}</i></b></p>
+      {% else %}
+      <p class="links text-center mt-2"><b><i>{% trans "Registrarme" %}</i></b></p>
+      {% endif %}
+    </a>
+
+    <!-- Tercer div -->
+    <a class="links d-flex flex-column align-items-center text-decoration-none text-dark" href="">
+      <div class="d-flex justify-content-center align-items-center bg-dark rounded-circle"
+        style="height: 100px; width: 100px;">
+        <img class="img-fluid img-section-links p-1" src="{% static 'home/images/index/person-raised-hand.svg' %}"
+          alt="">
+      </div>
+      <p class="links text-center mt-2"><b><i>{% trans "Nosotros" %}</i></b></p>
+    </a>
+
+    <!-- Cuarto div -->
+    <a class="links d-flex flex-column align-items-center text-decoration-none text-dark" href="{% url 'listOffers' %}">
+      <div class="d-flex justify-content-center align-items-center bg-dark rounded-circle"
+        style="height: 100px; width: 100px;">
+        <img class="img-fluid img-section-links p-1" src="{% static 'home/images/index/bag.svg' %}" alt="">
+      </div>
+      <p class="links text-center mt-2"><b><i>{% trans "Comprá" %}</i></b></p>
+    </a>
+  </div>
+</section>
+
+<div class="container"></div>
+
+<section class="container-fluid p-0 mb-5">
+  <div class="row no-gutters">
+    <div class="col-md-8">
+      <div role="region" aria-label="Mapa de ubicación" class="w-100 h-100">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3342.3102580401046!2d-64.37070632352058!3d-33.10092627352996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95d20100455ae713%3A0x45c09be96f337c9!2sITEC%20R%C3%ADo%20Cuarto!5e0!3m2!1ses!2sar!4v1723313797200!5m2!1ses!2sar"
+          width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+    <div class="col-md-4 d-flex justify-content-center align-items-center">
+      <h4><b>{% trans "Dónde" %}</b> {% trans "nos encontramos" %}</h4>
+      <hr class="ms-3 my-3 w-75">
+    </div>
+  </div>
+</section>
+
+<section class="py-3">
+  <div class="d-flex inline-flex gap-5">
+    <div>
+      <a class="social-link">
+        <img src="{% static '/home/images/index/social/instagram.svg' %}" alt="">
+      </a>
+    </div>
+    <div>
+      <a class="social-link">
+        <img src="{% static '/home/images/index/social/facebook.svg' %}" alt="">
+      </a>
+    </div>
+    <div>
+      <a class="social-link">
+        <img src="{% static '/home/images/index/social/twitter-x.svg' %}" alt="">
+      </a>
+    </div>
+    <div>
+      <a class="social-link">
+        <img src="{% static '/home/images/index/social/youtube.svg' %}" alt="">
+      </a>
+    </div>
+    <div>
+      <a class="social-link">
+        <img src="{% static '/home/images/index/social/whatsapp.svg' %}" alt="">
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const showMyProfile = async (event) => {
+    try {
+      event.preventDefault();
+
+      let modalElement = document.createElement('div');
+      let username = '{{ current_user.username }}';
+      let email = '{{ current_user.email }}';
+      let firstName = '{{ current_user.first_name }}';
+      let lastName = '{{ current_user.last_name }}';
+      let isStaff = '{{ current_user.is_staff }}' === 'True' ? 'Staff' : 'No Staff';
+      let isSeller = '{{ current_user.is_seller }}' === 'True' ? 'Vendedor' : 'Comprador';
+
+      modalElement.className = 'modal fade';
+      modalElement.tabIndex = -1;
+      modalElement.id = 'modal-profile'
+
+      let modalBodyContent = `<div class="modal-body">`;
+
+      modalBodyContent += `
+          <div class="mx-0 card h-25 row w-80 mt-3 mb-3">
+              <p class="ps-4 mt-3 text-left"><b>Nombre de usuario</b></p>
+              <hr class="w-100">
+              <div class="d-flex w-100">
+                  <p class='ms-3'><i>${username}</i></p>
+              </div>
+          </div>
+          <hr>
+          <div class="mx-0 card h-25 row w-80 mt-3 mb-3">
+              <p class="ps-4 mt-3 text-left"><b>Correo electrónico</b></p>
+              <hr class="w-100">
+              <div class="d-flex w-100">
+                  <p class='ms-3'><i>${email}</i></p>
+              </div>
+          </div>
+          <hr>
+          <div class="mx-0 card h-25 row w-80 mt-3 mb-3">
+              <p class="ps-4 mt-3 text-left"><b>Nombre personal</b></p>
+              <hr class="w-100">
+              <div class="d-flex w-100">
+                  <p class='ms-3'><i>${firstName}</i></p>
+              </div>
+          </div>
+          <hr>
+          <div class="mx-0 card h-25 row w-80 mt-3 mb-3">
+              <p class="ps-4 mt-3 text-left"><b>Apellido</b></p>
+              <hr class="w-100">
+              <div class="d-flex w-100">
+                  <p class='ms-3'><i>${lastName}</i></p>
+              </div>
+          </div>
+          <div class="mx-0 card h-25 row w-80 mt-3 mb-3">
+              <p class="ps-4 mt-3 text-left"><b>Tipo de usuario</b></p>
+              <hr class="w-100">
+              <div class="d-flex w-100">
+                  <p class='ms-3'><i>${isStaff} | ${isSeller}</i></p>
+              </div>
+          </div>
+          
+        `;
+
+      modalBodyContent += `</div>`;
+
+      modalElement.innerHTML = `
+          <div class="modal-dialog modal-profile-index d-flex justify-content-center align-items-center">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Mi Perfil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </button>
+              </div>
+              ${modalBodyContent}
+            </div>
+          </div>
+                    
+        `;
+
+      document.body.appendChild(modalElement);
+
+      const myModal = new bootstrap.Modal(modalElement);
+      myModal.show();
+
+    } catch (error) {
+      console.error(error);
+
+    }
+
+  };
+
+</script>
+{% endblock %}
