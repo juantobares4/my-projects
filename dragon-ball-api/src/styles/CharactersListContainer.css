@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Squada+One&display=swap');
+
+@font-face {
+  font-family: 'SaiyanSans';
+  src: url('src/styles/fonts/saiyan-sans/Saiyan-Sans.ttf') format('truetype');
+
+}
+
+:root{
+  --main-font-family: 'SaiyanSans';
+  --font-secondary-titles: 'Squada One', sans-serif;
+  
+}
+
+.main-container{
+  padding-bottom: 30px;
+  background: #f0c17be1;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #f0c17bb4, #4b1248e7);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #f0c17bb4, #4b1248e7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+}
+
+.section-name{
+  background-image: url('../src/assets/wallhaven-28yq7m.png');
+  background-position: right;
+  background-repeat: repeat;
+  background-size: 35%;
+  
+}
+
+.custom-font{
+  font-family: var(--main-font-family);
+  font-size: 60px;
+
+}
+
+h6{
+  font-size: 50px;
+  font-family: var(--font-secondary-titles);
+
+}

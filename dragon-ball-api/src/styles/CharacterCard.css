@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Squada+One&display=swap');
+
+.card-image{
+  width: 200px;
+  height: 300px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  padding: 10px;
+  filter: drop-shadow(
+    0 0 10px black
+
+  );
+
+}
+
+.card-title{
+  font-family: 'Squada One', sans-serif;
+
+}
+
+.female{
+  color: rgb(241, 128, 145);
+
+}
+
+.male{
+  color: rgb(71, 142, 165);
+
+}
+
+.logo{
+  height: 20px;
+  width: 20px;
+
+}
+
+.effect{
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  z-index: 1;
+
+}
+
+.effect:hover{
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+  z-index: 2;
+  cursor: pointer;
+
+}

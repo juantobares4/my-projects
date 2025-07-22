@@ -1,0 +1,13 @@
+.detail-container{
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 30px;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background: #f0c17be1;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #f0c17bb4, #4b1248e7);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #f0c17bb4, #4b1248e7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
