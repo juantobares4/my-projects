@@ -8,6 +8,9 @@ Budgeting App es una aplicación que permite al usuario gestionar su economía p
 Este simple proyecto fue realizado de forma individual durante un curso de Udemy sobre JavaScript.
 En el mismo intenté focalizarme más en el aspecto visual de la aplicación, haciendo enfásis en la interfaz de usuario y la experiencia.
 
+### 🧰 Tecnologías usadas:
+HTML, CSS y Boostrap, JavaScript.
+
 ### ✅  ¿Cómo comenzar a utilizarla?
 Si bien su uso es sencillo, debemos seguir los siguientes pasos:
 1. Clonar el repositorio (repositorio general):
