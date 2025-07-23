@@ -12,7 +12,7 @@ Agregar y quitar jugadores, realizar cambios (titular a suplente y viceversa), v
 ### 🧰 Tecnologías utilizadas:
 HTML, CSS Y JavaScript.
 
-✅ ¿Cómo comenzar a utilizarla?
+### ✅ ¿Cómo comenzar a utilizarla?
 Si bien su uso es sencillo, debemos seguir los siguientes pasos:
 
 1. Clonar el repositorio (repositorio general): 
