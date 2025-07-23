@@ -25,6 +25,12 @@ Si bien su uso es sencillo, debemos seguir los siguientes pasos:
 
 4. Click derecho en Go Live en la barra inferior derecha de nuestro editor de texto (VSCode).
 
+### 🔨 Futuras implementaciones
+- Agregar más validaciones para mayor robustez y realismo.
+- Perfil personal.
+- Sección de comunicados del Cuerpo Técnico.
+- Calendario.
+
 ### 📧 Contacto
 [Gmail](mailto:juantobares4@gmail.com)
 
