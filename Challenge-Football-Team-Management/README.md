@@ -33,6 +33,8 @@ Si bien su uso es sencillo, debemos seguir los siguientes pasos:
 
 ### 📧 Contacto
 [Gmail](mailto:juantobares4@gmail.com)
+[Whatsapp](https://wa.me/543584860460)
+[LinkedIn](https://www.linkedin.com/in/juancruz-tobares-dev)
 
 ---
 >Desarrollada por: Tobares, Juan Cruz. 2025. Argentina.

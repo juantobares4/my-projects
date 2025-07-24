@@ -33,6 +33,8 @@ La idea de este proyecto es seguir añadiendo funcionalidades a la app, de forma
 ### 📧 Contacto
 
 [Gmail](mailto:juantobares4@gmail.com)
+[Whatsapp](https://wa.me/543584860460)
+[LinkedIn](https://www.linkedin.com/in/juancruz-tobares-dev)
 
 ---
 > Desarrollada por: Tobares, Juan Cruz. 2025. Argentina.

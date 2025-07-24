@@ -20,6 +20,8 @@ Como el objetivo era desarrollar una aplicación de fácil implementación, cons
 
 ### 📧 Contacto
 [Gmail](mailto:juantobares4@gmail.com)
+[Whatsapp](https://wa.me/543584860460)
+[LinkedIn](https://www.linkedin.com/in/juancruz-tobares-dev)
 
 ---
 > Desarrollada por: Tobares, Juan Cruz. 2025. Argentina.
