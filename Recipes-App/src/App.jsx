@@ -17,11 +17,11 @@ function App(){
   const location = useLocation();
   const validRoutes = ['/', '/recipesList', '/recipeCreate', '/recipeDetail/:id', '/profile/:id'];
 
-  const isValidRoute = validRoutes.some(route => location.pathname === route || location.pathname.startsWith('/recipeDetail') || location.pathname.startsWith('/profile')); // location.pathname es la ubicación actual del usuario en las rutas.
+  const isValidRoute = validRoutes.some(route => location.pathname === route || location.pathname.startsWith('/recipeDetail') || location.pathname.startsWith('/profile'));
 
   return(
     <>
-      {isValidRoute && location.pathname !== '/' && <Navbar />} {/* No renderiza la Navbar en la ruta '/' (Login) */}
+      {isValidRoute && location.pathname !== '/' && <Navbar />} 
 
       <ToastContainer />
 
@@ -29,7 +29,7 @@ function App(){
         <Route path='/' element={<StartPage />} />
         <Route path='/recipesList' element={
           <ProtectedRoutes>
-            <RecipesList />
+            <RecipesList key={location.pathname} /> {/* Forzar remount */}
           </ProtectedRoutes> 
         }/>
         <Route path='/recipeCreate' element={
