@@ -1,8 +1,8 @@
-# 💸 Budgeting App
+# 💸 Be Balanced
 ---
 
 ### ¿En qué consiste?
-Budgeting App es una aplicación que permite al usuario gestionar su economía personal o familiar de forma sencilla. El objetivo es llevar un control claro de los ingresos y egresos, mostrando en tiempo real el presupuesto disponible.
+Be Balanced es una aplicación que permite al usuario gestionar su economía personal o familiar de forma sencilla. El objetivo es llevar un control claro de los ingresos y egresos, mostrando en tiempo real el presupuesto disponible.
 
 ### ℹ️ Realización
 Este simple proyecto fue realizado de forma individual durante un curso de Udemy sobre JavaScript.
@@ -16,8 +16,8 @@ Si bien su uso es sencillo, debemos seguir los siguientes pasos:
 1. Clonar el repositorio (repositorio general):
 `git clone git@github.com:juantobares4/my-projects.git`
 
-2. Una vez clonado, entrar a la carpeta del proyecto de *Budgeting App*:
-    `cd Budgeting-App`
+2. Una vez clonado, entrar a la carpeta del proyecto de *Be Balanced*:
+    `cd Be Balanced`
 
 3. Instalar y correr la aplicación con Live Server -- extensión de VSCode --. Utilizará el puerto 5500 para correr nuestro proyecto.
 
